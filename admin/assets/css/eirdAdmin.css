@@ -1,0 +1,11 @@
+nav a,
+.nav a,
+.pagination a,
+.carousel a,
+.panel-title a {
+    cursor: pointer;
+}
+body {
+    /* Para ajustar la barra de navegación fija en el top */
+    padding-top: 70px;
+}

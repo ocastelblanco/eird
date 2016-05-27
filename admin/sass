@@ -1,0 +1,1 @@
+sass --watch ~/workspace/admin/scss/_bootstrap.scss:assets/css/bootstrap.css --style compressed

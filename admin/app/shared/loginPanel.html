@@ -1,0 +1,33 @@
+<div class="container" ng-controller="controladorPrincipal as cp">
+    <div class="row">
+        <div class="col-md-6 col-xs-12 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        {{cp.panelLogin.titulo}}
+                    </h3>
+                </div><!-- /panel-heading -->
+                <div class="panel-body">
+                <form ng-submit="lf.autenticar()" ng-controller="loginForm as lf">
+                    <div class="form-group">
+                        <label for="usuario">
+                            {{cp.panelLogin.labelUsuario}}
+                        </label>
+                        <input type="text" ng-model="lf.usuario" class="form-control" id="usuario" placeholder="Usuario">
+                    </div>
+                    <div class="form-group">
+                        <label for="clave">
+                            {{cp.panelLogin.labelClave}}
+                        </label>
+                        <input type="password" ng-model="lf.clave" class="form-control" id="clave" placeholder="Contraseña">
+                        
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        {{cp.panelLogin.labelSubmit}}
+                    </button>
+                </form>
+                </div><!-- /panel-body -->
+            </div><!-- /panel -->
+        </div>
+    </div>
+</div><!-- /container -->

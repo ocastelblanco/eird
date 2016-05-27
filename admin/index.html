@@ -1,0 +1,28 @@
+<!doctype html>
+<html ng-app="eirdAdmin">
+    <head>
+        <title>Administración EIRP</title>
+        <meta charset="utf-8">
+        <base href="/admin/">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="assets/css/bootstrap.css" type="text/css" />
+        <link rel="stylesheet" href="assets/css/eirdAdmin.css" type="text/css" />
+    </head>
+    <body>
+        <ng-view ng-controller="controladorPrincipal"></ng-view>
+        <!-- Llamado a dependencias JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-touch.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-resource.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
+        <script src="assets/js/ui-bootstrap.min.js"></script>
+        <!-- Componentes de la app raiz -->
+        <script src="app/app.module.js"></script>
+        <script src="app/app.routes.js"></script>
+        <!-- Componentes modulares -->
+        <script src="app/components/inicio/inicio.module.js"></script>
+    </body>
+</html>
