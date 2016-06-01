@@ -27,10 +27,15 @@ inicio.controller('datosSesion', ['consultaSesion', function(consultaSesion) {
         }
     });
 }]);
-inicio.controller('loginForm', [function(){
+inicio.controller('loginForm', ['$http', function($http){
     var salida = this;
     salida.autenticar = function() {
-        console.log('loginForm ', salida.usuario);
+        console.log('loginForm ', salida.usuario, salida.clave);
+        var datosForm = {'usuario': salida.usuario, 'clave': salida.clave, 'titulo': 'Enciclopedia Ilustrada de la República Dominicana'};
+        $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+        $http.post('php/autentica.php', datosForm).then(function(resp){
+            console.log(resp.data);
+        });
     }
 }]);
 // Este servicio consulta si hay sesion y cuál es

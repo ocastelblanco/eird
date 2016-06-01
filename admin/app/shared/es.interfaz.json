@@ -1,0 +1,14 @@
+{
+  "textos": {
+    "titulos": {
+      "corto": "ENREDO",
+      "largo": "Enciclopedia Ilustrada de la República Dominicana"
+    },
+    "panelLogin": {
+      "titulo": "Ingrese sus datos para iniciar sesión",
+      "labelUsuario": "Usuario",
+      "labelClave": "Contraseña",
+      "labelSubmit": "Ingresar"
+    }
+  }
+}
