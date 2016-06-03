@@ -4,11 +4,44 @@
       "corto": "ENREDO",
       "largo": "Enciclopedia Ilustrada de la República Dominicana"
     },
+    "barra": {
+      "salir": {
+        "texto": "Salir",
+        "icono": "fa-sign-out"
+      }
+    },
     "panelLogin": {
       "titulo": "Ingrese sus datos para iniciar sesión",
       "labelUsuario": "Usuario",
       "labelClave": "Contraseña",
-      "labelSubmit": "Ingresar"
+      "labelSubmit": "Ingresar",
+      "iconoSubmit": "fa-sign-in",
+      "placeholderUsuario": "Escriba su usuario",
+      "placeholderClave": "Escriba su contraseña"
+    },
+    "footer": {
+      "copyright": "Todos los derechos reservados ©2016",
+      "desarrollo": {
+          "encabezado": "Desarrollado por ",
+          "vinculo": "http://www.mediateca.co",
+          "desarrollador": "Mediateca Soluciones Educativas",
+          "cliente": "para EduProgreso"
+      }
+    },
+    "menu": {
+      "titulo": "Menú principal",
+      "inicio": {
+        "texto": "Inicio",
+        "icono": "fa-home"
+      },
+      "contenidos": {
+        "texto": "Administrar contenidos",
+        "icono": "fa-book"
+      },
+      "codigos": {
+        "texto": "Administrar códigos",
+        "icono": "fa-barcode"
+      }
     }
   }
 }
