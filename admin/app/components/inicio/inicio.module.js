@@ -1,39 +1,26 @@
 /* global angular */
-var rutaShared = 'app/shared/';
+var pagInicial = '/contenido';
 var inicio = angular.module('inicio', ['eirdAdmin']);
 // Verifica si la sesión ha sido iniciada
-inicio.controller('inyectaContenido', ['consultaSesion', '$scope', function(consultaSesion, $scope) {
+inicio.controller('inyectaContenido', ['consultaSesion', '$scope', '$location', 
+                                function(consultaSesion, $scope, $location) {
     var salida = this;
-    $scope.$on('cargaVista', function(event, resp) {
-        salida.cargaVista(resp.pos, resp.vista);
-    });
     consultaSesion.hay().then(function(sesion){
         if (sesion.conexion) {
             if (sesion.id) {
                 // Hay sesión
-                salida.cargaVista('header', rutaShared + 'header.sesion.html');
-                salida.cargaVista('contenido', 'app/components/contenido/contenido.html');
-                salida.cargaVista('footer', rutaShared + 'footer.html');
+                $location.path(pagInicial);
             } else {
                 // No hay sesión
-                salida.cargaVista('header', rutaShared + 'header.noSesion.html');
-                salida.cargaVista('contenido', rutaShared + 'loginPanel.html');
-                salida.cargaVista('footer', rutaShared + 'footer.html');
+                salida.header = 'app/components/header/header.html';
+                salida.footer = 'app/shared/footer.html';
+                salida.contenido = 'app/shared/loginPanel.html';
             }
         } else {
             // No se logró la conexión con PHP
             salida.mensaje = "Error al conectarse con el sistema. Intente más tarde";
         }
     });
-    salida.cierraSesion = function(){
-        consultaSesion.cerrar();
-        salida.cargaVista('header', rutaShared + 'header.sesion.html');
-        salida.cargaVista('contenido', rutaShared + 'loginPanel.html');
-        salida.cargaVista('footer', rutaShared + 'footer.html');
-    };
-    salida.cargaVista = function(pos, vista) {
-        salida[pos] = vista;
-    };
 }]);
 // Obtiene datos del usuario autenticado
 inicio.controller('datosSesion', ['consultaSesion', function(consultaSesion) {
@@ -44,8 +31,8 @@ inicio.controller('datosSesion', ['consultaSesion', function(consultaSesion) {
         }
     });
 }]);
-inicio.controller('loginForm', ['$http', 'cargaInterfaz', 'consultaSesion', 'generaID', '$rootScope',
-                        function($http, cargaInterfaz, consultaSesion, generaID, $rootScope) {
+inicio.controller('loginForm', ['$http', 'cargaInterfaz', 'consultaSesion', 'generaID', '$rootScope', '$location',
+                        function($http, cargaInterfaz, consultaSesion, generaID, $rootScope, $location) {
     var salida = this;
     var titulo;
     cargaInterfaz.textos().then(function(resp){
@@ -54,12 +41,11 @@ inicio.controller('loginForm', ['$http', 'cargaInterfaz', 'consultaSesion', 'gen
     salida.autenticar = function() {
         var datosForm = {'usuario': salida.usuario, 'clave': salida.clave, 'titulo': titulo};
         $http.post('php/autentica.php', datosForm).then(function(resp){
-            consultaSesion.crear(generaID(5), resp.data.nombre).then(function(resp){
-                $rootScope.$broadcast('cargaVista', {'pos': 'header', 'vista': rutaShared + 'header.sesion.html'});
-                $rootScope.$broadcast('cargaVista', {'pos': 'contenido', 'vista': 'app/components/contenido/contenido.html'});
+            consultaSesion.crear(generaID(5), resp.data.nombre, resp.data.permisos).then(function(resp){
+                $location.path(pagInicial);
             });
         });
-    }
+    };
 }]);
 // Este servicio consulta si hay sesion y cuál es
 inicio.service('consultaSesion', ['$http', function($http){
@@ -77,8 +63,8 @@ inicio.service('consultaSesion', ['$http', function($http){
             });
             return promesa;
         },
-        crear: function(id, nombre) {
-            var accion = ruta + 'crear&sesionID='+id+'&nombre='+nombre;
+        crear: function(id, nombre, permisos) {
+            var accion = ruta + 'crear&sesionID='+id+'&nombre='+nombre+'&permisos='+permisos;
             var promesa = $http.get(accion).then(function(resp){
                 return resp.data;
             });

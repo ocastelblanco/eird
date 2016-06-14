@@ -4,16 +4,21 @@ var eirdAdmin = angular.module('eirdAdmin', [
     'ui.bootstrap',
     'ngRoute',
     'inicio',
-    'menu'
+    'contenido',
+    'encabezado'
 ]);
 // Controladores
-eirdAdmin.controller('controladorPrincipal', ['cargaInterfaz', function(cargaInterfaz) {
+eirdAdmin.controller('controladorPrincipal', ['cargaInterfaz', '$rootScope', function(cargaInterfaz, $rootScope) {
     // Controlador principal
     console.log('ControladorPrincipal iniciado');
     // Contenidos básicos de la interfaz
     var salida = this;
     cargaInterfaz.textos().then(function(resp){
         salida.textos = resp;
+    });
+    $rootScope.$on('$routeChangeStart', function(angularEvent, next, current) {
+        //angularEvent.preventDefault();
+        //console.log(angularEvent, next, current);
     });
 }]);
 // Servicios

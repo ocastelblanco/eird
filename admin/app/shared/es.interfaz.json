@@ -7,7 +7,54 @@
     "barra": {
       "salir": {
         "texto": "Salir",
-        "icono": "fa-sign-out"
+        "icono": "fa-sign-out",
+        "permisos": "1"
+      },
+      "dashboard": {
+        "texto": "Panel de control",
+        "icono": "fa-tachometer",
+        "permisos": "3"
+      },
+      "contenido": {
+        "texto": "Administrar contenidos",
+        "icono": "fa-book",
+        "permisos": "4",
+        "menu": {
+          "titulo": {
+            "texto": "Administrar contenidos"
+          },
+          "items": [
+            {
+              "texto": "Entradas",
+              "icono": "fa-file-text-o",
+              "destino": "entradas",
+              "permisos": "4"
+            },
+            {
+              "texto": "Publicar",
+              "icono": "fa-paper-plane",
+              "destino": "publicar",
+              "permisos": "5"
+            },
+            {
+              "texto": "Etiquetas",
+              "icono": "fa-tags",
+              "destino": "etiquetas",
+              "permisos": "4"
+            },
+            {
+              "texto": "Portada",
+              "icono": "fa-newspaper-o",
+              "destino": "portada",
+              "permisos": "4"
+            }
+          ]
+        }
+      },
+      "codigos": {
+        "texto": "Administrar códigos",
+        "icono": "fa-barcode",
+        "permisos": "5"
       }
     },
     "panelLogin": {
@@ -26,21 +73,6 @@
           "vinculo": "http://www.mediateca.co",
           "desarrollador": "Mediateca Soluciones Educativas",
           "cliente": "para EduProgreso"
-      }
-    },
-    "menu": {
-      "titulo": "Menú principal",
-      "inicio": {
-        "texto": "Inicio",
-        "icono": "fa-home"
-      },
-      "contenidos": {
-        "texto": "Administrar contenidos",
-        "icono": "fa-book"
-      },
-      "codigos": {
-        "texto": "Administrar códigos",
-        "icono": "fa-barcode"
       }
     }
   }

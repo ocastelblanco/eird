@@ -8,15 +8,16 @@ eirdAdmin.config(['$routeProvider', '$locationProvider',
             templateUrl :'app/components/inicio/inicio.html'
         })
         .when('/inicio', {
-            templateUrl : 'app/components/inicio/inicio.html',
-            controller  : 'controladorPrincipal'
+            templateUrl : 'app/components/inicio/inicio.html'
         })
-        .when('/contacto', {
-            templateUrl : 'pages/contacto.html',
-            controller  : 'contactController'
+        .when('/salir', {
+            templateUrl : 'app/components/inicio/inicio.html'
+        })
+        .when('/contenido', {
+            templateUrl : 'app/components/contenido/contenido.html'
         })
         .otherwise({
             redirectTo: '/'
         });
-        $locationProvider.html5Mode(true);
+        //$locationProvider.html5Mode(true);
 }]);
