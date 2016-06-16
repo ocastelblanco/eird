@@ -1,0 +1,19 @@
+<div ng-controller="adminEntradas as ae">
+    <div class="page-header">
+        <h1>
+            {{cp.textos.contenido.entradas.titulo}}
+            <small>{{cp.textos.contenido.entradas.instrucciones}}</small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            {{cp.textos.contenido.entradas.numEntradas}}
+        </div>
+        <div class="col-sm-3">
+            {{cp.textos.contenido.entradas.numLista}}
+        </div>
+        <div class="col-sm-3"></div>
+        <div class="col-sm-3"></div>
+    </div>
+    <div ui-grid="ae.datosTabla" ui-grid-selection class="tablaEntradas"></div>
+</div>

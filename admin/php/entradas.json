@@ -1,0 +1,34 @@
+[
+  {
+    "id": "0001",
+    "titulo": "Independencia Efímera",
+    "categoria": "Historia",
+    "subcategoria": "Independencia",
+    "fecha": "2016-06-15",
+    "estado": 1
+  },
+  {
+    "id": "0002",
+    "titulo": "Ocupación haitiana",
+    "categoria": "Historia",
+    "subcategoria": "Independencia",
+    "fecha": "2016-06-15",
+    "estado": 2
+  },
+  {
+    "id": "0003",
+    "titulo": "Sierra de Yamasa",
+    "categoria": "Geografía",
+    "subcategoria": "Relieve",
+    "fecha": "2016-06-15",
+    "estado": 1
+  },
+  {
+    "id": "0004",
+    "titulo": "Sierra del Seibo",
+    "categoria": "Geografía",
+    "subcategoria": "Relieve",
+    "fecha": "2016-06-15",
+    "estado": 1
+  }
+]

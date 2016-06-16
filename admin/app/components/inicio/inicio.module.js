@@ -2,8 +2,9 @@
 var pagInicial = '/contenido';
 var inicio = angular.module('inicio', ['eirdAdmin']);
 // Verifica si la sesión ha sido iniciada
-inicio.controller('inyectaContenido', ['consultaSesion', '$scope', '$location', 
+inicio.controller('inyectaContenido', ['consultaSesion', '$scope', '$location',
                                 function(consultaSesion, $scope, $location) {
+    //console.log('inyectaContenido cargado');
     var salida = this;
     consultaSesion.hay().then(function(sesion){
         if (sesion.conexion) {
@@ -24,6 +25,7 @@ inicio.controller('inyectaContenido', ['consultaSesion', '$scope', '$location',
 }]);
 // Obtiene datos del usuario autenticado
 inicio.controller('datosSesion', ['consultaSesion', function(consultaSesion) {
+    //console.log('datosSesion cargado');
     var salida = this;
     consultaSesion.datos().then(function(sesion){
         if (sesion.conexion) {
@@ -33,6 +35,7 @@ inicio.controller('datosSesion', ['consultaSesion', function(consultaSesion) {
 }]);
 inicio.controller('loginForm', ['$http', 'cargaInterfaz', 'consultaSesion', 'generaID', '$rootScope', '$location',
                         function($http, cargaInterfaz, consultaSesion, generaID, $rootScope, $location) {
+    //console.log('loginForm cargado');
     var salida = this;
     var titulo;
     cargaInterfaz.textos().then(function(resp){

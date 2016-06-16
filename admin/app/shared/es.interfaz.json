@@ -37,9 +37,9 @@
               "permisos": "5"
             },
             {
-              "texto": "Etiquetas",
+              "texto": "Categorías y etiquetas",
               "icono": "fa-tags",
-              "destino": "etiquetas",
+              "destino": "categorias",
               "permisos": "4"
             },
             {
@@ -55,6 +55,22 @@
         "texto": "Administrar códigos",
         "icono": "fa-barcode",
         "permisos": "5"
+      }
+    },
+    "contenido": {
+      "entradas": {
+        "titulo": "Gestionar entradas",
+        "instrucciones": "Haga clic sobre el nombre de una entrada para editarla",
+        "eliminar": "Eliminar entradas",
+        "numEntradas": "Número de entradas:",
+        "numLista": "Entradas por página:",
+        "encabezadoTablaDatos": {
+          "nomEntradas": "Título de la entrada",
+          "categoria": "Categoría",
+          "subcategoria": "Subcategoría",
+          "fecha": "Fecha",
+          "estado": "Estado"
+        }
       }
     },
     "panelLogin": {

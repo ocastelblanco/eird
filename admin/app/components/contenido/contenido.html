@@ -2,11 +2,11 @@
   <ng-include src="cc.header"></ng-include>
   <div class="content-fluid contenidoCentral">
     <div class="row">
-        <div class="col-sm-2">
-             <ng-include src="cc.nav"></ng-include>
+        <div class="col-sm-3 col-md-2">
+             <div ng-include="cc.nav" class="menuLateral" ng-controller="menuLateral as ml"></div>
         </div>
-        <div class="col-sm-10">
-            <ng-include src="cc.central"></ng-include>
+        <div class="col-sm-9 col-md-10">
+            <div ng-include="cc.central" class="contenidoDerecho"></div>
         </div>
     </div>
   </div>

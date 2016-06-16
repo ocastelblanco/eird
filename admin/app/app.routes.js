@@ -16,6 +16,9 @@ eirdAdmin.config(['$routeProvider', '$locationProvider',
         .when('/contenido', {
             templateUrl : 'app/components/contenido/contenido.html'
         })
+        .when('/contenido/:subseccion', {
+            templateUrl : 'app/components/contenido/contenido.html'
+        })
         .otherwise({
             redirectTo: '/'
         });
