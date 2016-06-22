@@ -67,6 +67,10 @@ body {
     padding-right: 1em;
     margin-top: -20px;
 }
+#tituloEntrada {
+    font-size: 2em;
+    height: 2em;
+}
 /* Interfaz de ancho de computador */
 @media (min-width: 768px) {
     .menuLateral {

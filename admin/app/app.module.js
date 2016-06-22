@@ -5,12 +5,15 @@ var eirdAdmin = angular.module('eirdAdmin', [
     'ui.bootstrap',
     'ui.grid',
     'ui.grid.selection',
+    'ui.grid.pagination',
+    'ui.tinymce',
     'ngRoute',
     'ngTouch',
     'inicio',
     'contenido',
     'encabezado',
-    'entradas'
+    'entradas',
+    'editarEntradas'
 ]);
 // Controladores
 eirdAdmin.controller('controladorPrincipal', ['cargaInterfaz', function(cargaInterfaz) {

@@ -8,9 +8,6 @@ encabezado.controller('creaEncabezado', ['consultaSesion', '$location', function
             salida.haySesion = true;
         }
     });
-    consultaSesion.datos().then(function(resp){
-        salida.permisos = resp.permisos;
-    });
     salida.cierraSesion = function(){
         consultaSesion.cerrar();
     };

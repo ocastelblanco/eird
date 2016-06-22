@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{titulo}}</h3>
+</div>
+<div class="modal-body">
+    <uib-progressbar ng-hide="cuerpo.progreso.invisible" class="progress-striped active" value="cuerpo.progreso.valor"></uib-progressbar>
+    <div ng-bind-html="cuerpo.contenido"></div>
+</div>
+<div class="modal-footer">
+    <button ng-hide="footer.boton01.invisible" class="btn {{footer.boton01.estilo}}" type="button" ng-click="boton01()">
+        <i ng-hide="footer.boton01.icono.invisible" class="fa {{footer.boton01.icono.estilo}}"></i>
+        {{footer.boton01.texto}}
+    </button>
+    <button ng-hide="footer.boton02.invisible" class="btn {{footer.boton02.estilo}}" type="button" ng-click="boton02()">
+        <i ng-hide="footer.boton02.icono.invisible" class="fa {{footer.boton02.icono.estilo}}"></i>
+        {{footer.boton02.texto}}
+    </button>
+    <button ng-hide="footer.boton03.invisible" class="btn {{footer.boton03.estilo}}" type="button" ng-click="boton03()">
+        <i ng-hide="footer.boton03.icono.invisible" class="fa {{footer.boton03.icono.estilo}}"></i>
+        {{footer.boton03.texto}}
+    </button>
+</div>

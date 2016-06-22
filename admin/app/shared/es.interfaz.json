@@ -60,17 +60,75 @@
     "contenido": {
       "entradas": {
         "titulo": "Gestionar entradas",
-        "instrucciones": "Haga clic sobre el nombre de una entrada para editarla",
-        "eliminar": "Eliminar entradas",
-        "numEntradas": "Número de entradas:",
-        "numLista": "Entradas por página:",
+        "instrucciones": "Seleccione la(s) entrada(s) y haga clic sobre el botón correspondiente.",
+        "eliminar": {
+          "texto": "Eliminar entradas seleccionadas",
+          "icono": "fa-trash"
+        },
+        "editar": {
+          "texto": "Editar entrada seleccionada",
+          "icono": "fa-pencil"
+        },
+        "nueva": {
+          "texto": "Crear nueva entrada",
+          "icono": "fa-plus"
+        },
         "encabezadoTablaDatos": {
           "nomEntradas": "Título de la entrada",
           "categoria": "Categoría",
           "subcategoria": "Subcategoría",
           "fecha": "Fecha",
           "estado": "Estado"
-        }
+        },
+        "permisos": "4"
+      },
+      "editarEntrada": {
+        "titulo": "Editar entrada",
+        "botonesAccion": {
+          "guardar": {
+            "texto": "Guardar entrada",
+            "icono": "fa-floppy-o"
+          },
+          "eliminar": {
+            "texto": "Eliminar entrada",
+            "icono": "fa-trash"
+          },
+          "cancelar": {
+            "texto": "Cancelar edición",
+            "icono": "fa-times"
+          }
+        },
+        "placeholders": {
+          "tituloEntrada": "Título de la entrada"
+        },
+        "modalCancelarEdicion": {
+          "titulo": "¿Desea cancelar la edición?",
+          "cuerpo": "Al cancelar la edición de esta entrada se perderá toda la información que no haya guardado.",
+          "footer": {
+            "boton01": {
+              "texto": "Aceptar",
+              "icono": "fa-exclamation"
+            },
+            "boton02": {
+              "texto": "Cancelar"
+            }
+          }
+        },
+        "modalGuardarEntrada": {
+          "titulo1": "Guardando la entrada...",
+          "titulo2": "Entrada guardada",
+          "contenido": "¿Qué desea hacer?",
+          "boton01": {
+            "texto": "Seguir editando"
+          },
+          "boton02": {
+            "texto": "Volver al listado de entradas"
+          },
+          "boton03": {
+            "texto": "Crear nueva entrada"
+          }
+        },
+        "permisos": "4"
       }
     },
     "panelLogin": {

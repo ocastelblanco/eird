@@ -1,0 +1,29 @@
+<div ng-if="cc.permisos >= cp.textos.contenido.editarEntrada.permisos" ng-controller="editarEntradas as ee">
+    <div class="page-header">
+        <h2>{{cp.textos.contenido.editarEntrada.titulo}}</h2>
+    </div>
+    <div class="row">
+        <div class="col-sm-9">
+            <div class="form-group">
+                <input type="text" class="form-control" id="tituloEntrada" ng-model="ee.tituloEntrada"
+                placeholder="{{cp.textos.contenido.editarEntrada.placeholders.tituloEntrada}}">
+            </div>
+            <textarea ui-tinymce="ee.tinymceOptions" ng-model="ee.textoEntrada"></textarea>
+        </div>
+        <div class="col-sm-3">
+            <button class="btn btn-block btn-primary" ng-click="ee.guardaCambios()"
+                    ng-disabled="!ee.textoEntrada || !ee.tituloEntrada">
+                <i class="fa fa-fw {{cp.textos.contenido.editarEntrada.botonesAccion.guardar.icono}}"></i>
+                {{cp.textos.contenido.editarEntrada.botonesAccion.guardar.texto}}
+            </button>
+            <button class="btn btn-block btn-default" ng-click="ee.cancelaEdicion()">
+                <i class="fa fa-fw {{cp.textos.contenido.editarEntrada.botonesAccion.cancelar.icono}}"></i>
+                {{cp.textos.contenido.editarEntrada.botonesAccion.cancelar.texto}}
+            </button>
+            <button class="btn btn-block btn-danger" ng-click="ee.eliminaEntrada()">
+                <i class="fa fa-fw {{cp.textos.contenido.editarEntrada.botonesAccion.eliminar.icono}}"></i>
+                {{cp.textos.contenido.editarEntrada.botonesAccion.eliminar.texto}}
+            </button>
+        </div>
+    </div>
+</div>

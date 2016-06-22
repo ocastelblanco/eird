@@ -1,4 +1,4 @@
-<div ng-controller="adminEntradas as ae">
+<div ng-if="cc.permisos >= cp.textos.contenido.entradas.permisos" ng-controller="adminEntradas as ae">
     <div class="page-header">
         <h1>
             {{cp.textos.contenido.entradas.titulo}}
@@ -6,14 +6,25 @@
         </h1>
     </div>
     <div class="row">
-        <div class="col-sm-3">
-            {{cp.textos.contenido.entradas.numEntradas}}
+        <div class="col-sm-4">
+            <button ng-click="ae.nuevaEntrada()" class="btn btn-block btn-primary">
+                <i class="fa {{cp.textos.contenido.entradas.nueva.icono}}"></i>
+                {{cp.textos.contenido.entradas.nueva.texto}}
+            </button>
         </div>
-        <div class="col-sm-3">
-            {{cp.textos.contenido.entradas.numLista}}
+        <div class="col-sm-4">
+            <button ng-click="ae.editarEntrada()" class="btn btn-block btn-warning" ng-disabled="ae.estadoEditar">
+                <i class="fa {{cp.textos.contenido.entradas.editar.icono}}"></i>
+                {{cp.textos.contenido.entradas.editar.texto}}
+            </button>
         </div>
-        <div class="col-sm-3"></div>
-        <div class="col-sm-3"></div>
+        <div class="col-sm-4">
+            <button ng-click="ae.eliminarEntrada()" class="btn btn-block btn-danger" ng-disabled="ae.estadoEliminar">
+                <i class="fa {{cp.textos.contenido.entradas.eliminar.icono}}"></i>
+                {{cp.textos.contenido.entradas.eliminar.texto}}
+            </button>
+        </div>
     </div>
-    <div ui-grid="ae.datosTabla" ui-grid-selection class="tablaEntradas"></div>
+    <br>
+    <div ui-grid="ae.datosTabla" ui-grid-selection ui-grid-pagination class="tablaEntradas"></div>
 </div>
