@@ -30,5 +30,53 @@
     "subcategoria": "Relieve",
     "fecha": "2016-06-15",
     "estado": 1
+  },
+  {
+    "id": "0005",
+    "titulo": "Sierra",
+    "categoria": "Geografía",
+    "subcategoria": "Relieve",
+    "fecha": "2016-06-15",
+    "estado": 1
+  },
+  {
+    "id": "0006",
+    "titulo": "Sierra Madre",
+    "categoria": "Geografía",
+    "subcategoria": "Relieve",
+    "fecha": "2016-06-16",
+    "estado": 1
+  },
+  {
+    "id": "0007",
+    "titulo": "Sierra Especial",
+    "categoria": "Geografía",
+    "subcategoria": "Relieve",
+    "fecha": "2016-06-17",
+    "estado": 2
+  },
+  {
+    "id": "0008",
+    "titulo": "Sierra Única",
+    "categoria": "Geografía",
+    "subcategoria": "Relieve",
+    "fecha": "2016-06-25",
+    "estado": 1
+  },
+  {
+    "id": "0009",
+    "titulo": "Sierra Solitaria",
+    "categoria": "Geografía",
+    "subcategoria": "Relieve",
+    "fecha": "2016-06-25",
+    "estado": 2
+  },
+  {
+    "id": "0010",
+    "titulo": "Sierra Augusta",
+    "categoria": "Geografía",
+    "subcategoria": "Relieve",
+    "fecha": "2016-06-25",
+    "estado": 1
   }
 ]

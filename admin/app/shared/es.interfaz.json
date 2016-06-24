@@ -78,7 +78,8 @@
           "categoria": "Categoría",
           "subcategoria": "Subcategoría",
           "fecha": "Fecha",
-          "estado": "Estado"
+          "estado": "Estado",
+          "estados": ["Eliminado", "Publicado", "Sin publicar"]
         },
         "permisos": "4"
       },
@@ -116,17 +117,31 @@
         },
         "modalGuardarEntrada": {
           "titulo1": "Guardando la entrada...",
-          "titulo2": "Entrada guardada",
-          "contenido": "¿Qué desea hacer?",
+          "titulo2": "Entrada guardada correctamente",
+          "tituloError": "Problemas al guardar la entrada",
+          "contenido": {
+            "texto1": "La entrada ",
+            "texto2": " ha sido guardada correctamente.",
+            "icono": "fa-thumbs-up"
+          },
+          "contenidoError": {
+            "texto1": "Error al intentar guardar la entrada ",
+            "texto2": ". Intente de nuevo.",
+            "icono": "fa-thumbs-down"
+          },
           "boton01": {
-            "texto": "Seguir editando"
+            "texto": "Seguir editando",
+            "icono": "fa-undo"
           },
           "boton02": {
-            "texto": "Volver al listado de entradas"
+            "texto": "Volver al listado de entradas",
+            "icono": "fa-chevron-left"
           },
           "boton03": {
-            "texto": "Crear nueva entrada"
-          }
+            "texto": "Crear nueva entrada",
+            "icono": "fa-plus"
+          },
+          "botonError": "Cerrar"
         },
         "permisos": "4"
       }

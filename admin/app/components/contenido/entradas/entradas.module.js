@@ -26,8 +26,8 @@ entradas.controller('adminEntradas', ['$http', 'i18nService', 'cargaInterfaz', '
         selectionRowHeaderWidth: 35,
         rowHeight: 35,
         showGridFooter:true,
-        paginationPageSizes: [2, 5, 7],
-        paginationPageSize: 2
+        paginationPageSizes: [5, 10, 20],
+        paginationPageSize: 10
     };
     // Captura cuando el usuario selecciona filas de la tabla
     salida.datosTabla.onRegisterApi = function(gridApi){
@@ -43,9 +43,21 @@ entradas.controller('adminEntradas', ['$http', 'i18nService', 'cargaInterfaz', '
             salida.activaBotones();
         });
     };
-    $http.get('php/entradas.json').then(function(resp){
-        salida.datosTabla.data = resp.data;
+    $http.post('php/entradas.php').then(function(resp){
+        salida.datosTabla.data = cambiaEstado(resp.data);
     });
+    function cambiaEstado(data) {
+        var respuesta = data;
+        angular.forEach(respuesta, function(valor, llave){
+            if (respuesta[llave].estado == 0) {
+                respuesta.splice(llave, 1);
+            }
+        });
+        angular.forEach(respuesta, function(valor, llave){
+            respuesta[llave].estado = salida.titulosTabla.estados[respuesta[llave].estado];
+        });
+        return respuesta;
+    }
     salida.activaBotones = function() {
         if (salida.numFilasSeleccionadas == 1) {
             salida.estadoEditar = false;
@@ -62,14 +74,16 @@ entradas.controller('adminEntradas', ['$http', 'i18nService', 'cargaInterfaz', '
     salida.nuevaEntrada = function() {
         var seccion = $location.path().split('/')[1];
         $location.path('/'+seccion+'/editarEntrada');
-    }
+    };
     salida.editarEntrada = function() {
-        console.log('Edita la entrada ', salida.filasSeleccionadas[0].id);
-    }
+        var seccion = $location.path().split('/')[1];
+        var pos = $location.search('id', salida.filasSeleccionadas[0].id);
+        pos.path('/'+seccion+'/editarEntrada');
+    };
     salida.eliminarEntrada = function() {
         console.log('Elimina las entradas');
         angular.forEach(salida.filasSeleccionadas, function(value, key) {
             console.log(value.id);
         });
-    }
+    };
 }]);
