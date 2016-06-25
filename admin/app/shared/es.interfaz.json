@@ -143,6 +143,38 @@
           },
           "botonError": "Cerrar"
         },
+        "modalEliminarEntrada": {
+          "titulo1": "Eliminar la entrada actual",
+          "titulo2": "Eliminando la entrada",
+          "titulo3": "Entrada eliminada correctamente",
+          "tituloError": "Problemas al eliminar la entrada",
+          "contenido1": {
+            "texto": "¿Quiere eliminar la entrada definitivamente?",
+            "icono": "fa-exclamation-triangle"
+          },
+          "contenido3": {
+            "texto": "La entrada ha sido eliminada correctamente.",
+            "icono": "fa-check"
+          },
+          "contenidoError": {
+            "texto1": "Error al intentar eliminar la entrada ",
+            "texto2": ". Intente de nuevo.",
+            "icono": "fa-thumbs-down"
+          },
+          "boton01": {
+            "texto": "Eliminar la entrada",
+            "icono": "fa-trash"
+          },
+          "boton02": {
+            "texto": "Seguir editando sin eliminar",
+            "icono": "fa-pencil"
+          },
+          "botonFinal": {
+            "texto": "Volver al listado de entradas",
+            "icono": "fa-chevron-left"
+          },
+          "botonError": "Cerrar"
+        },
         "permisos": "4"
       }
     },

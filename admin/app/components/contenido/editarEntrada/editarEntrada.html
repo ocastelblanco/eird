@@ -20,7 +20,8 @@
                 <i class="fa fa-fw {{cp.textos.contenido.editarEntrada.botonesAccion.cancelar.icono}}"></i>
                 {{cp.textos.contenido.editarEntrada.botonesAccion.cancelar.texto}}
             </button>
-            <button class="btn btn-block btn-danger" ng-click="ee.eliminaEntrada()">
+            <button class="btn btn-block btn-danger" ng-click="ee.eliminaEntrada()"
+                    ng-disabled="!ee.datosPOST.id">
                 <i class="fa fa-fw {{cp.textos.contenido.editarEntrada.botonesAccion.eliminar.icono}}"></i>
                 {{cp.textos.contenido.editarEntrada.botonesAccion.eliminar.texto}}
             </button>

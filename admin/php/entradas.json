@@ -1,82 +1,162 @@
 [
-  {
-    "id": "0001",
-    "titulo": "Independencia Efímera",
-    "categoria": "Historia",
-    "subcategoria": "Independencia",
-    "fecha": "2016-06-15",
-    "estado": 1
-  },
-  {
-    "id": "0002",
-    "titulo": "Ocupación haitiana",
-    "categoria": "Historia",
-    "subcategoria": "Independencia",
-    "fecha": "2016-06-15",
-    "estado": 2
-  },
-  {
-    "id": "0003",
-    "titulo": "Sierra de Yamasa",
-    "categoria": "Geografía",
-    "subcategoria": "Relieve",
-    "fecha": "2016-06-15",
-    "estado": 1
-  },
-  {
-    "id": "0004",
-    "titulo": "Sierra del Seibo",
-    "categoria": "Geografía",
-    "subcategoria": "Relieve",
-    "fecha": "2016-06-15",
-    "estado": 1
-  },
-  {
-    "id": "0005",
-    "titulo": "Sierra",
-    "categoria": "Geografía",
-    "subcategoria": "Relieve",
-    "fecha": "2016-06-15",
-    "estado": 1
-  },
-  {
-    "id": "0006",
-    "titulo": "Sierra Madre",
-    "categoria": "Geografía",
-    "subcategoria": "Relieve",
-    "fecha": "2016-06-16",
-    "estado": 1
-  },
-  {
-    "id": "0007",
-    "titulo": "Sierra Especial",
-    "categoria": "Geografía",
-    "subcategoria": "Relieve",
-    "fecha": "2016-06-17",
-    "estado": 2
-  },
-  {
-    "id": "0008",
-    "titulo": "Sierra Única",
-    "categoria": "Geografía",
-    "subcategoria": "Relieve",
-    "fecha": "2016-06-25",
-    "estado": 1
-  },
-  {
-    "id": "0009",
-    "titulo": "Sierra Solitaria",
-    "categoria": "Geografía",
-    "subcategoria": "Relieve",
-    "fecha": "2016-06-25",
-    "estado": 2
-  },
-  {
-    "id": "0010",
-    "titulo": "Sierra Augusta",
-    "categoria": "Geografía",
-    "subcategoria": "Relieve",
-    "fecha": "2016-06-25",
-    "estado": 1
-  }
+    {
+        "id": "0001",
+        "titulo": "Independencia Efímera",
+        "categoria": "Historia",
+        "subcategoria": "Independencia",
+        "fecha": "2016-06-15",
+        "estado": 1
+    },
+    {
+        "id": "0002",
+        "titulo": "Ocupación haitiana",
+        "categoria": "Historia",
+        "subcategoria": "Independencia",
+        "fecha": "2016-06-15",
+        "estado": 2
+    },
+    {
+        "id": "0003",
+        "titulo": "Sierra de Yamasa",
+        "categoria": "Geografía",
+        "subcategoria": "Relieve",
+        "fecha": "2016-06-15",
+        "estado": 1
+    },
+    {
+        "id": "0004",
+        "titulo": "Sierra del Seibo",
+        "categoria": "Geografía",
+        "subcategoria": "Relieve",
+        "fecha": "2016-06-15",
+        "estado": 1
+    },
+    {
+        "id": "0005",
+        "titulo": "Sierra",
+        "categoria": "Geografía",
+        "subcategoria": "Relieve",
+        "fecha": "2016-06-15",
+        "estado": 1
+    },
+    {
+        "id": "0006",
+        "titulo": "Sierra Madre",
+        "categoria": "Geografía",
+        "subcategoria": "Relieve",
+        "fecha": "2016-06-16",
+        "estado": 1
+    },
+    {
+        "id": "0007",
+        "titulo": "Sierra Especial",
+        "categoria": "Geografía",
+        "subcategoria": "Relieve",
+        "fecha": "2016-06-17",
+        "estado": 2
+    },
+    {
+        "id": "0008",
+        "titulo": "Sierra Única",
+        "categoria": "Geografía",
+        "subcategoria": "Relieve",
+        "fecha": "2016-06-25",
+        "estado": 1
+    },
+    {
+        "id": "0009",
+        "titulo": "Sierra Solitaria",
+        "categoria": "Geografía",
+        "subcategoria": "Relieve",
+        "fecha": "2016-06-25",
+        "estado": 2
+    },
+    {
+        "id": "0010",
+        "titulo": "Sierra Augusta",
+        "categoria": "Geografía",
+        "subcategoria": "Relieve",
+        "fecha": "2016-06-25",
+        "estado": 1
+    },
+    {
+        "id": "0011",
+        "titulo": "Guerra de la Restauración",
+        "categoria": null,
+        "subcategoria": null,
+        "fecha": "2016-06-24",
+        "estado": 2
+    },
+    {
+        "id": "0012",
+        "titulo": "Nueva entrada",
+        "categoria": null,
+        "subcategoria": null,
+        "fecha": "2016-06-24",
+        "estado": 2
+    },
+    {
+        "id": "0013",
+        "titulo": "Entrada nueva",
+        "categoria": null,
+        "subcategoria": null,
+        "fecha": "2016-06-24",
+        "estado": 2
+    },
+    {
+        "id": "0014",
+        "titulo": "Entrada 14",
+        "categoria": null,
+        "subcategoria": null,
+        "fecha": "2016-06-24",
+        "estado": 2
+    },
+    {
+        "id": "0015",
+        "titulo": "Entrada 15",
+        "categoria": null,
+        "subcategoria": null,
+        "fecha": "2016-06-24",
+        "estado": 2
+    },
+    {
+        "id": "0016",
+        "titulo": "La guerra y la paz",
+        "categoria": null,
+        "subcategoria": null,
+        "fecha": "2016-06-24",
+        "estado": 2
+    },
+    {
+        "id": "0017",
+        "titulo": "Otra orden",
+        "categoria": null,
+        "subcategoria": null,
+        "fecha": "2016-06-24",
+        "estado": 2
+    },
+    {
+        "id": "0018",
+        "titulo": "Otra entrada",
+        "categoria": null,
+        "subcategoria": null,
+        "fecha": "2016-06-24",
+        "estado": 2
+    },
+    {
+        "id": "0019",
+        "titulo": "Entrada 19",
+        "categoria": null,
+        "subcategoria": null,
+        "fecha": "2016-06-24",
+        "estado": 0
+    },
+    {
+        "id": "0020",
+        "titulo": null,
+        "categoria": null,
+        "subcategoria": null,
+        "fecha": "2016-06-25",
+        "estado": 2
+    }
 ]
