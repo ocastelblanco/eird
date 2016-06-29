@@ -102,6 +102,18 @@
         "placeholders": {
           "tituloEntrada": "Título de la entrada"
         },
+        "categorias": {
+          "categorias": {
+            "titulo": "Categorías"
+          },
+          "subcategorias": {
+            "titulo": "Subcategorías",
+            "temporal": {
+              "texto": "Primero seleccione una categoría para poder visualizar las subcategorías.",
+              "icono": "fa-hand-o-up"
+            }
+          }
+        },
         "modalCancelarEdicion": {
           "titulo": "¿Desea cancelar la edición?",
           "cuerpo": "Al cancelar la edición de esta entrada se perderá toda la información que no haya guardado.",

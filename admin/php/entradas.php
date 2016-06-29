@@ -2,12 +2,14 @@
 require_once('medoo.php');
 // Esto permite des-serializar los parámetros POST que vienen en forma JSON
 $params = json_decode(file_get_contents('php://input'),true);
+
 // ---------> Solución temporal mientras se implementa MySQL
 $nombre_fichero = 'entradas.json';
 $gestor = fopen($nombre_fichero, 'r+');
 $contenido = fread($gestor, filesize($nombre_fichero));
 fclose($gestor);
 // ---------> Fin solución temporal
+
 // Si no se envían parámetros POST, se responde con un listado de entradas en JSON
 if (count($params) == 0) {
     echo $contenido;
@@ -20,7 +22,7 @@ if (count($params) == 0) {
     }
     $entrada = $info[$posicion];
     echo json_encode($entrada, JSON_UNESCAPED_UNICODE);
-} else { // Si la solicitud viene con parámetros, se debe o crear un nuevo ID o guardar en el enviado
+} else {// Si la solicitud viene con parámetros, se debe o crear un nuevo ID o guardar en el enviado
     $posicion = "";
     $salida = array();
     $entradas = json_decode($contenido, true);

@@ -1,8 +1,7 @@
 /* global angular idioma */
 var entradaID;
 var editarEntradas = angular.module('editarEntradas', ['ngSanitize']);
-editarEntradas.controller('editarEntradas', ['$uibModal', '$location', '$http', '$rootScope', '$timeout', '$route',
-                                     function($uibModal, $location, $http, $rootScope, $timeout, $route){
+editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$rootScope','$timeout','$route','obtieneMetada',function($uibModal, $location, $http, $rootScope, $timeout, $route, obtieneMetada){
     var salida = this;
     salida.datosPOST = {};
     // Cargar información cuando ya existe un ID (se editó la entrada)
@@ -107,6 +106,31 @@ editarEntradas.controller('editarEntradas', ['$uibModal', '$location', '$http', 
     function cancelarEdicion(){
         $location.path('/entradas');
     }
+    
+    salida.cat = true;
+    obtieneMetada.categorias().then(function(resp){
+        salida.categorias = resp;
+    });
+    salida.cambiaCat = function(valor) {
+        salida.numSub = null;
+        obtieneMetada.subcategorias(valor).then(function(resp){
+            salida.subcategorias = resp;
+        });
+    };
+    salida.PC = [];
+    salida.palabrasClave = ["Historia nacional", "Conflicto", "Independencia", "Región"];
+    salida.nuevaPClave = function(palabra) {
+      salida.PC.push(palabra);
+      salida.nuevaPC = "";
+    };
+    salida.existentePClave = function(palabra, index) {
+      salida.PC.push(palabra);
+      salida.palabrasClave.splice(index, 1);
+    };
+    salida.eliminaPClave = function(palabra, index) {
+      salida.palabrasClave.push(palabra);
+      salida.PC.splice(index, 1);
+    };
 }]);
 // Controlador para la ventana modal de Eliminar Entrada
 editarEntradas.controller('modalEliminarEntrada', ['$scope', 'cargaInterfaz', '$uibModalInstance', '$rootScope',
@@ -371,4 +395,22 @@ editarEntradas.controller('modalGuardarEntrada', ['$scope', 'cargaInterfaz', '$u
             };
         }); 
     });
+}]);
+editarEntradas.service('obtieneMetada', ['$http', function($http){
+    var rutaCat = 'php/categorias.php';
+    var obtieneMetada = {
+        categorias: function() {
+            var promesa = $http.get(rutaCat).then(function(resp){
+                return resp.data;
+            });
+            return promesa;
+        },
+        subcategorias: function(cat) {
+            var promesa = $http.get(rutaCat+'?cat='+cat).then(function(resp){
+                return resp.data;
+            });
+            return promesa;
+        }
+    };
+    return obtieneMetada;
 }]);
