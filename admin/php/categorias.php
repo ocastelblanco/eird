@@ -18,5 +18,8 @@ if (count($params) == 0) {// Si no se envían parámetros, se responde con un li
     $num = array_keys($cadena);
     $salida = $cadena[$num[$params["cat"]]];
 }
+if ($params["todo"]) {
+    $salida = $cadena;
+}
 echo json_encode($salida, JSON_UNESCAPED_UNICODE);// | JSON_PRETTY_PRINT);
 ?>

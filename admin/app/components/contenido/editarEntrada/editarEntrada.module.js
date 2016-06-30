@@ -4,6 +4,7 @@ var editarEntradas = angular.module('editarEntradas', ['ngSanitize']);
 editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$rootScope','$timeout','$route','obtieneMetada',function($uibModal, $location, $http, $rootScope, $timeout, $route, obtieneMetada){
     var salida = this;
     salida.datosPOST = {};
+    salida.PC = [];
     // Cargar información cuando ya existe un ID (se editó la entrada)
     var location = $location.search();
     if (location.id) {
@@ -11,8 +12,13 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
         salida.datosPOST.id = location.id;
         salida.datosPOST.accion = 'listarEntrada';
         $http.post('php/entradas.php', salida.datosPOST).then(function(resp){
-            console.log('Al solicitar la entrada '+entradaID+' se obtuvo',resp.data);
             salida.tituloEntrada = resp.data.titulo;
+            salida.textoEntrada = resp.data.texto;
+            salida.fechaEntrada = resp.data.fecha;
+            salida.numCat = resp.data.categoria;
+            salida.cambiaCat(salida.numCat, resp.data.subcategoria);
+            salida.cambiaSub(resp.data.subcategoria);
+            salida.PC = resp.data.palabrasClave?resp.data.palabrasClave:[];
         });
     }
     salida.tinymceOptions = {
@@ -37,6 +43,7 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
         ],
         toolbar1: "cut copy paste | undo redo | removeformat bold italic underline | bullist numlist | alignleft aligncenter alignright alignjustify | styleselect code"
     };
+    // Funciones disponibles para los botones de acción
     salida.guardaCambios = function() {
         salida.modalInstance = $uibModal.open({
             templateUrl: 'app/shared/modal.html',
@@ -44,11 +51,18 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
             backdrop: 'static'
         });
         if (entradaID) {salida.datosPOST.id = entradaID;}
+        salida.datosPOST.accion = 'guardar';
         salida.datosPOST.titulo = salida.tituloEntrada;
         salida.datosPOST.texto = salida.textoEntrada;
-        // Y todos los demás datos necesarios, como Categorías, subcategorías y palabras clave.
+        salida.datosPOST.palabrasClave = salida.PC;
+        // Y todos los demás datos necesarios, como Categoría, subcategoría y palabras clave.
         $http.post('php/entradas.php', salida.datosPOST).then(function(resp){
             $timeout(function(){
+                salida.datosPOST.accion = 'listarEntrada';
+                $http.post('php/entradas.php', salida.datosPOST).then(function(resp){
+                    salida.fechaEntrada = resp.data.fecha;
+                    salida.datosPOST.accion = null;
+                });
                 $rootScope.$emit('entradaGuardada', [resp.data,salida.datosPOST]);
             }, 1000);
             entradaID = resp.data.id;
@@ -85,7 +99,8 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
             salida.modalInstance = $uibModal.open({
                 templateUrl: 'app/shared/modal.html',
                 controller: 'modalEliminarEntrada',
-                backdrop: 'static'
+                backdrop: 'static',
+                keyboard: false
             });
         }
         $rootScope.$on('eliminarEntrada', function(evento, resp){
@@ -106,19 +121,33 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
     function cancelarEdicion(){
         $location.path('/entradas');
     }
-    
+    // Funciones disponibles para los páneles de categorias/subcategorias y palabras clave
     salida.cat = true;
     obtieneMetada.categorias().then(function(resp){
         salida.categorias = resp;
     });
-    salida.cambiaCat = function(valor) {
-        salida.numSub = null;
+    salida.cambiaCat = function(valor, miSub) {
+        salida.datosPOST.categoria = valor;
+        salida.numSub = miSub;
         obtieneMetada.subcategorias(valor).then(function(resp){
             salida.subcategorias = resp;
         });
+        obtieneMetada.palabrasClave(valor).then(function(resp){
+            // Elimina palabras clave repetidas
+            var respuesta = [];
+            angular.forEach(resp, function(valor, llave){
+                var existente = false;
+                angular.forEach(salida.PC, function(valorPC, llavePC){
+                    if (valor == valorPC) {existente = true;}
+                });
+                if (!existente) {respuesta.push(valor);}
+            });
+            salida.palabrasClave = respuesta;
+        });
     };
-    salida.PC = [];
-    salida.palabrasClave = ["Historia nacional", "Conflicto", "Independencia", "Región"];
+    salida.cambiaSub = function(valor) {
+        salida.datosPOST.subcategoria = valor;
+    };
     salida.nuevaPClave = function(palabra) {
       salida.PC.push(palabra);
       salida.nuevaPC = "";
@@ -130,6 +159,11 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
     salida.eliminaPClave = function(palabra, index) {
       salida.palabrasClave.push(palabra);
       salida.PC.splice(index, 1);
+    };
+    salida.buscaEnter = function(evento) {
+        if (evento.code == "Enter") {
+            salida.nuevaPClave(salida.nuevaPC);
+        }
     };
 }]);
 // Controlador para la ventana modal de Eliminar Entrada
@@ -398,6 +432,7 @@ editarEntradas.controller('modalGuardarEntrada', ['$scope', 'cargaInterfaz', '$u
 }]);
 editarEntradas.service('obtieneMetada', ['$http', function($http){
     var rutaCat = 'php/categorias.php';
+    var rutaPC = 'php/palabrasclave.php';
     var obtieneMetada = {
         categorias: function() {
             var promesa = $http.get(rutaCat).then(function(resp){
@@ -407,6 +442,12 @@ editarEntradas.service('obtieneMetada', ['$http', function($http){
         },
         subcategorias: function(cat) {
             var promesa = $http.get(rutaCat+'?cat='+cat).then(function(resp){
+                return resp.data;
+            });
+            return promesa;
+        },
+        palabrasClave: function(cat) {
+            var promesa = $http.get(rutaPC+'?cat='+cat).then(function(resp){
                 return resp.data;
             });
             return promesa;

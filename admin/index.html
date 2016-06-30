@@ -10,9 +10,6 @@
         <link rel="stylesheet" href="assets/css/eirdAdmin.css" type="text/css" />
         <link rel="stylesheet" href="assets/css/ui-grid.min.css" type="text/css" />
         <link rel="stylesheet" href="assets/css/jasny-bootstrap.min.css" type="text/css" />
-    </head>
-    <body>
-        <ng-view ng-controller="controladorPrincipal as cp"></ng-view>
         <!-- Llamado a dependencias JS -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
@@ -26,6 +23,9 @@
         <script src="assets/js/ui-grid.min.js"></script>
         <script src="assets/js/tinymce/tinymce.min.js"></script>
         <script src="assets/js/ui-tinymce.min.js"></script>
+    </head>
+    <body>
+        <ng-view ng-controller="controladorPrincipal as cp"></ng-view>
         <!-- Componentes de la app raiz -->
         <script src="app/app.module.js"></script>
         <script src="app/app.routes.js"></script>

@@ -1,0 +1,47 @@
+{
+  "Historia": [
+    "Asentamiento aborigen",
+    "Conquista",
+    "Dominio francés",
+    "Independencia Efímera",
+    "Ocupación haitiana",
+    "Independencia",
+    "Restauración",
+    "Ocupación"
+  ],
+  "Geografía": [
+    "Relieve",
+    "Hidrografía",
+    "Problemas medioambientales"
+  ],
+  "Estado": [
+    "Derechos humanos",
+    "Símbolos",
+    "Fuerzas armadas",
+    "Territorio marítimo y espacio aéreo"
+  ],
+  "Demografía": [
+    "Población",
+    "Etnias",
+    "Religión",
+    "Inmigración"
+  ],
+  "Cultura": [
+    "Artes",
+    "Gastronomía",
+    "Música",
+    "Deporte"
+  ],
+  "Economía": [
+    "Moneda",
+    "Exportaciones",
+    "Importaciones",
+    "Turismo"
+  ],
+  "Infraestructuras": [
+    "Carreteras",
+    "Puertos",
+    "Aeropuertos",
+    "Telecomunicaciones"
+  ]
+}

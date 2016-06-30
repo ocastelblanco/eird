@@ -81,10 +81,42 @@
           "estado": "Estado",
           "estados": ["Eliminado", "Publicado", "Sin publicar"]
         },
+        "modalEliminaEntradas": {
+          "titulo1": "Eliminar las entradas seleccionadas",
+          "titulo2": "Eliminando las entradas",
+          "titulo3": "Entradas eliminadas correctamente",
+          "tituloError": "Problemas al eliminar las entradas",
+          "contenido1": {
+            "texto": "¿Quiere eliminar las entradas definitivamente?",
+            "icono": "fa-exclamation-triangle"
+          },
+          "contenido3": {
+            "texto": "Las entradas han sido eliminadas correctamente.",
+            "icono": "fa-check"
+          },
+          "contenidoError": {
+            "texto": "Error al intentar eliminar las entradas. Intente de nuevo.",
+            "icono": "fa-thumbs-down"
+          },
+          "boton01": {
+            "texto": "Eliminar las entradas",
+            "icono": "fa-trash"
+          },
+          "boton02": {
+            "texto": "Volver al listado sin eliminar",
+            "icono": "fa-th"
+          },
+          "botonFinal": {
+            "texto": "Cerrar",
+            "icono": "fa-times"
+          },
+          "botonError": "Cerrar"
+        },
         "permisos": "4"
       },
       "editarEntrada": {
         "titulo": "Editar entrada",
+        "fechaCambio": "Guardado el",
         "botonesAccion": {
           "guardar": {
             "texto": "Guardar entrada",
@@ -111,6 +143,17 @@
             "temporal": {
               "texto": "Primero seleccione una categoría para poder visualizar las subcategorías.",
               "icono": "fa-hand-o-up"
+            }
+          }
+        },
+        "palabrasClave" :{
+          "panel": {
+            "header": {
+              "texto": "Palabras clave"
+            },
+            "footer": {
+              "placeholder": "Nueva palabra clave",
+              "texto": "Palabras clave de la categoria"
             }
           }
         },

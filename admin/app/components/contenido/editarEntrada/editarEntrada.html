@@ -11,6 +11,10 @@
             <textarea ui-tinymce="ee.tinymceOptions" ng-model="ee.textoEntrada"></textarea>
         </div>
         <div class="col-sm-3">
+            <h5>
+                {{cp.textos.contenido.editarEntrada.fechaCambio}}
+                {{ee.fechaEntrada}}
+            </h5>
             <button class="btn btn-block btn-primary" ng-click="ee.guardaCambios()"
                     ng-disabled="(ee.textoEntrada.length < 2) || (ee.tituloEntrada.length < 2) || (!ee.numCat && ee.numCat != 0) || (!ee.numSub && ee.numSub != 0)">
                 <i class="fa fa-fw {{cp.textos.contenido.editarEntrada.botonesAccion.guardar.icono}}"></i>
@@ -34,7 +38,7 @@
                     </uib-accordion-heading>
                     <div class="radio" ng-repeat="categoria in ee.categorias track by $index">
                         <label>
-                            <input type="radio" name="categorias" ng-value="$index" ng-model="ee.numCat" ng-change="ee.cambiaCat(ee.numCat)">
+                            <input type="radio" name="categorias" ng-value="$index" ng-model="ee.numCat" ng-change="ee.cambiaCat(ee.numCat)" ng-checked="ee.numCat">
                             {{categoria}}
                         </label>
                     </div><!-- /.radio -->
@@ -50,15 +54,17 @@
                     </div><!-- /.alert -->
                     <div class="radio" ng-repeat="subcategoria in ee.subcategorias track by $index">
                         <label>
-                            <input type="radio" name="subcategorias" ng-value="$index" ng-model="ee.numSub">
+                            <input type="radio" name="subcategorias" ng-value="$index" ng-model="ee.numSub" ng-change="ee.cambiaSub(ee.numSub)" ng-checked="ee.numSub">
                             {{subcategoria}}
                         </label>
                     </div><!-- /.radio -->
                 </uib-accordion-group>
             </uib-accordion>
-            <div class="panel panel-default">
+            <div class="panel panel-default palabrasClave">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Palabras clave <span class="badge">{{ee.PC.length}}</span></h3>
+                    <h3 class="panel-title">{{cp.textos.contenido.editarEntrada.palabrasClave.panel.header.texto}}
+                        <span class="badge">{{ee.PC.length}}</span>
+                    </h3>
                 </div>
                 <div class="panel-body">
                     <button type="button" class="btn btn-labeled btn-default btn-xs" ng-repeat="palabraClave in ee.PC track by $index" ng-click="ee.eliminaPClave(palabraClave, $index);">
@@ -67,23 +73,27 @@
                             <i class="fa fa-times"></i>
                         </span>
                     </button>
-                </div>
+                </div><!-- /.panel-body -->
                 <div class="panel-footer">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="{{cp.textos.contenido.editarEntrada.palabrasClave.panel.footer.placeholder}}" ng-keypress="ee.buscaEnter($event);" ng-model="ee.nuevaPC">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" ng-click="ee.nuevaPClave(ee.nuevaPC);">
+                                <i class="fa fa-plus fa-lg"></i>
+                            </button>
+                        </span>
+                    </div><!-- /.input-group -->
+                    <h5 ng-show="ee.categorias[ee.numCat]">
+                        {{cp.textos.contenido.editarEntrada.palabrasClave.panel.footer.texto}}
+                        <small>{{ee.categorias[ee.numCat]}}</small>
+                    </h5>
                     <button type="button" class="btn btn-labeled btn-primary btn-xs" ng-repeat="palabraClave in ee.palabrasClave track by $index" ng-click="ee.existentePClave(palabraClave, $index);">
                         <span class="btn-label">
                             <i class="fa fa-check"></i>
                         </span>
                         {{palabraClave}}
                     </button>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Escriba la palabra clave" ng-model="ee.nuevaPC">
-                        <span class="input-group-btn">
-                            <button class="btn btn-success" ng-click="ee.nuevaPClave(ee.nuevaPC);">
-                                <i class="fa fa-plus fa-lg"></i>
-                            </button>
-                        </span>
-                    </div>
-                </div>
+                </div><!-- /.panel-footer -->
             </div><!-- /.panel -->
         </div><!-- /col-sm-3 -->
     </div>

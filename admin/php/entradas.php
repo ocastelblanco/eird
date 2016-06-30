@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/Bogota');
 require_once('medoo.php');
 // Esto permite des-serializar los parámetros POST que vienen en forma JSON
 $params = json_decode(file_get_contents('php://input'),true);
@@ -42,12 +43,25 @@ if (count($params) == 0) {
     }
     if ($params["accion"] == "eliminar") {
         $entradas[$posicion]["estado"] = 0;
-    } else {
+    } elseif ($params["accion"] != "eliminaEntradas") {
         $entradas[$posicion]["titulo"] = $params["titulo"];
+        $entradas[$posicion]["texto"] = $params["texto"];
         $entradas[$posicion]["categoria"] = $params["categoria"];
         $entradas[$posicion]["subcategoria"] = $params["subcategoria"];
-        $entradas[$posicion]["fecha"] = date('Y-m-d');
+        $entradas[$posicion]["palabrasClave"] = $params["palabrasClave"];
+        $entradas[$posicion]["fecha"] = date('Y-m-d h:i:sa');
         $entradas[$posicion]["estado"] = 2;
+    }
+    if ($params["accion"] == "eliminaEntradas") {
+        $salida["accion"] = $params["accion"];
+        $idBorrar = $params["entradas"];
+        $salida["entradas"] = $idBorrar;
+        for ($i = 0; $i < count($entradas); $i++) {
+            for ($e = 0; $e < count($idBorrar); $e++) {
+                if ($idBorrar[$e] == $entradas[$i]["id"])
+                    $entradas[$i]["estado"] = 0;
+                }
+        }
     }
     // Acá se debe reemplazar por una acción de cargar, actualizar o eliminar info a MySQL, a partir de $entradas
     file_put_contents($nombre_fichero, json_encode($entradas, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));

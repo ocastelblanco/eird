@@ -71,10 +71,12 @@ body {
     font-size: 2em;
     height: 2em;
 }
-.panel.categorias>.panel-heading {
-    color: #FFF;
-    background-color: #546E7A;
-    border-color: #213B47;
+.panel.palabrasClave .btn-labeled {
+    margin-right: 2px;
+    margin-bottom: 2px;
+}
+.panel.palabrasClave .input-group {
+    margin-bottom: 2px;
 }
 /* Interfaz de ancho de computador */
 @media (min-width: 768px) {
