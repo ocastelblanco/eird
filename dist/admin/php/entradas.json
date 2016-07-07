@@ -1,0 +1,223 @@
+[
+    {
+        "id": "0001",
+        "titulo": "Independencia Efímera",
+        "categoria": 0,
+        "subcategoria": 1,
+        "fecha": "2016-07-07 05:04:14pm",
+        "estado": 2,
+        "texto": "<p>ui-uploader is a single\/multiple and high customizable file uploader and the most important is very easy to implement.<\/p>\n<ul>\n<li>Upload multiple or single files<\/li>\n<li>Cancel or remove upload when you want.<\/li>\n<li>Allows concurrent Upload<\/li>\n<li>Totally cutomizable<\/li>\n<\/ul>\n<p>You can use with html5, jquery or every library or framework:<\/p>\n<p>The main objective of ui-uploader is to have a user control, clean, simple, customizable, and above all very easy to implement.<\/p>\n<p>Try the <a href=\"http:\/\/realtica.org\/ng-uploader\/demo.html\">demo<\/a>.<\/p>",
+        "palabrasClave": [
+            "Asentamiento aborigen",
+            "Independencia Efímera",
+            "Independencia"
+        ]
+    },
+    {
+        "id": "0002",
+        "titulo": "Ocupación haitiana",
+        "categoria": 0,
+        "subcategoria": 2,
+        "fecha": "2016-06-15",
+        "estado": 2
+    },
+    {
+        "id": "0003",
+        "titulo": "Sierra de Yamasa",
+        "categoria": 1,
+        "subcategoria": 0,
+        "fecha": "2016-06-15",
+        "estado": 1
+    },
+    {
+        "id": "0004",
+        "titulo": "Sierra del Seibo",
+        "categoria": 2,
+        "subcategoria": 2,
+        "fecha": "2016-06-29 07:26:17pm",
+        "estado": 2,
+        "texto": "<p>Cancel icon<\/p>\n<p>By default the filter shows a cancel X beside the dropdown. You can set disableCancelFilterButton: true to suppress this button.<\/p>\n<p>Programmatic setting of filters<\/p>\n<p>You can set filters<\/p>\n<p>In this example we've provided a \"toggle filters\" button to allow you to turn the filter row on and off. To still visually indicate which columns are filtered even when the filters aren't present, we've used the headerCellClass to make any columns with a filter condition have blue text.<\/p>",
+        "palabrasClave": [
+            "Símbolos",
+            "Territorio marítimo y espacio aéreo"
+        ]
+    },
+    {
+        "id": "0005",
+        "titulo": "Sierra",
+        "categoria": 2,
+        "subcategoria": 2,
+        "fecha": "2016-06-15",
+        "estado": 0
+    },
+    {
+        "id": "0006",
+        "titulo": "Sierra Madre",
+        "categoria": 2,
+        "subcategoria": 1,
+        "fecha": "2016-06-16",
+        "estado": 1
+    },
+    {
+        "id": "0007",
+        "titulo": "Sierra Especial",
+        "categoria": 2,
+        "subcategoria": 1,
+        "fecha": "2016-06-17",
+        "estado": 2
+    },
+    {
+        "id": "0008",
+        "titulo": "Sierra Única",
+        "categoria": 1,
+        "subcategoria": 1,
+        "fecha": "2016-06-25",
+        "estado": 1
+    },
+    {
+        "id": "0009",
+        "titulo": "Sierra Solitaria",
+        "categoria": 1,
+        "subcategoria": 1,
+        "fecha": "2016-06-25",
+        "estado": 2
+    },
+    {
+        "id": "0010",
+        "titulo": "Sierra Augusta",
+        "categoria": 2,
+        "subcategoria": 1,
+        "fecha": "2016-06-25",
+        "estado": 1
+    },
+    {
+        "id": "0011",
+        "titulo": "Guerra de la Restauración",
+        "categoria": 0,
+        "subcategoria": 2,
+        "fecha": "2016-06-24",
+        "estado": 2
+    },
+    {
+        "id": "0012",
+        "titulo": "Nueva entrada",
+        "categoria": 1,
+        "subcategoria": 1,
+        "fecha": "2016-06-24",
+        "estado": 2
+    },
+    {
+        "id": "0013",
+        "titulo": "Entrada nueva",
+        "categoria": 3,
+        "subcategoria": 1,
+        "fecha": "2016-06-24",
+        "estado": 2
+    },
+    {
+        "id": "0014",
+        "titulo": "Entrada 14",
+        "categoria": 2,
+        "subcategoria": 1,
+        "fecha": "2016-06-29 06:21:59pm",
+        "estado": 2,
+        "texto": "<p><strong>Nota<\/strong>:<\/p>\n<p>Ya que esta función sólo acepta marcas de tiempo de tipo <a href=\"http:\/\/php.net\/manual\/es\/language.types.integer.php\">integer<\/a> el carácter de formato u sólo es útil cuando se usa la función <a href=\"http:\/\/php.net\/manual\/es\/function.date-format.php\">date_format()<\/a> con marcas de tiempo basadas en usuario creadas con<a href=\"http:\/\/php.net\/manual\/es\/function.date-create.php\">date_create()<\/a>.<\/p>",
+        "palabrasClave": [
+            "Derechos humanos",
+            "Símbolos",
+            "PHP"
+        ]
+    },
+    {
+        "id": "0015",
+        "titulo": "Entrada 15",
+        "categoria": 4,
+        "subcategoria": 1,
+        "fecha": "2016-06-24",
+        "estado": 2
+    },
+    {
+        "id": "0016",
+        "titulo": "La guerra y la paz",
+        "categoria": 0,
+        "subcategoria": 2,
+        "fecha": "2016-06-29 07:08:54pm",
+        "estado": 2,
+        "texto": "<p><strong>Guerra y paz<\/strong> (en <a href=\"https:\/\/es.wikipedia.org\/wiki\/Idioma_ruso\">ruso<\/a> Война и мир, Voyná i mir), también conocida como <strong>La guerra y la paz<\/strong>, es una novela del escritor ruso <a href=\"https:\/\/es.wikipedia.org\/wiki\/Le%C3%B3n_Tolst%C3%B3i\">León Tolstói<\/a> (<a href=\"https:\/\/es.wikipedia.org\/wiki\/1828\">1828<\/a>–<a href=\"https:\/\/es.wikipedia.org\/wiki\/1910\">1910<\/a>) que comenzó a escribir en una época de convalecencia tras romperse el brazo por caer del caballo en una partida de caza en <a href=\"https:\/\/es.wikipedia.org\/wiki\/1864\">1864<\/a>. Primero se publicó como fascículos de revista (<a href=\"https:\/\/es.wikipedia.org\/wiki\/1865\">1865<\/a>–<a href=\"https:\/\/es.wikipedia.org\/wiki\/1869\">1869<\/a>). Guerra y Paz es considerada como la obra cumbre del autor junto con su otro trabajo posterior, <a href=\"https:\/\/es.wikipedia.org\/wiki\/Ana_Karenina\">Anna Karénina<\/a> (<a href=\"https:\/\/es.wikipedia.org\/wiki\/1873\">1873<\/a>–<a href=\"https:\/\/es.wikipedia.org\/wiki\/1877\">1877<\/a>).<\/p>",
+        "palabrasClave": [
+            "Conquista",
+            "Restauración",
+            "Dominio francés",
+            "Rusos"
+        ]
+    },
+    {
+        "id": "0017",
+        "titulo": "Otra orden",
+        "categoria": 1,
+        "subcategoria": 1,
+        "fecha": "2016-06-24",
+        "estado": 1
+    },
+    {
+        "id": "0018",
+        "titulo": "Otra entrada",
+        "categoria": 4,
+        "subcategoria": 1,
+        "fecha": "2016-06-24",
+        "estado": 0
+    },
+    {
+        "id": "0019",
+        "titulo": "Entrada 19",
+        "categoria": 4,
+        "subcategoria": 2,
+        "fecha": "2016-06-24",
+        "estado": 1
+    },
+    {
+        "id": "0020",
+        "titulo": "Entrada fantasma",
+        "categoria": 3,
+        "subcategoria": 1,
+        "fecha": "2016-06-25",
+        "estado": 0
+    },
+    {
+        "id": "0021",
+        "titulo": "Lucha fraticida",
+        "texto": "<p>Second and slightly more complex is to use shell_exec (<a href=\"http:\/\/us2.php.net\/manual\/en\/function.shell-exec.php\">docs<\/a>). With shell_exec, you will call the php binary and pass the desired script as the argument. Your code would look like this:<\/p>",
+        "categoria": 1,
+        "subcategoria": 1,
+        "palabrasClave": [
+            "Problemas medioambientales",
+            "Hidrografía",
+            "Programación"
+        ],
+        "fecha": "2016-06-29",
+        "estado": 2
+    },
+    {
+        "id": "0022",
+        "titulo": "Código",
+        "texto": "<p>Finally, and most complex, you could use the CURL library to call the file as though it were requested via a browser. Check out the CURL library documentation here:<a href=\"http:\/\/us2.php.net\/manual\/en\/ref.curl.php\">http:\/\/us2.php.net\/manual\/en\/ref.curl.php<\/a><\/p>",
+        "categoria": 4,
+        "subcategoria": 2,
+        "palabrasClave": [
+            "Artes",
+            "Deporte",
+            "Ingeniería de Sistemas"
+        ],
+        "fecha": "2016-06-29",
+        "estado": 2
+    },
+    {
+        "id": "0023"
+    },
+    {
+        "id": "0024"
+    },
+    {
+        "id": "0025"
+    }
+]

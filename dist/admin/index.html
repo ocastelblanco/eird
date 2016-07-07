@@ -1,0 +1,40 @@
+<!doctype html>
+<html ng-app="eirdAdmin">
+    <head>
+        <title>Administración EIRP</title>
+        <meta charset="utf-8">
+        <base href="/dist/admin/">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="../assets/css/font-awesome.min.css" type="text/css" />
+        <link rel="stylesheet" href="../assets/css/jasny-bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="../assets/css/eirdAdmin.css" type="text/css" />
+        <link rel="stylesheet" href="../assets/css/ui-grid.min.css" type="text/css" />
+        <!-- Llamado a dependencias JS -->
+        <script src="../assets/js/angular.min.js"></script>
+        <script src="../assets/js/angular-route.min.js"></script>
+        <script src="../assets/js/angular-sanitize.min.js"></script>
+        <script src="../assets/js/angular-touch.min.js"></script>
+        <script src="../assets/js/ui-bootstrap-tpls.js"></script>
+        <script src="../assets/js/ui-grid.min.js"></script>
+        <script src="../assets/js/tinymce/tinymce.min.js"></script>
+        <script src="../assets/js/ui-tinymce.min.js"></script>
+        <!-- script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-touch.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-resource.min.js"></script -->
+    </head>
+    <body>
+        <ng-view ng-controller="controladorPrincipal as cp"></ng-view>
+        <!-- Componentes de la app raiz -->
+        <script src="app/app.module.js"></script>
+        <script src="app/app.routes.js"></script>
+        <!-- Componentes modulares -->
+        <script src="app/components/inicio/inicio.module.js"></script>
+        <script src="app/components/contenido/contenido.module.js"></script>
+        <script src="app/components/header/header.module.js"></script>
+        <script src="app/components/contenido/entradas/entradas.module.js"></script>
+        <script src="app/components/contenido/editarEntrada/editarEntrada.module.js"></script>
+    </body>
+</html>

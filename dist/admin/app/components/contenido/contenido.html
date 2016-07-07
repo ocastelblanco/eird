@@ -1,0 +1,14 @@
+<div ng-controller="controladorContenido as cc">
+  <ng-include src="cc.header"></ng-include>
+  <div class="content-fluid contenidoCentral">
+    <div class="row">
+        <div class="col-sm-3 col-md-2">
+             <div ng-include="cc.nav" class="menuLateral" ng-controller="menuLateral as ml"></div>
+        </div>
+        <div class="col-sm-9 col-md-10">
+            <div ng-include="cc.central" class="contenidoDerecho"></div>
+        </div>
+    </div>
+  </div>
+  <ng-include class="navbar-fixed-bottom"src="cc.footer"></ng-include>
+</div> <!-- Controlador - contenedor -->

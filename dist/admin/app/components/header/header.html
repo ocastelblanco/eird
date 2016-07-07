@@ -1,0 +1,52 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="creaEncabezado as ce">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a ng-if="ce.haySesion" class="btn btn-navbar navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+                <span class="sr-only">Navegación colapsada</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="navbar-brand" href="#inicio">
+                {{cp.textos.titulos.corto}}
+            </a>
+        </div><!-- /navbar-header -->
+        <div ng-if="ce.haySesion" collapse="navCollapsed" class="nav-collapse navbar-collapse collapse navbar-responsive-collapse">
+            <ul class="nav navbar-nav navbar-left">
+                <li ng-if="cc.permisos >= cp.textos.barra.dashboard.permisos" ng-class="ce.esActivo('dashboard', 1)">
+                    <a href="#dashboard">
+                        <i class="fa {{cp.textos.barra.dashboard.icono}}" aria-hidden="true"></i>
+                        {{cp.textos.barra.dashboard.texto}}
+                    </a>
+                </li>
+                <li ng-if="cc.permisos >= cp.textos.barra.contenido.permisos" ng-class="ce.esActivo('contenido', 1)">
+                    <a href="#contenido">
+                        <i class="fa {{cp.textos.barra.contenido.icono}}" aria-hidden="true"></i>
+                        {{cp.textos.barra.contenido.texto}}
+                    </a>
+                </li>
+                <li ng-if="cc.permisos >= cp.textos.barra.codigos.permisos" ng-class="ce.esActivo('codigos', 1)">
+                    <a href="#codigos">
+                        <i class="fa {{cp.textos.barra.codigos.icono}}" aria-hidden="true"></i>
+                        {{cp.textos.barra.codigos.texto}}
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li uib-dropdown is-open="status.isopen" ng-controller="datosSesion as ds">
+                    <a id="single-button" uib-dropdown-toggle ng-disabled="disabled">
+                        {{ds.nombre}} <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                        <li role="menuitem">
+                            <a href="#salir" ng-click="ce.cierraSesion()">
+                                <i class="fa {{cp.textos.barra.salir.icono}}" aria-hidden="true"></i>
+                                {{cp.textos.barra.salir.texto}}
+                            </a>
+                        </li>
+                    </ul>
+                </li><!-- Dropdown menú -->  
+            </ul>
+        </div><!-- /navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>

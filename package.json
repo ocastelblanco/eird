@@ -1,0 +1,43 @@
+{
+  "name": "eird",
+  "version": "0.0.1",
+  "description": "Enciclopedia Ilustrada de la República Dominicana",
+  "main": "gruntfile.js",
+  "dependencies": {
+    "angular": "^1.5.7",
+    "angular-route": "^1.5.7",
+    "angular-sanitize": "^1.5.7",
+    "angular-touch": "^1.5.7",
+    "angular-ui-bootstrap": "^1.3.3",
+    "angular-ui-grid": "^3.2.5",
+    "angular-ui-tinymce": "0.0.16",
+    "font-awesome": "^4.6.3",
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "tinymce": "^4.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ocastelblanco/eird"
+  },
+  "keywords": [
+    "enciclopedia",
+    "República Dominicana",
+    "Enciclopedia Ilustrada"
+  ],
+  "author": "Oliver Castelblanco",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ocastelblanco/eird/issues"
+  },
+  "homepage": "https://github.com/ocastelblanco/eird#readme"
+}

@@ -1,0 +1,9 @@
+<h2>{{cp.textos.barra[ml.seccion].menu.titulo.texto}}</h2>
+<ul class="menuPrincipal">
+    <li ng-repeat="item in ml.items" ng-if="cc.permisos >= item.permisos" ng-class="ml.esActivo(item.destino)">
+        <a href="#{{ml.seccion+'/'+item.destino}}">
+            <i class="fa {{item.icono}} fa-fw" aria-hidden="true"></i>
+            <span>{{item.texto}}</span>
+        </a>
+    </li>
+</ul>
