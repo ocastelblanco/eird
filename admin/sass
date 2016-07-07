@@ -1,2 +1,0 @@
-cd ~/workspace/
-sass --watch ~/workspace/admin/scss/_bootstrap.scss:admin/assets/css/bootstrap.css --style compressed
