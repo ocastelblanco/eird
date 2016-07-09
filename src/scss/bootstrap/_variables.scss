@@ -760,6 +760,14 @@ $thumbnail-caption-color:     $text-color !default;
 //** Padding around the thumbnail caption
 $thumbnail-caption-padding:   9px !default;
 
+//** Valores de los iconos sobreimpresos en las imágenes thumb
+$eirdadmin-thumbnail-height: 240px;
+$eirdadmin-thumbnail-iconover-top: 0.5em;
+$eirdadmin-thumbnail-iconover-left: 1.75em;
+$eirdadmin-thumbnail-iconover-color: rgba(255, 255, 255, 0.8);
+$eirdadmin-thumbnail-iconover-text-shadow: #000 1px 1px 2px;
+$eirdadmin-thumbnail-img-height: 10em;
+$eirdadmin-thumbnail-caption-height: 1.25em;
 
 //== Wells
 //

@@ -62,6 +62,7 @@ module.exports = function(grunt) {
                             'node_modules/angular-sanitize/angular-sanitize.min.js',
                             'node_modules/angular-touch/angular-touch.min.js',
                             'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
+                            'node_modules/ng-file-upload/dist/ng-file-upload.min.js',
                             'node_modules/angular-ui-grid/ui-grid.min.js'
                         ],
                         dest: 'dist/assets/js/',
@@ -129,5 +130,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     
     grunt.registerTask('default', ['sass', 'copy', 'watch']);
+    grunt.registerTask('actualizar', ['sass', 'copy']);
     grunt.registerTask('producir', ['jshint', 'concat', 'uglify', 'sass', 'copy']);
 };

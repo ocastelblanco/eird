@@ -7,6 +7,7 @@ var eirdAdmin = angular.module('eirdAdmin', [
     'ui.grid.selection',
     'ui.grid.pagination',
     'ui.tinymce',
+    'ngFileUpload',
     'ngRoute',
     'ngTouch',
     'inicio',

@@ -1,10 +1,33 @@
 /* global angular idioma */
 var entradaID;
 var editarEntradas = angular.module('editarEntradas', ['ngSanitize']);
-editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$rootScope','$timeout','$route','obtieneMetada',function($uibModal, $location, $http, $rootScope, $timeout, $route, obtieneMetada){
+editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$rootScope','$timeout','$route','obtieneMetada','Upload', function($uibModal,$location,$http,$rootScope,$timeout,$route,obtieneMetada,Upload){
     var salida = this;
     salida.datosPOST = {};
     salida.PC = [];
+    salida.medios = [{
+        'ruta': 'http://winteriscoming.net/wp-content/uploads/2016/03/Daenerys-Targaryen-crop-630x371.jpg',
+        'pie': 'Daenerys Targaryen',
+        'tipo': 0
+    }, {
+        'ruta': 'https://archive.org/download/Free_20s_Jazz_Collection/2to2.mp3',
+        'pie': '2to2: 78 RPMs and Cylinder Recordings',
+        'tipo': 1,
+        'thumb': 'https://ia802609.us.archive.org/9/items/Free_20s_Jazz_Collection/otpump.jpg'
+    }, {
+        'ruta': 'https://archive.org/download/HSF-mov-moon/moon_512kb.mp4',
+        'pie': 'Luna vista desde la tierra en una misión del Apollo 11 o cualquier otro cohete o aparato',
+        'tipo': 2,
+        'thumb': 'https://archive.org/services/img/HSF-mov-moon'
+    },{
+        'ruta': 'https://pbs.twimg.com/profile_images/458643675250446336/TSGxBFjj.jpeg',
+        'pie': 'Margaery Tyrell',
+        'tipo': 0
+    },{
+        'ruta': 'http://cdn.thedailybeast.com/content/dailybeast/articles/2014/06/23/game-of-thrones-star-maisie-williams-on-arya-stark-s-s4-journey-and-her-crush-on-andrew-garfield/jcr:content/image.img.2000.jpg/1403516733247.cached.jpg',
+        'pie': 'Arya Stark',
+        'tipo': 0
+    }];
     // Cargar información cuando ya existe un ID (se editó la entrada)
     var location = $location.search();
     if (location.id) {
@@ -19,6 +42,7 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
             salida.cambiaCat(salida.numCat, resp.data.subcategoria);
             salida.cambiaSub(resp.data.subcategoria);
             salida.PC = resp.data.palabrasClave?resp.data.palabrasClave:[];
+            salida.medios = resp.data.medios?resp.data.medios:[];
         });
     }
     salida.tinymceOptions = {
@@ -164,6 +188,38 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
         if (evento.code == "Enter") {
             salida.nuevaPClave(salida.nuevaPC);
         }
+    };
+    // Funciones y variables disponibles para la carga de elementos multimedia
+    salida.abreThumb = function(medio) {
+        var head = '<div class="modal-header"><button type="button" class="close" aria-label="Close"><span aria-hidden="true" ng-click="cancel()">&times;</span></button></div>';
+        var body = '<div class="modal-body">';
+        var footer = '</div><div class="modal-footer"><p>';
+        var cuerpoMedio;
+        if (medio.tipo == 0) {
+            cuerpoMedio = '<img src="'+medio.ruta+'">';
+        } else if (medio.tipo == 1) {
+            cuerpoMedio = '<audio src="'+medio.ruta+'" controls></audio>';
+        } else if (medio.tipo == 2) {
+            cuerpoMedio = '<video src="'+medio.ruta+'" poster="'+medio.thumb+'" controls></video>';
+        }
+        var templateMedio = head+body+cuerpoMedio+footer+medio.pie+'</p></div>';
+        salida.modalInstance = $uibModal.open({
+            template: templateMedio,
+            size: 'lg',
+            windowClass: 'modal-medios',
+            controller: 'verMedio'
+        });
+    };
+    salida.rutaThumb = function(medio) {
+        return (medio.tipo)?medio.thumb:medio.ruta;
+    };
+    
+}]);
+// Controlador para la ventana modal de Ver medio
+editarEntradas.controller('verMedio', ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+    $scope.cancel = function () {
+        console.log('Cerrando imagen');
+        $uibModalInstance.dismiss('cancel');
     };
 }]);
 // Controlador para la ventana modal de Eliminar Entrada

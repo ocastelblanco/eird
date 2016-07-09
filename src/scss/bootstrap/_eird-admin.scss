@@ -1,0 +1,64 @@
+//
+// Interfaz de administración EIRD
+// --------------------------------------------------
+
+
+// -- Editar entradas
+//  \-- Panel de Elementos multimedia
+//    \-- Tarjetas de medios
+.panel-medios {
+    .thumbnail {
+        height: $eirdadmin-thumbnail-height;
+        .imagen-thumb {
+            overflow-y: hidden;
+            height: $eirdadmin-thumbnail-img-height;
+            cursor: pointer;
+            img, audio, video {
+                @include img-responsive;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .icon-over {
+                position: absolute;
+                top: $eirdadmin-thumbnail-iconover-top;
+                left: $eirdadmin-thumbnail-iconover-left;
+                color: $eirdadmin-thumbnail-iconover-color;
+                text-shadow: $eirdadmin-thumbnail-iconover-text-shadow;
+            }
+        }
+        .caption {
+            h5 {
+                height: $eirdadmin-thumbnail-caption-height;
+                overflow-y: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+        &.uploader {
+            background-color: gray;
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            i {
+                font-size: 5em;
+                padding-top: 0.75em;
+            }
+            p {
+                font-size: 1.5em;
+                padding-top: 1em;
+            }
+        }
+    }
+}
+// -- Modal de ampliación de medios
+.modal-medios {
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100%;
+    }
+    .modal-footer {
+        text-align: left;
+    }
+}

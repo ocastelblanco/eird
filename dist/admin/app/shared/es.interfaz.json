@@ -153,8 +153,23 @@
             },
             "footer": {
               "placeholder": "Nueva palabra clave",
-              "texto": "Palabras clave de la categoria"
+              "texto": "Disponibles en"
             }
+          }
+        },
+        "elementosMultimedia": {
+          "titulo": "Elementos multimedia",
+          "tipos": ["fa-picture-o", "fa-volume-up", "fa-video-camera"],
+          "cambiar": {
+            "texto": "Cambiar",
+            "icono": "fa-retweet"
+          },
+          "eliminar": {
+            "texto": "Eliminar",
+            "icono": "fa-trash"
+          },
+          "subirMedio": {
+            "texto": "Cargar medios"
           }
         },
         "modalCancelarEdicion": {
