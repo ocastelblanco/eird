@@ -1,12 +1,12 @@
 /* global angular idioma */
 var entradaID;
 var editarEntradas = angular.module('editarEntradas', ['ngSanitize']);
-editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$rootScope','$timeout','$route','obtieneMetada','Upload', function($uibModal,$location,$http,$rootScope,$timeout,$route,obtieneMetada,Upload){
+editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$rootScope','$timeout','$route','obtieneMetada', function($uibModal,$location,$http,$rootScope,$timeout,$route,obtieneMetada){
     var salida = this;
     salida.datosPOST = {};
     salida.PC = [];
     salida.medios = [{
-        'ruta': 'http://winteriscoming.net/wp-content/uploads/2016/03/Daenerys-Targaryen-crop-630x371.jpg',
+        'ruta': 'https://winteriscoming.net/wp-content/uploads/2016/03/Daenerys-Targaryen-crop-630x371.jpg',
         'pie': 'Daenerys Targaryen',
         'tipo': 0
     }, {
@@ -22,10 +22,6 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
     },{
         'ruta': 'https://pbs.twimg.com/profile_images/458643675250446336/TSGxBFjj.jpeg',
         'pie': 'Margaery Tyrell',
-        'tipo': 0
-    },{
-        'ruta': 'http://cdn.thedailybeast.com/content/dailybeast/articles/2014/06/23/game-of-thrones-star-maisie-williams-on-arya-stark-s-s4-journey-and-her-crush-on-andrew-garfield/jcr:content/image.img.2000.jpg/1403516733247.cached.jpg',
-        'pie': 'Arya Stark',
         'tipo': 0
     }];
     // Cargar información cuando ya existe un ID (se editó la entrada)
@@ -207,16 +203,60 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
             template: templateMedio,
             size: 'lg',
             windowClass: 'modal-medios',
-            controller: 'verMedio'
+            controller: 'modalVerMedio'
         });
     };
     salida.rutaThumb = function(medio) {
         return (medio.tipo)?medio.thumb:medio.ruta;
     };
-    
+    salida.abrirCarga = function(){
+        salida.modalInstance = $uibModal.open({
+            templateUrl: 'app/shared/modal.html',
+            controller: 'modalCargarMedios',
+            size: 'lg',
+            windowClass: 'modal-cargamedios'
+        });
+    };
+}]);
+// Controlador para la ventana modal de cargar medios
+editarEntradas.controller('modalCargarMedios', ['$scope', 'cargaInterfaz', '$uibModalInstance', '$rootScope','Upload',
+                                        function($scope, cargaInterfaz, $uibModalInstance, $rootScope, Upload){
+    cargaInterfaz.textos().then(function(resp){
+        var textos = resp.contenido.editarEntrada.modalCargarMedios;
+        var tarjetaUp = '<div ngf-drop ngf-select ng-model="files" class="col-sm-6 col-md-4 tarjetaUp" ngf-drag-over-class="\'dragover\'" ngf-multiple="true" ngf-allow-dir="true" accept="image/*,application/pdf" ngf-pattern="\'image/*,application/pdf\'">'+textos.instrucciones+'</div>';
+        var tarjeta = '<div class="col-sm-6 col-md-4 tarjeta"><img src="https://placehold.it/110x110"></div>';
+        $scope.titulo = textos.titulo;
+        $scope.cuerpo = {
+            'progreso': {'invisible': true},
+            'contenido': '<div class="row">'+tarjetaUp+tarjeta+'</div>'
+        };
+        $scope.footer = {
+            'boton01': {
+                'invisible': false,
+                'texto': textos.boton01.texto,
+                'estilo': 'btn-primary',
+                'icono': {
+                    'invisible': false,
+                    'estilo': textos.boton01.icono
+                }
+            },
+            'boton02': {
+                'invisible': false,
+                'texto': textos.boton02.texto,
+                'estilo': 'btn-danger',
+                'icono': {
+                    'invisible': false,
+                    'estilo': textos.boton02.icono
+                }
+            },
+            'boton03': {
+                'invisible': true
+            }
+        };
+    });
 }]);
 // Controlador para la ventana modal de Ver medio
-editarEntradas.controller('verMedio', ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+editarEntradas.controller('modalVerMedio', ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
     $scope.cancel = function () {
         console.log('Cerrando imagen');
         $uibModalInstance.dismiss('cancel');

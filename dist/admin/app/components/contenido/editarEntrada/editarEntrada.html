@@ -19,7 +19,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-6 col-md-4">
-                            <div class="uploader thumbnail">
+                            <div class="uploader thumbnail" ng-click="ee.abrirCarga();">
                                 <i class="fa fa-upload"></i>
                                 <p>{{cp.textos.contenido.editarEntrada.elementosMultimedia.subirMedio.texto}}</p>
                             </div>
@@ -39,14 +39,14 @@
                                     <h5>{{medio.pie}}</h5>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <a href="#" class="btn btn-primary" role="button">
+                                            <a href="#" class="btn btn-primary btn-block" role="button">
                                                 <i class="fa fa-
                                                 {{cp.textos.contenido.editarEntrada.elementosMultimedia.cambiar.icono}}"></i>
                                                 {{cp.textos.contenido.editarEntrada.elementosMultimedia.cambiar.texto}}
                                             </a>
                                         </div>
                                         <div class="col-md-6">
-                                            <a href="#" class="btn btn-danger" role="button">
+                                            <a href="#" class="btn btn-danger btn-block" role="button">
                                                 <i class="fa fa-
                                                 {{cp.textos.contenido.editarEntrada.elementosMultimedia.eliminar.icono}}"></i>
                                                 {{cp.textos.contenido.editarEntrada.elementosMultimedia.eliminar.texto}}

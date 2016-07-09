@@ -172,6 +172,22 @@
             "texto": "Cargar medios"
           }
         },
+        "modalCargarMedios": {
+          "titulo": "Cargar imágenes, audios o videos a la entrada",
+          "instrucciones": "Arrastre y suelte o haga clic para cargar",
+          "boton01": {
+            "texto": "Cargar todo",
+            "icono": "fa-upload"
+          },
+          "boton02": {
+            "texto": "Cancelar todo",
+            "icono": "fa-ban"
+          },
+          "botonTarjeta": {
+            "texto": "Cancelar",
+            "icono": "fa-ban"
+          }
+        },
         "modalCancelarEdicion": {
           "titulo": "¿Desea cancelar la edición?",
           "cuerpo": "Al cancelar la edición de esta entrada se perderá toda la información que no haya guardado.",
