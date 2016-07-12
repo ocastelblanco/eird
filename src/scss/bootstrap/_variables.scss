@@ -769,6 +769,16 @@ $eirdadmin-thumbnail-iconover-text-shadow: #000 1px 1px 2px;
 $eirdadmin-thumbnail-img-height: 10em;
 $eirdadmin-thumbnail-caption-height: 1.25em;
 
+//** Valores de los elementos de carga de imágenes
+$eirdadmin-uploader-bgcolor: rgb(84,110,122);
+$eirdadmin-uploader-color: #FFF;
+$eirdadmin-uploader-icono-font-size: 5em;
+$eirdadmin-uploader-icono-padding-top: $eirdadmin-uploader-icono-font-size * 0.15;
+$eirdadmin-uploader-p-font-size: $eirdadmin-uploader-icono-padding-top * 2;
+$eirdadmin-uploader-p-padding-top: $eirdadmin-uploader-icono-font-size / 5;
+$eirdadmin-uploader-modal-height: 110px;
+$eirdadmin-uploader-modal-bordercolor: #B0BEC5;
+
 //== Wells
 //
 //##

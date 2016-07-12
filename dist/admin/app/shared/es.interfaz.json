@@ -175,6 +175,8 @@
         "modalCargarMedios": {
           "titulo": "Cargar imágenes, audios o videos a la entrada",
           "instrucciones": "Arrastre y suelte o haga clic para cargar",
+          "miniInstrucciones": "Cargar",
+          "noCompatible": "Su navegador no es compatible con esta función",
           "boton01": {
             "texto": "Cargar todo",
             "icono": "fa-upload"

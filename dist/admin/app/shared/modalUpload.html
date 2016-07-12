@@ -1,0 +1,39 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{titulo}}</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div ngf-drop ngf-select ng-model="archivos" class="col-md-2 col-sm-4 tarjetaUp" 
+            ngf-drag-over-class="'tarjetaUpOver'" ngf-multiple="true" ngf-allow-dir="true"
+            accept="image/jpeg,video/*,audio/mp3" ngf-pattern="'image/jpeg,video/*,audio/mp3'"
+            ng-show="tarjetaUpVisible">
+            <i class="fa fa-cloud-upload"></i>
+            <p>{{cuerpo.miniInstrucciones}}</p>
+            <p>{{cuerpo.instrucciones}}</p>
+        </div>
+        <div ngf-no-file-drop>{{cuerpo.noCompatible}}</div>
+        <div class="col-sm-2 col-md-4 tarjeta" ng-repeat="a in archivos track by $index">
+            <img ngf-thumbnail="a" ngf-size="{width: 110, height: 110}" ng-if="a.type == 'image/jpeg'">
+            <div class="audio" ng-if="a.type == 'audio/mp3'">
+                <audio controls ngf-src="a"></audio>
+                <button class="btn btn-primary">Subir thumbnail</button>
+            </div>
+            <div class="video" ng-if="a.type == 'video/mp4'">
+                <video controls ngf-src="a"></video>
+                <button class="btn btn-primary">Subir thumbnail</button>
+            </div>
+            <p>{{a.name}} :: {{a.type}}</p>
+        </div>
+    </div>
+    <uib-progressbar class="ng-hide progress-striped active" ng-hide="cuerpo.progreso.invisible" value="cuerpo.progreso.valor"></uib-progressbar>
+</div>
+<div class="modal-footer">
+    <button class="ng-hide btn {{footer.boton01.estilo}}" ng-hide="footer.boton01.invisible" type="button" ng-click="boton01()">
+        <i ng-hide="footer.boton01.icono.invisible" class="fa {{footer.boton01.icono.estilo}}"></i>
+        {{footer.boton01.texto}}
+    </button>
+    <button class="ng-hide btn {{footer.boton02.estilo}}" ng-hide="footer.boton02.invisible" type="button" ng-click="boton02()">
+        <i ng-hide="footer.boton02.icono.invisible" class="fa {{footer.boton02.icono.estilo}}"></i>
+        {{footer.boton02.texto}}
+    </button>
+</div>

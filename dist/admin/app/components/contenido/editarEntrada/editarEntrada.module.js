@@ -211,7 +211,7 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
     };
     salida.abrirCarga = function(){
         salida.modalInstance = $uibModal.open({
-            templateUrl: 'app/shared/modal.html',
+            templateUrl: 'app/shared/modalUpload.html',
             controller: 'modalCargarMedios',
             size: 'lg',
             windowClass: 'modal-cargamedios'
@@ -219,16 +219,15 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
     };
 }]);
 // Controlador para la ventana modal de cargar medios
-editarEntradas.controller('modalCargarMedios', ['$scope', 'cargaInterfaz', '$uibModalInstance', '$rootScope','Upload',
-                                        function($scope, cargaInterfaz, $uibModalInstance, $rootScope, Upload){
+editarEntradas.controller('modalCargarMedios', ['$scope', 'cargaInterfaz', '$uibModalInstance', '$rootScope','Upload', '$timeout', function($scope, cargaInterfaz, $uibModalInstance, $rootScope, Upload, $timeout){
     cargaInterfaz.textos().then(function(resp){
         var textos = resp.contenido.editarEntrada.modalCargarMedios;
-        var tarjetaUp = '<div ngf-drop ngf-select ng-model="files" class="col-sm-6 col-md-4 tarjetaUp" ngf-drag-over-class="\'dragover\'" ngf-multiple="true" ngf-allow-dir="true" accept="image/*,application/pdf" ngf-pattern="\'image/*,application/pdf\'">'+textos.instrucciones+'</div>';
-        var tarjeta = '<div class="col-sm-6 col-md-4 tarjeta"><img src="https://placehold.it/110x110"></div>';
         $scope.titulo = textos.titulo;
         $scope.cuerpo = {
             'progreso': {'invisible': true},
-            'contenido': '<div class="row">'+tarjetaUp+tarjeta+'</div>'
+            'instrucciones': textos.instrucciones,
+            'noCompatible': textos.noCompatible,
+            'miniInstrucciones': textos.miniInstrucciones
         };
         $scope.footer = {
             'boton01': {
@@ -248,9 +247,30 @@ editarEntradas.controller('modalCargarMedios', ['$scope', 'cargaInterfaz', '$uib
                     'invisible': false,
                     'estilo': textos.boton02.icono
                 }
-            },
-            'boton03': {
-                'invisible': true
+            }
+        };
+        
+        $scope.$watch('archivos', function() {
+            $scope.upload($scope.archivos);
+        });
+        $scope.tarjetaUpVisible = true;
+        $scope.upload = function (archivos) {
+            if (archivos && archivos.length) {
+                for (var i = 0; i < archivos.length; i++) {
+                    var archivo = archivos[i];
+                    $scope.tarjetaUpVisible = false;
+                    Upload.upload({
+                        url: 'php/cargaMedios.php',
+                        data: {file: archivo}
+                    }).then(function (resp) {
+                        console.log('Success ' + resp.config.data.file.name + ' uploaded. Response: ' + resp.data);
+                    }, function (resp) {
+                        console.log('Error status: ' + resp.status);
+                    }, function (evt) {
+                        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                        console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+                    });
+                }
             }
         };
     });

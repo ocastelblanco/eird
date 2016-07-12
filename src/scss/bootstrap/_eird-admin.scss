@@ -35,17 +35,17 @@
             }
         }
         &.uploader {
-            background-color: gray;
-            color: white;
+            background-color: $eirdadmin-uploader-bgcolor;
+            color: $eirdadmin-uploader-color;
             text-align: center;
             cursor: pointer;
             i {
-                font-size: 5em;
-                padding-top: 0.75em;
+                font-size: $eirdadmin-uploader-icono-font-size;
+                padding-top: $eirdadmin-uploader-icono-padding-top;
             }
             p {
-                font-size: 1.5em;
-                padding-top: 1em;
+                font-size: $eirdadmin-uploader-p-font-size;
+                padding-top: $eirdadmin-uploader-p-padding-top;
             }
         }
     }
@@ -60,5 +60,40 @@
     }
     .modal-footer {
         text-align: left;
+    }
+}
+// -- Modal de carga de medios
+.modal-cargamedios {
+    .row {
+        margin: 0;
+        .tarjetaUp {
+            background-color: $eirdadmin-uploader-bgcolor;
+            height: $eirdadmin-uploader-modal-height;
+            color: $eirdadmin-uploader-color;
+            text-align: center;
+            cursor: pointer;
+            padding: 2.5%;
+            cursor: pointer;
+            border: solid 2px $eirdadmin-uploader-modal-bordercolor;
+            border-radius: $eirdadmin-uploader-p-padding-top / 2;
+            i, p:first-of-type {
+                display: none;
+            }
+        }
+        .tarjetaUpOver {
+            background-color: lighten($eirdadmin-uploader-bgcolor, 20%);
+            border: solid 2px darken($eirdadmin-uploader-modal-bordercolor, 40%);
+            padding: 1.5%;
+            p:last-of-type {
+                display: none;
+            }
+            i {
+                display: block;
+                font-size: $eirdadmin-uploader-icono-font-size * 0.75;
+            }
+            p:first-of-type {
+                display: block;
+            }
+        }
     }
 }
