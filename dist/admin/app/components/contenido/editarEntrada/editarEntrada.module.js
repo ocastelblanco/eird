@@ -1,29 +1,12 @@
-/* global angular idioma */
+/* global angular idioma rutaMedios */
 var entradaID;
 var editarEntradas = angular.module('editarEntradas', ['ngSanitize']);
 editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$rootScope','$timeout','$route','obtieneMetada', function($uibModal,$location,$http,$rootScope,$timeout,$route,obtieneMetada){
     var salida = this;
     salida.datosPOST = {};
     salida.PC = [];
-    salida.medios = [{
-        'ruta': 'https://winteriscoming.net/wp-content/uploads/2016/03/Daenerys-Targaryen-crop-630x371.jpg',
-        'pie': 'Daenerys Targaryen',
-        'tipo': 0
-    }, {
-        'ruta': 'https://archive.org/download/Free_20s_Jazz_Collection/2to2.mp3',
-        'pie': '2to2: 78 RPMs and Cylinder Recordings',
-        'tipo': 1,
-        'thumb': 'https://ia802609.us.archive.org/9/items/Free_20s_Jazz_Collection/otpump.jpg'
-    }, {
-        'ruta': 'https://archive.org/download/HSF-mov-moon/moon_512kb.mp4',
-        'pie': 'Luna vista desde la tierra en una misión del Apollo 11 o cualquier otro cohete o aparato',
-        'tipo': 2,
-        'thumb': 'https://archive.org/services/img/HSF-mov-moon'
-    },{
-        'ruta': 'https://pbs.twimg.com/profile_images/458643675250446336/TSGxBFjj.jpeg',
-        'pie': 'Margaery Tyrell',
-        'tipo': 0
-    }];
+    salida.medios = [{'ruta': 'Haku.jpg','pie': 'Perritu loquitu','tipo': 0}];
+    salida.medios = [];
     // Cargar información cuando ya existe un ID (se editó la entrada)
     var location = $location.search();
     if (location.id) {
@@ -75,6 +58,7 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
         salida.datosPOST.titulo = salida.tituloEntrada;
         salida.datosPOST.texto = salida.textoEntrada;
         salida.datosPOST.palabrasClave = salida.PC;
+        salida.datosPOST.medios = salida.medios;
         // Y todos los demás datos necesarios, como Categoría, subcategoría y palabras clave.
         $http.post('php/entradas.php', salida.datosPOST).then(function(resp){
             $timeout(function(){
@@ -192,11 +176,11 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
         var footer = '</div><div class="modal-footer"><p>';
         var cuerpoMedio;
         if (medio.tipo == 0) {
-            cuerpoMedio = '<img src="'+medio.ruta+'">';
+            cuerpoMedio = '<img src="'+rutaMedios+medio.ruta+'">';
         } else if (medio.tipo == 1) {
-            cuerpoMedio = '<audio src="'+medio.ruta+'" controls></audio>';
+            cuerpoMedio = '<div class="contenedor"><img src="'+rutaMedios+medio.thumb+'"><audio src="'+rutaMedios+medio.ruta+'" controls></audio></div>';
         } else if (medio.tipo == 2) {
-            cuerpoMedio = '<video src="'+medio.ruta+'" poster="'+medio.thumb+'" controls></video>';
+            cuerpoMedio = '<video src="'+rutaMedios+medio.ruta+'" poster="'+rutaMedios+medio.thumb+'" controls></video>';
         }
         var templateMedio = head+body+cuerpoMedio+footer+medio.pie+'</p></div>';
         salida.modalInstance = $uibModal.open({
@@ -207,19 +191,31 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
         });
     };
     salida.rutaThumb = function(medio) {
-        return (medio.tipo)?medio.thumb:medio.ruta;
+        return (medio.tipo)?rutaMedios+medio.thumb:rutaMedios+medio.ruta;
     };
     salida.abrirCarga = function(){
         salida.modalInstance = $uibModal.open({
             templateUrl: 'app/shared/modalUpload.html',
             controller: 'modalCargarMedios',
             size: 'lg',
-            windowClass: 'modal-cargamedios'
+            windowClass: 'modal-cargamedios',
+            backdrop: 'static',
+            keyboard: 'false'
+        });
+        salida.modalInstance.result.then(function(recienCargados){
+            angular.forEach(recienCargados,function(valor,llave){
+                salida.medios.push(valor);
+            });
         });
     };
 }]);
 // Controlador para la ventana modal de cargar medios
 editarEntradas.controller('modalCargarMedios', ['$scope', 'cargaInterfaz', '$uibModalInstance', '$rootScope','Upload', '$timeout', function($scope, cargaInterfaz, $uibModalInstance, $rootScope, Upload, $timeout){
+    var metadata = [];
+    var tipos = {'image/jpeg': 0, 'audio/mp3': 1, 'video/mp4': 2};
+    $scope.misArchivos = [];
+    $scope.medioThumb = [];
+    $scope.pies = [];
     cargaInterfaz.textos().then(function(resp){
         var textos = resp.contenido.editarEntrada.modalCargarMedios;
         $scope.titulo = textos.titulo;
@@ -227,18 +223,13 @@ editarEntradas.controller('modalCargarMedios', ['$scope', 'cargaInterfaz', '$uib
             'progreso': {'invisible': true},
             'instrucciones': textos.instrucciones,
             'noCompatible': textos.noCompatible,
-            'miniInstrucciones': textos.miniInstrucciones
+            'miniInstrucciones': textos.miniInstrucciones,
+            'botonSubirThumb': textos.botonSubirThumb,
+            'botonEliminar': textos.botonEliminar,
+            'textareaPlaceholder': textos.textareaPlaceholder
         };
         $scope.footer = {
-            'boton01': {
-                'invisible': false,
-                'texto': textos.boton01.texto,
-                'estilo': 'btn-primary',
-                'icono': {
-                    'invisible': false,
-                    'estilo': textos.boton01.icono
-                }
-            },
+            'boton01': {'invisible': true},
             'boton02': {
                 'invisible': false,
                 'texto': textos.boton02.texto,
@@ -249,36 +240,168 @@ editarEntradas.controller('modalCargarMedios', ['$scope', 'cargaInterfaz', '$uib
                 }
             }
         };
-        
+        $scope.boton02 = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
         $scope.$watch('archivos', function() {
             $scope.upload($scope.archivos);
         });
         $scope.tarjetaUpVisible = true;
         $scope.upload = function (archivos) {
             if (archivos && archivos.length) {
-                for (var i = 0; i < archivos.length; i++) {
-                    var archivo = archivos[i];
-                    $scope.tarjetaUpVisible = false;
+                angular.forEach(archivos, function(valor, llave){$scope.misArchivos.push(valor);});
+                $scope.footer = {
+                    'boton01': {
+                        'invisible': false,
+                        'texto': textos.boton01.texto,
+                        'estilo': 'btn-primary',
+                        'icono': {
+                            'invisible': false,
+                            'estilo': textos.boton01.icono
+                        }
+                    },
+                    'boton02': {
+                        'invisible': false,
+                        'texto': textos.boton02.texto,
+                        'estilo': 'btn-danger',
+                        'icono': {
+                            'invisible': false,
+                            'estilo': textos.boton02.icono
+                        }
+                    }
+                };
+                $scope.boton01 = function() {
+                    cargarArchivos();
+                };
+                $scope.boton02 = function() {
+                    archivos = [];
+                    $scope.misArchivos = [];
+                    $uibModalInstance.dismiss('cancel');
+                };
+            }
+        };
+        $scope.eliminarMedio = function(index) {
+            $scope.misArchivos.splice(index, 1);
+            $scope.medioThumb.splice(index, 1);
+        };
+        $scope.subirThumb = function(thumb, index){
+            $scope.medioThumb[index] = thumb;
+        };
+        function cargarArchivos() {
+            var mediosCargados = [];
+            var thumbsCargados = [];
+            var erroresMetadata = [];
+            angular.forEach($scope.misArchivos, function(valor, llave){
+                metadata[llave] = {'ruta':'','pie':'','tipo':'','thumb':''};
+                metadata[llave].ruta = valor.name;
+                metadata[llave].pie = ($scope.pies[llave])?$scope.pies[llave]:'';
+                metadata[llave].tipo = tipos[valor.type];
+                metadata[llave].thumb = ($scope.medioThumb[llave])?$scope.medioThumb[llave].name:'';
+            });
+            $scope.tarjetaUpVisible = false;
+            $scope.progresoVisible = [];
+            $scope.progresoValor = [];
+            $scope.mensajeError = [];
+            $scope.mensajeThumbError = [];
+            $scope.mensajeExito = [];
+            $scope.mensajeThumbExito = [];
+            $scope.progresoThumbVisible = [];
+            $scope.progresoThumbValor = [];
+            // Carga primero los medios, img, audio o video.
+            angular.forEach($scope.misArchivos, function(archivo, llave){
+                mediosCargados[llave] = false;
+                $scope.progresoVisible[llave] = true;
+                $scope.progresoValor[llave] = 0;
+                $timeout(function(){
                     Upload.upload({
                         url: 'php/cargaMedios.php',
                         data: {file: archivo}
-                    }).then(function (resp) {
-                        console.log('Success ' + resp.config.data.file.name + ' uploaded. Response: ' + resp.data);
-                    }, function (resp) {
-                        console.log('Error status: ' + resp.status);
-                    }, function (evt) {
-                        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                        console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+                    }).then(function(resp) {
+                        //console.log(resp);
+                        if (resp.data.respuesta) {
+                            metadata[llave].ruta = resp.data.nombreFinal;
+                            $scope.mensajeExito[llave] = archivo.name + textos.mensajeExito;
+                        } else {
+                            $scope.mensajeError[llave] = textos.mensajeError + archivo.name + ': ' + resp.data.mensaje;
+                            erroresMetadata.push(llave);
+                        }
+                        mediosCargados[llave] = true;
+                        verificaCargas();
+                    }, function(resp) {
+                        $scope.mensajeError[llave] = textos.mensajeError + archivo.name + ': ' + resp.status;
+                        erroresMetadata.push(llave);
+                        mediosCargados[llave] = true;
+                        verificaCargas();
+                    }, function(evt) {
+                        $scope.progresoValor[llave] = parseInt(100.0 * evt.loaded / evt.total);
                     });
+                }, (llave*1000));
+            });
+            // Carga los tumbs que se usaron para audio o video
+            angular.forEach($scope.medioThumb, function(archivo, llave){
+                $scope.progresoThumbVisible[llave] = true;
+                $scope.progresoThumbValor[llave] = 0;
+                thumbsCargados[llave] = false;
+                $timeout(function(){
+                    Upload.upload({
+                        url: 'php/cargaMedios.php',
+                        data: {file: archivo}
+                    }).then(function(resp) {
+                        //console.log(resp);
+                        if (resp.data.respuesta) {
+                            metadata[llave].thumb = resp.data.nombreFinal;
+                            $scope.mensajeThumbExito[llave] = archivo.name + textos.mensajeExito;
+                        } else {
+                            $scope.mensajeThumbError[llave] = textos.mensajeError + archivo.name + ': ' + resp.data.mensaje;
+                            erroresMetadata.push(llave);
+                        }
+                        thumbsCargados[llave] = true;
+                        verificaCargas();
+                    }, function(resp) {
+                        $scope.mensajeThumbError[llave] = textos.mensajeError + archivo.name + ': ' + resp.status;
+                        thumbsCargados[llave] = true;
+                        erroresMetadata.push(llave);
+                        verificaCargas();
+                    }, function(evt) {
+                        $scope.progresoThumbValor[llave] = parseInt(100.0 * evt.loaded / evt.total);
+                    });
+                }, (llave*1000));
+            });
+            $scope.footer = {
+                'boton01': {'invisible': true},
+                'boton02': {'invisible': true}
+            };
+            function verificaCargas() {
+                var todoCargado = true;
+                angular.forEach(mediosCargados,function(valor,llave){if(!valor){todoCargado=false;}});
+                angular.forEach(thumbsCargados,function(valor,llave){if(!valor){todoCargado=false;}});
+                if(todoCargado){
+                    $scope.footer.boton01 = {
+                        'invisible': false,
+                        'texto': textos.botonOK.texto,
+                        'estilo': 'btn-primary',
+                        'icono': {'invisible': true}
+                    };
+                    var temp = [];
+                    angular.forEach(metadata,function(valor,llave){
+                        var sinError = true;
+                        angular.forEach(erroresMetadata,function(value,key){
+                            if (llave == value){
+                                sinError = false;
+                            }
+                        });
+                        if(sinError){temp.push(valor);}
+                    });
+                    metadata = temp;
+                    $scope.boton01 = function(){$uibModalInstance.close(metadata);};
                 }
             }
-        };
+        }
     });
 }]);
 // Controlador para la ventana modal de Ver medio
 editarEntradas.controller('modalVerMedio', ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
     $scope.cancel = function () {
-        console.log('Cerrando imagen');
         $uibModalInstance.dismiss('cancel');
     };
 }]);

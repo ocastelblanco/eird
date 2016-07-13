@@ -1,13 +1,21 @@
 <?php
-chdir('../../media');
-$fichero_subido = basename($_FILES['file']['name']);
-echo "Intendando subir ".basename($_FILES['file']['name']);
-if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
-    echo "El fichero es válido y se subió con éxito.\n";
-} else {
-    echo "¡Posible ataque de subida de ficheros!\n";
+require_once('variables.php');
+require_once('medoo.php');
+date_default_timezone_set($timezone);
+$salida = array("archivo" => $_FILES);
+if (!isset($_FILES['file']['type'])){
+    $salida["respuesta"] = false;
+    $salida["mensaje"] = "El archivo tiene errores. Cámbielo y vuelva a intentar.";
+    exit(json_encode($salida));
 }
-
-echo 'Más información de depuración:';
-print_r($_FILES);
+$fichero_subido = hash('md5', time()).$extMedio[$_FILES['file']['type']];
+$salida["nombreFinal"] = $fichero_subido;
+chdir('../../media');
+if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
+    $salida["respuesta"] = true;
+} else {
+    $salida["respuesta"] = false;
+    $salida["mensaje"] = "Posible ataque de subida de archivos. Intente de nuevo.";
+}
+echo(json_encode($salida));
 ?>

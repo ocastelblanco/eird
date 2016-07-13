@@ -58,8 +58,22 @@
         margin-right: auto;
         max-width: 100%;
     }
+    video {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100%;
+    }
     .modal-footer {
         text-align: left;
+    }
+    .contenedor {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100%;
+        audio {
+            width: 100%;
+        }
     }
 }
 // -- Modal de carga de medios
@@ -68,14 +82,14 @@
         margin: 0;
         .tarjetaUp {
             background-color: $eirdadmin-uploader-bgcolor;
-            height: $eirdadmin-uploader-modal-height;
+            height: $eirdadmin-modalupload-thumb-height;
             color: $eirdadmin-uploader-color;
             text-align: center;
             cursor: pointer;
-            padding: 2.5%;
-            cursor: pointer;
             border: solid 2px $eirdadmin-uploader-modal-bordercolor;
-            border-radius: $eirdadmin-uploader-p-padding-top / 2;
+            border-radius: 5px;
+            padding: 10% 5% 0 5%;
+            font-size: 1.75em;
             i, p:first-of-type {
                 display: none;
             }
@@ -83,16 +97,70 @@
         .tarjetaUpOver {
             background-color: lighten($eirdadmin-uploader-bgcolor, 20%);
             border: solid 2px darken($eirdadmin-uploader-modal-bordercolor, 40%);
-            padding: 1.5%;
+            padding: 5%;
             p:last-of-type {
                 display: none;
             }
             i {
                 display: block;
-                font-size: $eirdadmin-uploader-icono-font-size * 0.75;
+                font-size: $eirdadmin-uploader-icono-font-size;
             }
             p:first-of-type {
                 display: block;
+            }
+        }
+        .tarjeta {
+            .thumbnail {
+                height: $eirdadmin-modalupload-thumb-height;
+                .contenedor {
+                    height: $eirdadmin-modalupload-thumb-img-max-height;
+                    img,
+                    video {
+                        max-height: 100%;
+                        max-width: 100%;
+                        height: auto;
+                        width: auto;
+                        margin: auto;
+                        display: block;
+                    }
+                    audio {
+                        max-width: 100%;
+                        height: $eirdadmin-modalupload-thumb-audio-height;
+                    }
+                }
+                p {
+                    font-size: $eirdadmin-modalupload-thumb-p-font-size;
+                    line-height: 1em;
+                    text-align: center;
+                }
+                textarea {
+                    font-size: $eirdadmin-modalupload-thumb-p-font-size;
+                    height: $eirdadmin-modalupload-thumb-p-font-size * 3.5;
+                    width: 100%;
+                    margin-top: $eirdadmin-modalupload-thumb-p-font-size / 2;
+                }
+                &.imagen {
+                    button {
+                        margin-top: $eirdadmin-modalupload-thumb-button-height + ($eirdadmin-modalupload-thumb-p-font-size / 2);
+                    }
+                }
+                &.audio {
+                    .thumb {
+                        max-height: $eirdadmin-modalupload-thumb-img-max-height - $eirdadmin-modalupload-thumb-audio-height;
+                    }
+                }
+                &.video {
+                    .thumb {
+                        max-width: 85px;
+                        max-height: 130px;
+                        position: absolute;
+                        top: 16px;
+                        left: 16px;
+                    }
+                }
+                .alert {
+                    font-size: $eirdadmin-modalupload-thumb-p-font-size;
+                }
             }
         }
     }

@@ -174,9 +174,18 @@
         },
         "modalCargarMedios": {
           "titulo": "Cargar imágenes, audios o videos a la entrada",
-          "instrucciones": "Arrastre y suelte o haga clic para cargar",
-          "miniInstrucciones": "Cargar",
+          "instrucciones": "Arrastre y suelte o haga clic en esta zona para cargar medios",
+          "miniInstrucciones": "Cargar (solo se aceptan archivos JPG, MP3 y MP4)",
           "noCompatible": "Su navegador no es compatible con esta función",
+          "botonEliminar": {
+            "texto": "Eliminar medio",
+            "icono": "fa-trash"
+          },
+          "botonSubirThumb": {
+            "texto": "Subir miniatura",
+            "icono": "fa-picture-o"
+          },
+          "textareaPlaceholder": "Pie de imagen/audio/video",
           "boton01": {
             "texto": "Cargar todo",
             "icono": "fa-upload"
@@ -188,7 +197,13 @@
           "botonTarjeta": {
             "texto": "Cancelar",
             "icono": "fa-ban"
-          }
+          },
+          "botonOK": {
+            "texto": "Aceptar",
+            "icono": "fa-check"
+          },
+          "mensajeError": "Ha ocurrido un error durante la carga de ",
+          "mensajeExito": " cargado exitosamente."
         },
         "modalCancelarEdicion": {
           "titulo": "¿Desea cancelar la edición?",

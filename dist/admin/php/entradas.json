@@ -4,13 +4,39 @@
         "titulo": "Independencia Efímera",
         "categoria": 0,
         "subcategoria": 1,
-        "fecha": "2016-07-07 05:04:14pm",
+        "fecha": "2016-07-13 06:15:43pm",
         "estado": 2,
         "texto": "<p>ui-uploader is a single\/multiple and high customizable file uploader and the most important is very easy to implement.<\/p>\n<ul>\n<li>Upload multiple or single files<\/li>\n<li>Cancel or remove upload when you want.<\/li>\n<li>Allows concurrent Upload<\/li>\n<li>Totally cutomizable<\/li>\n<\/ul>\n<p>You can use with html5, jquery or every library or framework:<\/p>\n<p>The main objective of ui-uploader is to have a user control, clean, simple, customizable, and above all very easy to implement.<\/p>\n<p>Try the <a href=\"http:\/\/realtica.org\/ng-uploader\/demo.html\">demo<\/a>.<\/p>",
         "palabrasClave": [
             "Asentamiento aborigen",
             "Independencia Efímera",
             "Independencia"
+        ],
+        "medios": [
+            {
+                "ruta": "2415899f413d9f344b3022c861e2864c.jpg",
+                "pie": "El mejor DJ perruno",
+                "tipo": 0,
+                "thumb": ""
+            },
+            {
+                "ruta": "63e21a078c2ca2b7fd21c47940c21a9b.mp3",
+                "pie": "Un algarabía",
+                "tipo": 1,
+                "thumb": "21c49d3a973574fc20eb7e0add1fee1d.jpg"
+            },
+            {
+                "ruta": "5d7ce8e7383eac67e14c2ad117f72636.mp3",
+                "pie": "Esto fue troya",
+                "tipo": 1,
+                "thumb": "5d7ce8e7383eac67e14c2ad117f72636.jpg"
+            },
+            {
+                "ruta": "9ead09d576ffda1ca43f4dca1f1f5cc6.mp4",
+                "pie": "Video con montada de miniatura",
+                "tipo": 2,
+                "thumb": "d0e2b424c4686dd0c000380ad7d4dd95.jpg"
+            }
         ]
     },
     {

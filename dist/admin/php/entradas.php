@@ -1,6 +1,7 @@
 <?php
-date_default_timezone_set('America/Bogota');
+require_once('variables.php');
 require_once('medoo.php');
+date_default_timezone_set($timezone);
 // Esto permite des-serializar los parámetros POST que vienen en forma JSON
 $params = json_decode(file_get_contents('php://input'),true);
 
@@ -49,6 +50,7 @@ if (count($params) == 0) {
         $entradas[$posicion]["categoria"] = $params["categoria"];
         $entradas[$posicion]["subcategoria"] = $params["subcategoria"];
         $entradas[$posicion]["palabrasClave"] = $params["palabrasClave"];
+        $entradas[$posicion]["medios"] = $params["medios"];
         $entradas[$posicion]["fecha"] = date('Y-m-d h:i:sa');
         $entradas[$posicion]["estado"] = 2;
     }
@@ -70,8 +72,7 @@ if (count($params) == 0) {
     echo json_encode($salida);
 }
 function rellenaDigitos($valor) {
-    $numDigitos = 4;
-    $numCeros = $numDigitos - strlen((string)$valor);
+    $numCeros = $numDigitosID - strlen((string)$valor);
     $salida = str_repeat("0",$numCeros).$valor;
     return $salida;
 }

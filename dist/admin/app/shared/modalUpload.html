@@ -3,29 +3,56 @@
 </div>
 <div class="modal-body">
     <div class="row">
-        <div ngf-drop ngf-select ng-model="archivos" class="col-md-2 col-sm-4 tarjetaUp" 
+        <div class="col-sm-4 tarjeta" ng-repeat="a in misArchivos track by $index">
+            <div class="thumbnail" ng-class="{'imagen': a.type == 'image/jpeg', 'audio': a.type == 'audio/mp3', 'video': a.type == 'video/mp4'}">
+                <p>{{a.name}}</p>
+                <div class="alert alert-success" role="alert" ng-show="mensajeExito[$index]">
+                    {{mensajeExito[$index]}}
+                </div>
+                <div class="alert alert-danger" role="alert" ng-show="mensajeError[$index]">
+                    {{mensajeError[$index]}}
+                </div>
+                <uib-progressbar ng-show="progresoVisible[$index]" value="progresoValor[$index]">
+                    {{progresoValor[$index]}}%
+                </uib-progressbar>
+                <p ng-show="progresoThumbVisible[$index]">Miniatura: {{medioThumb[$index].name}}</p>
+                <div class="alert alert-success" role="alert" ng-show="mensajeThumbExito[$index]">
+                    {{mensajeThumbExito[$index]}}
+                </div>
+                <div class="alert alert-danger" role="alert" ng-show="mensajeThumbError[$index]">
+                    {{mensajeThumbError[$index]}}
+                </div>
+                <uib-progressbar ng-show="progresoThumbVisible[$index]" value="progresoThumbValor[$index]" type="info">
+                    {{progresoThumbValor[$index]}}%
+                </uib-progressbar>
+                <div class="contenedor" ng-hide="progresoVisible[$index]">
+                    <img ngf-thumbnail="a" ng-if="a.type == 'image/jpeg'">
+                    <img class="thumb" ngf-thumbnail="medioThumb[$index]" ng-if="medioThumb[$index]">
+                    <audio controls ngf-src="a" ng-if="a.type == 'audio/mp3'"></audio>
+                    <video controls ngf-src="a" ng-if="a.type == 'video/mp4'"></video>
+                </div><!-- /.contenedor -->
+                <textarea placeholder="{{cuerpo.textareaPlaceholder}}" ng-model="pies[$index]" ng-hide="progresoVisible[$index]"></textarea>
+                <button class="btn btn-primary btn-block" ngf-select="subirThumb($file, $index)"
+          accept="image/*" ng-if="a.type != 'image/jpeg'" ng-hide="progresoVisible[$index]">
+                    <i class="fa {{cuerpo.botonSubirThumb.icono}}"></i>
+                    {{cuerpo.botonSubirThumb.texto}}
+                </button>
+                <button class="btn btn-danger btn-block" ng-click="eliminarMedio($index)" ng-hide="progresoVisible[$index]">
+                    <i class="fa {{cuerpo.botonEliminar.icono}}"></i>
+                    {{cuerpo.botonEliminar.texto}}
+                </button>
+            </div><!-- /.thumbnail -->
+        </div><!-- /ng-repeat -->
+        <div ngf-drop ngf-select ng-model="archivos" class="col-sm-4 tarjetaUp" 
             ngf-drag-over-class="'tarjetaUpOver'" ngf-multiple="true" ngf-allow-dir="true"
-            accept="image/jpeg,video/*,audio/mp3" ngf-pattern="'image/jpeg,video/*,audio/mp3'"
+            accept="image/jpeg,video/mp4,audio/mp3" ngf-pattern="'image/jpeg,video/mp4,audio/mp3'"
             ng-show="tarjetaUpVisible">
             <i class="fa fa-cloud-upload"></i>
             <p>{{cuerpo.miniInstrucciones}}</p>
             <p>{{cuerpo.instrucciones}}</p>
         </div>
         <div ngf-no-file-drop>{{cuerpo.noCompatible}}</div>
-        <div class="col-sm-2 col-md-4 tarjeta" ng-repeat="a in archivos track by $index">
-            <img ngf-thumbnail="a" ngf-size="{width: 110, height: 110}" ng-if="a.type == 'image/jpeg'">
-            <div class="audio" ng-if="a.type == 'audio/mp3'">
-                <audio controls ngf-src="a"></audio>
-                <button class="btn btn-primary">Subir thumbnail</button>
-            </div>
-            <div class="video" ng-if="a.type == 'video/mp4'">
-                <video controls ngf-src="a"></video>
-                <button class="btn btn-primary">Subir thumbnail</button>
-            </div>
-            <p>{{a.name}} :: {{a.type}}</p>
-        </div>
     </div>
-    <uib-progressbar class="ng-hide progress-striped active" ng-hide="cuerpo.progreso.invisible" value="cuerpo.progreso.valor"></uib-progressbar>
 </div>
 <div class="modal-footer">
     <button class="ng-hide btn {{footer.boton01.estilo}}" ng-hide="footer.boton01.invisible" type="button" ng-click="boton01()">

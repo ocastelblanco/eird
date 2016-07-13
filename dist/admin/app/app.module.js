@@ -1,5 +1,6 @@
 /* global angular */
 var idioma = 'es';
+var rutaMedios = '../media/';
 // Módulos de la app principal eirdAdmin
 var eirdAdmin = angular.module('eirdAdmin', [
     'ui.bootstrap',
