@@ -1,11 +1,10 @@
 /* global angular idioma rutaMedios */
 var entradaID;
 var editarEntradas = angular.module('editarEntradas', ['ngSanitize']);
-editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$rootScope','$timeout','$route','obtieneMetada', function($uibModal,$location,$http,$rootScope,$timeout,$route,obtieneMetada){
+editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$rootScope','$timeout','$route','obtieneMetada','$sce',function($uibModal,$location,$http,$rootScope,$timeout,$route,obtieneMetada,$sce){
     var salida = this;
     salida.datosPOST = {};
     salida.PC = [];
-    salida.medios = [{'ruta': 'Haku.jpg','pie': 'Perritu loquitu','tipo': 0}];
     salida.medios = [];
     // Cargar información cuando ya existe un ID (se editó la entrada)
     var location = $location.search();

@@ -1,46 +1,22 @@
 [
     {
-        "id": "0001",
-        "titulo": "Independencia Efímera",
-        "categoria": 0,
-        "subcategoria": 1,
-        "fecha": "2016-07-13 06:15:43pm",
+        "id": "000001",
+        "titulo": "Entrada que reemplaza",
+        "categoria": 2,
+        "subcategoria": 2,
+        "fecha": "2016-07-13 07:18:05pm",
         "estado": 2,
-        "texto": "<p>ui-uploader is a single\/multiple and high customizable file uploader and the most important is very easy to implement.<\/p>\n<ul>\n<li>Upload multiple or single files<\/li>\n<li>Cancel or remove upload when you want.<\/li>\n<li>Allows concurrent Upload<\/li>\n<li>Totally cutomizable<\/li>\n<\/ul>\n<p>You can use with html5, jquery or every library or framework:<\/p>\n<p>The main objective of ui-uploader is to have a user control, clean, simple, customizable, and above all very easy to implement.<\/p>\n<p>Try the <a href=\"http:\/\/realtica.org\/ng-uploader\/demo.html\">demo<\/a>.<\/p>",
+        "texto": "<p>Ask questions on <a href=\"http:\/\/stackoverflow.com\/\">StackOverflow<\/a> under the <a href=\"http:\/\/stackoverflow.com\/tags\/ng-file-upload\/\">ng-file-upload<\/a> tag.<br>For bug report or feature request please search through existing <a href=\"https:\/\/github.com\/danialfarid\/ng-file-upload\/issues\">issues<\/a> first then open a new one <a href=\"https:\/\/github.com\/danialfarid\/ng-file-upload\/issues\/new\">here<\/a>. For faster response provide steps to reproduce\/versions with a jsfiddle link. If you need support for your company contact <a href=\"mailto:danial.farid@gmail.com\">me<\/a>.<br>If you like this plugin give it a thumbs up at <a href=\"http:\/\/ngmodules.org\/modules\/ng-file-upload\">ngmodules<\/a> or get me a <a href=\"https:\/\/www.paypal.com\/cgi-bin\/webscr?cmd=_donations&amp;business=danial%2efarid%40gmail%2ecom&amp;lc=CA&amp;item_name=ng%2dfile%2dupload&amp;item_number=ng%2dfile%2dupload&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted\">cup of tea <\/a>. Contributions are welcomed.<\/p>",
         "palabrasClave": [
-            "Asentamiento aborigen",
-            "Independencia Efímera",
-            "Independencia"
+            "Derechos humanos",
+            "Símbolos"
         ],
         "medios": [
-            {
-                "ruta": "2415899f413d9f344b3022c861e2864c.jpg",
-                "pie": "El mejor DJ perruno",
-                "tipo": 0,
-                "thumb": ""
-            },
-            {
-                "ruta": "63e21a078c2ca2b7fd21c47940c21a9b.mp3",
-                "pie": "Un algarabía",
-                "tipo": 1,
-                "thumb": "21c49d3a973574fc20eb7e0add1fee1d.jpg"
-            },
-            {
-                "ruta": "5d7ce8e7383eac67e14c2ad117f72636.mp3",
-                "pie": "Esto fue troya",
-                "tipo": 1,
-                "thumb": "5d7ce8e7383eac67e14c2ad117f72636.jpg"
-            },
-            {
-                "ruta": "9ead09d576ffda1ca43f4dca1f1f5cc6.mp4",
-                "pie": "Video con montada de miniatura",
-                "tipo": 2,
-                "thumb": "d0e2b424c4686dd0c000380ad7d4dd95.jpg"
-            }
+
         ]
     },
     {
-        "id": "0002",
+        "id": "000002",
         "titulo": "Ocupación haitiana",
         "categoria": 0,
         "subcategoria": 2,
@@ -48,7 +24,7 @@
         "estado": 2
     },
     {
-        "id": "0003",
+        "id": "000003",
         "titulo": "Sierra de Yamasa",
         "categoria": 1,
         "subcategoria": 0,
@@ -56,7 +32,7 @@
         "estado": 1
     },
     {
-        "id": "0004",
+        "id": "000004",
         "titulo": "Sierra del Seibo",
         "categoria": 2,
         "subcategoria": 2,
@@ -69,7 +45,7 @@
         ]
     },
     {
-        "id": "0005",
+        "id": "000005",
         "titulo": "Sierra",
         "categoria": 2,
         "subcategoria": 2,
@@ -77,7 +53,7 @@
         "estado": 0
     },
     {
-        "id": "0006",
+        "id": "000006",
         "titulo": "Sierra Madre",
         "categoria": 2,
         "subcategoria": 1,
@@ -85,7 +61,7 @@
         "estado": 1
     },
     {
-        "id": "0007",
+        "id": "000007",
         "titulo": "Sierra Especial",
         "categoria": 2,
         "subcategoria": 1,
@@ -93,7 +69,7 @@
         "estado": 2
     },
     {
-        "id": "0008",
+        "id": "000008",
         "titulo": "Sierra Única",
         "categoria": 1,
         "subcategoria": 1,
@@ -101,7 +77,7 @@
         "estado": 1
     },
     {
-        "id": "0009",
+        "id": "000009",
         "titulo": "Sierra Solitaria",
         "categoria": 1,
         "subcategoria": 1,
@@ -109,7 +85,7 @@
         "estado": 2
     },
     {
-        "id": "0010",
+        "id": "000010",
         "titulo": "Sierra Augusta",
         "categoria": 2,
         "subcategoria": 1,
@@ -117,7 +93,7 @@
         "estado": 1
     },
     {
-        "id": "0011",
+        "id": "000011",
         "titulo": "Guerra de la Restauración",
         "categoria": 0,
         "subcategoria": 2,
@@ -125,7 +101,7 @@
         "estado": 2
     },
     {
-        "id": "0012",
+        "id": "000012",
         "titulo": "Nueva entrada",
         "categoria": 1,
         "subcategoria": 1,
@@ -133,7 +109,7 @@
         "estado": 2
     },
     {
-        "id": "0013",
+        "id": "000013",
         "titulo": "Entrada nueva",
         "categoria": 3,
         "subcategoria": 1,
@@ -141,7 +117,7 @@
         "estado": 2
     },
     {
-        "id": "0014",
+        "id": "000014",
         "titulo": "Entrada 14",
         "categoria": 2,
         "subcategoria": 1,
@@ -155,7 +131,7 @@
         ]
     },
     {
-        "id": "0015",
+        "id": "000015",
         "titulo": "Entrada 15",
         "categoria": 4,
         "subcategoria": 1,
@@ -163,7 +139,7 @@
         "estado": 2
     },
     {
-        "id": "0016",
+        "id": "000016",
         "titulo": "La guerra y la paz",
         "categoria": 0,
         "subcategoria": 2,
@@ -178,7 +154,7 @@
         ]
     },
     {
-        "id": "0017",
+        "id": "000017",
         "titulo": "Otra orden",
         "categoria": 1,
         "subcategoria": 1,
@@ -186,7 +162,7 @@
         "estado": 1
     },
     {
-        "id": "0018",
+        "id": "000018",
         "titulo": "Otra entrada",
         "categoria": 4,
         "subcategoria": 1,
@@ -194,7 +170,7 @@
         "estado": 0
     },
     {
-        "id": "0019",
+        "id": "000019",
         "titulo": "Entrada 19",
         "categoria": 4,
         "subcategoria": 2,
@@ -202,7 +178,7 @@
         "estado": 1
     },
     {
-        "id": "0020",
+        "id": "000020",
         "titulo": "Entrada fantasma",
         "categoria": 3,
         "subcategoria": 1,
@@ -210,7 +186,7 @@
         "estado": 0
     },
     {
-        "id": "0021",
+        "id": "000021",
         "titulo": "Lucha fraticida",
         "texto": "<p>Second and slightly more complex is to use shell_exec (<a href=\"http:\/\/us2.php.net\/manual\/en\/function.shell-exec.php\">docs<\/a>). With shell_exec, you will call the php binary and pass the desired script as the argument. Your code would look like this:<\/p>",
         "categoria": 1,
@@ -224,7 +200,7 @@
         "estado": 2
     },
     {
-        "id": "0022",
+        "id": "000022",
         "titulo": "Código",
         "texto": "<p>Finally, and most complex, you could use the CURL library to call the file as though it were requested via a browser. Check out the CURL library documentation here:<a href=\"http:\/\/us2.php.net\/manual\/en\/ref.curl.php\">http:\/\/us2.php.net\/manual\/en\/ref.curl.php<\/a><\/p>",
         "categoria": 4,
@@ -238,12 +214,23 @@
         "estado": 2
     },
     {
-        "id": "0023"
-    },
-    {
-        "id": "0024"
-    },
-    {
-        "id": "0025"
+        "id": "000023",
+        "titulo": "Entrada 000023 final",
+        "texto": "<p>Ask questions on <a href=\"http:\/\/stackoverflow.com\/\">StackOverflow<\/a> under the <a href=\"http:\/\/stackoverflow.com\/tags\/ng-file-upload\/\">ng-file-upload<\/a> tag.<br>For bug report or feature request please search through existing <a href=\"https:\/\/github.com\/danialfarid\/ng-file-upload\/issues\">issues<\/a> first then open a new one <a href=\"https:\/\/github.com\/danialfarid\/ng-file-upload\/issues\/new\">here<\/a>. For faster response provide steps to reproduce\/versions with a jsfiddle link. If you need support for your company contact <a href=\"mailto:danial.farid@gmail.com\">me<\/a>.<br>If you like this plugin give it a thumbs up at <a href=\"http:\/\/ngmodules.org\/modules\/ng-file-upload\">ngmodules<\/a> or get me a <a href=\"https:\/\/www.paypal.com\/cgi-bin\/webscr?cmd=_donations&amp;business=danial%2efarid%40gmail%2ecom&amp;lc=CA&amp;item_name=ng%2dfile%2dupload&amp;item_number=ng%2dfile%2dupload&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted\">cup of tea <\/a>. Contributions are welcomed.<\/p>",
+        "categoria": 1,
+        "subcategoria": 2,
+        "palabrasClave": [
+            "Relieve"
+        ],
+        "medios": [
+            {
+                "ruta": "f78b95a6aa8bf44daa11855dfe0e14fe.jpg",
+                "pie": "Seleccionar el archivo encontrado",
+                "tipo": 0,
+                "thumb": ""
+            }
+        ],
+        "fecha": "2016-07-14 01:05:52pm",
+        "estado": 2
     }
 ]

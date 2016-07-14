@@ -4,7 +4,6 @@ require_once('medoo.php');
 date_default_timezone_set($timezone);
 // Esto permite des-serializar los parámetros POST que vienen en forma JSON
 $params = json_decode(file_get_contents('php://input'),true);
-
 // ---------> Solución temporal mientras se implementa MySQL
 $nombre_fichero = 'entradas.json';
 $gestor = fopen($nombre_fichero, 'r+');
@@ -39,7 +38,7 @@ if (count($params) == 0) {
         // No se recibió ID, por lo tanto se crea uno nuevo
         $posicion = count($entradas);
         $nuevoID = (int)$entradas[$posicion-1]["id"] + 1;
-        $salida["id"] = rellenaDigitos($nuevoID);
+        $salida["id"] = rellenaDigitos($nuevoID, $numDigitosID);
         $entradas[$posicion]["id"] = $salida["id"];
     }
     if ($params["accion"] == "eliminar") {
@@ -71,8 +70,9 @@ if (count($params) == 0) {
     $salida["respuesta"] = true;
     echo json_encode($salida);
 }
-function rellenaDigitos($valor) {
-    $numCeros = $numDigitosID - strlen((string)$valor);
+function rellenaDigitos($valor, $numDigitosID) {
+    $numCerosValor = strlen((string)$valor);
+    $numCeros = $numDigitosID - $numCerosValor;
     $salida = str_repeat("0",$numCeros).$valor;
     return $salida;
 }
