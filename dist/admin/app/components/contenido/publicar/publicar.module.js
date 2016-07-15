@@ -190,7 +190,7 @@ publicar.controller('adminPublicar', ['$http', 'i18nService', 'cargaInterfaz', '
                 });
                 salida.datosTabla.data.splice(aQuitar,1);
             });
-            salida.estadoPublicando = true;
+            salida.estadoPublicando = false;
             salida.numFilasSeleccionadas = 0;
             $scope.gridApi.selection.clearSelectedRows();
             salida.activaBotones();

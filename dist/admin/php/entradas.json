@@ -21,7 +21,7 @@
         "categoria": 0,
         "subcategoria": 2,
         "fecha": "2016-06-15",
-        "estado": 2
+        "estado": 1
     },
     {
         "id": "000003",
@@ -37,7 +37,7 @@
         "categoria": 2,
         "subcategoria": 2,
         "fecha": "2016-06-29 07:26:17pm",
-        "estado": 2,
+        "estado": 1,
         "texto": "<p>Cancel icon<\/p>\n<p>By default the filter shows a cancel X beside the dropdown. You can set disableCancelFilterButton: true to suppress this button.<\/p>\n<p>Programmatic setting of filters<\/p>\n<p>You can set filters<\/p>\n<p>In this example we've provided a \"toggle filters\" button to allow you to turn the filter row on and off. To still visually indicate which columns are filtered even when the filters aren't present, we've used the headerCellClass to make any columns with a filter condition have blue text.<\/p>",
         "palabrasClave": [
             "Símbolos",
@@ -238,5 +238,8 @@
     },
     {
         "id": "000025"
+    },
+    {
+        "id": "000026"
     }
 ]
