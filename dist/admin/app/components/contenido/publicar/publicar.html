@@ -1,0 +1,33 @@
+<div ng-if="cc.permisos >= cp.textos.contenido.publicar.permisos" ng-controller="adminPublicar as ap">
+    <div class="page-header">
+        <h1>
+            {{cp.textos.contenido.publicar.titulo}}
+            <small>{{cp.textos.contenido.publicar.instrucciones}}</small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            &nbsp;
+        </div>
+        <div class="col-sm-4">
+            <button ng-click="ap.verEntrada()" class="btn btn-block btn-info" ng-disabled="ap.estadoVer">
+                <i class="fa {{cp.textos.contenido.publicar.ver.icono}}"></i>
+                {{cp.textos.contenido.publicar.ver.texto}}
+            </button>
+        </div>
+        <div class="col-sm-4">
+            <button ng-click="ap.publicarEntrada()" class="btn btn-block btn-primary" ng-disabled="ap.estadoPublicar">
+                <span ng-hide="ap.estadoPublicando">
+                    <i class="fa {{cp.textos.contenido.publicar.publicar.icono}}"></i>
+                    {{cp.textos.contenido.publicar.publicar.texto}}
+                </span>
+                <span ng-show="ap.estadoPublicando">
+                    <i class="fa fa-spinner fa-pulse fa-fw"></i>
+                    {{cp.textos.contenido.publicar.modalVer.publicando}}
+                </span>
+            </button>
+        </div>
+    </div>
+    <br>
+    <div ui-grid="ap.datosTabla" ui-grid-selection ui-grid-pagination class="tablaEntradas"></div>
+</div>

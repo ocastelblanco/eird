@@ -165,3 +165,18 @@
         }
     }
 }
+.modal-verentrada {
+    .panel-medios {
+        .thumbnail {
+            height: 190px;
+        }
+    }
+    .anterior,
+    .siguiente {
+        cursor: pointer;
+        span {
+            width: 100%;
+            margin: auto;
+        }
+    }
+}

@@ -43,7 +43,7 @@ if (count($params) == 0) {
     }
     if ($params["accion"] == "eliminar") {
         $entradas[$posicion]["estado"] = 0;
-    } elseif ($params["accion"] != "eliminaEntradas") {
+    } elseif ($params["accion"] != "eliminaEntradas" && $params["accion"] != "publicarEntradas") {
         $entradas[$posicion]["titulo"] = $params["titulo"];
         $entradas[$posicion]["texto"] = $params["texto"];
         $entradas[$posicion]["categoria"] = $params["categoria"];
@@ -62,6 +62,15 @@ if (count($params) == 0) {
                 if ($idBorrar[$e] == $entradas[$i]["id"])
                     $entradas[$i]["estado"] = 0;
                 }
+        }
+    }
+    if($params["accion"] == "publicarEntradas") {
+        foreach($params["idEntradas"] as $idEntrada) {
+            foreach($entradas as $llave => $entrada) {
+                if ($entrada["id"] == $idEntrada) {
+                    $entradas[$llave]["estado"] = 1;
+                }
+            }
         }
     }
     // Acá se debe reemplazar por una acción de cargar, actualizar o eliminar info a MySQL, a partir de $entradas

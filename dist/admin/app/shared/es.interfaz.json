@@ -279,6 +279,30 @@
           "botonError": "Cerrar"
         },
         "permisos": "4"
+      },
+      "publicar": {
+        "titulo": "Publicar entradas",
+        "instrucciones": "Seleccione la(s) entrada(s) y haga clic sobre el botón correspondiente",
+        "ver": {
+          "texto": "Previsualizar entrada",
+          "icono": "fa-eye"
+        },
+        "publicar": {
+          "texto": "Publicar entradas",
+          "icono": "fa-paper-plane"
+        },
+        "modalVer": {
+          "boton01": {
+            "texto": "Publicar entrada",
+            "icono": "fa-paper-plane"
+          },
+          "boton02": {
+            "texto": "Cerrar y volver al listado",
+            "icono": "fa-th"
+          },
+          "publicando": "Publicando..."
+        },
+        "permisos": "5"
       }
     },
     "panelLogin": {

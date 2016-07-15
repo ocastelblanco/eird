@@ -1,0 +1,114 @@
+<div class="modal-header">
+    <div class="row">
+        <div class="anterior col-sm-1" ng-click="anteriorEntrada()">
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-chevron-left fa-stack-1x fa-inverse"></i>
+            </span>
+        </div>
+        <div class="col-sm-10">
+            <h3 class="modal-title">
+                {{titulo}}
+                <small ng-show="publicar">
+                    {{publicando}}
+                    <i class="fa fa-spinner fa-pulse fa-fw fa-2x"></i>
+                </small>
+            </h3>
+        </div>
+        <div class="siguiente col-sm-1" ng-click="siguienteEntrada()">
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-chevron-right fa-stack-1x fa-inverse"></i>
+            </span>
+        </div>
+    </div><!-- /.row -->
+</div><!-- /.modal-header -->
+<div class="modal-body">
+    <div class="cuerpo-entrada">
+        <div class="row">
+            <div class="col-sm-12 contenido">
+                <div class="well" ng-bind-html="contenido">
+                </div>
+            </div><!-- /.col-sm-12 -->
+        </div><!-- /.row -->
+        <div class="row">
+            <div class="col-sm-4 categoria">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            {{categoria.titulo}}
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        {{categoria.texto}}
+                    </div>
+                </div>
+            </div><!-- /.col-sm-4 -->
+            <div class="col-sm-4 subcategoria">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            {{subcategoria.titulo}}
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        {{subcategoria.texto}}
+                    </div>
+                </div>
+            </div><!-- /.col-sm-4 -->
+            <div class="col-sm-4 palabras-clave">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            {{palabrasClave.titulo}}
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <p class="palabras" ng-repeat="palabra in palabrasClave.palabras">
+                            {{palabra}}
+                        </p>
+                    </div>
+                </div>
+            </div><!-- /.col-sm-4 -->
+        </div><!-- /.row -->
+        <div class="row">
+            <div class="col-sm-12 medios">
+                <div class="panel panel-default panel-medios">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            {{medios.titulo}}
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-sm-6 col-md-4" ng-repeat="medio in medios.medios">
+                            <div class="thumbnail">
+                                <div class="imagen-thumb">
+                                    <img src="{{rutaThumb(medio)}}" alt="{{medio.pie}}">
+                                    <div class="icon-over">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                            <i class="fa {{medios.tipos[medio.tipo]}} fa-stack-1x"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="caption">
+                                    <h5>{{medio.pie}}</h5>
+                                </div><!-- /.caption -->
+                            </div><!-- /.thumbnail -->
+                        </div><!-- /.col-sm-6 -->
+                    </div><!-- /.panel-body -->
+                </div><!-- /.panel -->
+            </div><!-- /.col-sm-12 -->
+        </div><!-- /.row -->
+    </div><!-- /.cuerpo-entrada -->
+</div>
+<div class="modal-footer">
+    <button class="ng-hide btn {{footer.boton01.estilo}}" ng-hide="footer.boton01.invisible" type="button" ng-click="boton01()">
+        <i ng-hide="footer.boton01.icono.invisible" class="fa {{footer.boton01.icono.estilo}}"></i>
+        {{footer.boton01.texto}}
+    </button>
+    <button class="ng-hide btn {{footer.boton02.estilo}}" ng-hide="footer.boton02.invisible" type="button" ng-click="boton02()">
+        <i ng-hide="footer.boton02.icono.invisible" class="fa {{footer.boton02.icono.estilo}}"></i>
+        {{footer.boton02.texto}}
+    </button>
+</div>
