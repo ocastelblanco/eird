@@ -160,16 +160,35 @@
         "elementosMultimedia": {
           "titulo": "Elementos multimedia",
           "tipos": ["fa-picture-o", "fa-volume-up", "fa-video-camera"],
-          "cambiar": {
-            "texto": "Cambiar",
-            "icono": "fa-retweet"
-          },
           "eliminar": {
             "texto": "Eliminar",
             "icono": "fa-trash"
           },
           "subirMedio": {
             "texto": "Cargar medios"
+          },
+          "modalConfirmarEliminar": {
+            "titulo": "Confirme la acción",
+            "proceso": "Eliminando elemento...",
+            "terminado": "Elemento eliminado",
+            "tituloError": "Ha ocurrido un error durante el proceso",
+            "cuerpoTerminado": "¡Elemento multimedia eliminado correctamente!",
+            "cuerpo": {
+              "texto": "¿Desea eliminar el elemento multimedia?",
+              "icono": "fa-warning fa-2x"
+            },
+            "botonEliminar": {
+              "texto": "Eliminar",
+              "icono": "fa-trash"
+            },
+            "botonCancelar": {
+              "texto": "Cancelar sin eliminar",
+              "icono": "fa-undo"
+            },
+            "botonCerrar": {
+              "texto": "Cerrar",
+              "icono": "fa-times"
+            }
           }
         },
         "modalCargarMedios": {

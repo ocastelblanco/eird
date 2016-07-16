@@ -205,8 +205,95 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
             angular.forEach(recienCargados,function(valor,llave){
                 salida.medios.push(valor);
             });
+            salida.guardaCambios();
         });
     };
+    salida.eliminarMedio = function(index){
+        salida.medioBorrar = index;
+        salida.modalInstance = $uibModal.open({
+            templateUrl: 'app/shared/modalConfirmar.html',
+            windowClass: 'modal-eliminamedios',
+            controller: modalEliminarMedios,
+            backdrop: 'static',
+            keyboard: false
+        });
+        salida.modalInstance.result.then(function(vModal){
+            if (vModal == 'cerrarYguardar') {
+                salida.guardaCambios();
+            }
+        });
+    };
+    var modalEliminarMedios = ['$scope', 'cargaInterfaz', '$uibModalInstance', function($scope, cargaInterfaz, $uibModalInstance){
+        var textos;
+        cargaInterfaz.textos().then(function(resp){
+            textos = resp.contenido.editarEntrada.elementosMultimedia.modalConfirmarEliminar;
+            $scope.titulo = textos.titulo;
+            $scope.cuerpo = {
+                'icono': {
+                    'invisible': false,
+                    'icono': textos.cuerpo.icono
+                },
+                'texto': textos.cuerpo.texto,
+                'estilo': 'alert-warning'
+            };
+            $scope.boton01 = {
+                'invisible': false,
+                'estilo': 'btn-primary',
+                'icono': textos.botonCancelar.icono,
+                'texto':textos.botonCancelar.texto
+            };
+            $scope.boton02 = {
+                'invisible': false,
+                'estilo': 'btn-danger',
+                'icono': textos.botonEliminar.icono,
+                'texto':textos.botonEliminar.texto
+            };
+        });
+        $scope.botonCerrar = function(){$uibModalInstance.dismiss();};
+        $scope.boton1 = function(){$uibModalInstance.dismiss();};
+        $scope.boton2 = function(){
+            $scope.titulo = textos.proceso;
+            $scope.proceso = true;
+            $scope.boton01 = {'invisible': true};
+            $scope.boton02 = {'invisible': true};
+            $scope.botonCerrar = {'invisible': true};
+            var post = {'accion': 'eliminar','id': entradaID, 'medio': salida.medioBorrar};
+            $http.post('php/eliminaMedios.php', post).then(function(resp){
+                $scope.boton01 = {
+                    'invisible': false,
+                    'estilo': 'btn-primary',
+                    'icono': textos.botonCerrar.icono,
+                    'texto': textos.botonCerrar.texto
+                };
+                $scope.proceso = false;
+                if (resp.data.respuesta) {
+                    $timeout(function(){
+                        salida.medios.splice(salida.medioBorrar,1);
+                        $scope.titulo = textos.terminado;
+                        $scope.cuerpo = {
+                            'icono': {
+                                'invisible': false,
+                                'icono': 'fa-thumbs-up fa-lg'
+                            },
+                            'texto': textos.cuerpoTerminado,
+                            'estilo': 'alert-success'
+                        };
+                        $scope.boton1 = function(){$uibModalInstance.close('cerrarYguardar');};
+                    },500);
+                } else {
+                    $scope.titulo = textos.tituloError;
+                    $scope.cuerpo = {
+                        'icono': {
+                            'invisible': false,
+                            'icono': 'fa-ban fa-2x'
+                        },
+                        'texto': resp.data.mensaje,
+                        'estilo': 'alert-danger'
+                    };
+                }
+            });
+        };
+    }];
 }]);
 // Controlador para la ventana modal de cargar medios
 editarEntradas.controller('modalCargarMedios', ['$scope', 'cargaInterfaz', '$uibModalInstance', '$rootScope','Upload', '$timeout', function($scope, cargaInterfaz, $uibModalInstance, $rootScope, Upload, $timeout){

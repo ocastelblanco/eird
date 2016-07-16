@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <button type="button" class="close" aria-label="Close" ng-click="botonCerrar();" ng-hide="botonCerrar.invisible">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title">
+        {{titulo}}
+        <i class="fa fa-spinner fa-pulse fa-fw fa-2x" ng-show="proceso"></i>
+    </h4>
+</div><!-- /.modal-header -->
+<div class="modal-body">
+    <div class="alert {{cuerpo.estilo}}" role="alert">
+        <i class="fa {{cuerpo.icono.icono}}" ng-hide="cuerpo.icono.invisible"></i>
+        <span>{{cuerpo.texto}}</span>
+    </div>
+</div><!-- /.modal-body -->
+<div class="modal-footer">
+    <button type="button" class="btn {{boton01.estilo}}" ng-click="boton1();" ng-hide="boton01.invisible">
+        <i class="fa {{boton01.icono}}"></i>
+        {{boton01.texto}}
+    </button>
+    <button type="button" class="btn {{boton02.estilo}}" ng-click="boton2();" ng-hide="boton02.invisible">
+        <i class="fa {{boton02.icono}}"></i>
+        {{boton02.texto}}
+    </button>
+</div><!-- /.modal-footer -->

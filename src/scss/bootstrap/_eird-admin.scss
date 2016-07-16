@@ -169,6 +169,9 @@
     .panel-medios {
         .thumbnail {
             height: 190px;
+            .imagen-thumb {
+                cursor: auto;
+            }
         }
     }
     .anterior,
@@ -177,6 +180,15 @@
         span {
             width: 100%;
             margin: auto;
+        }
+    }
+}
+.modal-eliminamedios {
+    .alert {
+        span {
+            font-size: 1.25em;
+            margin-left: 1em;
+            font-weight: bolder;
         }
     }
 }

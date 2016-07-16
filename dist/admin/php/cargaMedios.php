@@ -2,6 +2,7 @@
 require_once('variables.php');
 require_once('medoo.php');
 date_default_timezone_set($timezone);
+chdir($rutaMedios);
 $salida = array("archivo" => $_FILES);
 if (!isset($_FILES['file']['type'])){
     $salida["respuesta"] = false;
@@ -10,7 +11,7 @@ if (!isset($_FILES['file']['type'])){
 }
 $fichero_subido = hash('md5', time()).$extMedio[$_FILES['file']['type']];
 $salida["nombreFinal"] = $fichero_subido;
-chdir('../../media');
+
 if (move_uploaded_file($_FILES['file']['tmp_name'], $fichero_subido)) {
     $salida["respuesta"] = true;
 } else {

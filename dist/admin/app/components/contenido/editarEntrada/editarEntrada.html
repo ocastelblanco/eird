@@ -24,7 +24,7 @@
                                 <p>{{cp.textos.contenido.editarEntrada.elementosMultimedia.subirMedio.texto}}</p>
                             </div>
                         </div><!-- /.col-sm-6 -->
-                        <div class="col-sm-6 col-md-4" ng-repeat="medio in ee.medios">
+                        <div class="col-sm-6 col-md-4" ng-repeat="medio in ee.medios track by $index">
                             <div class="thumbnail">
                                 <div class="imagen-thumb" ng-click="ee.abreThumb(medio);">
                                     <img src="{{ee.rutaThumb(medio)}}" alt="{{medio.pie}}">
@@ -38,19 +38,12 @@
                                 <div class="caption">
                                     <h5>{{medio.pie}}</h5>
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <a href="#" class="btn btn-primary btn-block" role="button">
-                                                <i class="fa fa-
-                                                {{cp.textos.contenido.editarEntrada.elementosMultimedia.cambiar.icono}}"></i>
-                                                {{cp.textos.contenido.editarEntrada.elementosMultimedia.cambiar.texto}}
-                                            </a>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <a href="#" class="btn btn-danger btn-block" role="button">
+                                        <div class="col-md-12">
+                                            <button class="btn btn-danger btn-block" ng-click="ee.eliminarMedio($index)">
                                                 <i class="fa fa-
                                                 {{cp.textos.contenido.editarEntrada.elementosMultimedia.eliminar.icono}}"></i>
                                                 {{cp.textos.contenido.editarEntrada.elementosMultimedia.eliminar.texto}}
-                                            </a>
+                                            </button>
                                         </div>
                                     </div><!-- /.row -->
                                 </div><!-- /.caption -->
