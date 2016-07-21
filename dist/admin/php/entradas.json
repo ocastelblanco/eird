@@ -5,7 +5,7 @@
         "categoria": 2,
         "subcategoria": 2,
         "fecha": "2016-07-15 07:14:12pm",
-        "estado": 2,
+        "estado": 1,
         "texto": "<p>Ask questions on <a href=\"http:\/\/stackoverflow.com\/\">StackOverflow<\/a> under the <a href=\"http:\/\/stackoverflow.com\/tags\/ng-file-upload\/\">ng-file-upload<\/a> tag.<br>For bug report or feature request please search through existing <a href=\"https:\/\/github.com\/danialfarid\/ng-file-upload\/issues\">issues<\/a> first then open a new one <a href=\"https:\/\/github.com\/danialfarid\/ng-file-upload\/issues\/new\">here<\/a>. For faster response provide steps to reproduce\/versions with a jsfiddle link. If you need support for your company contact <a href=\"mailto:danial.farid@gmail.com\">me<\/a>.<br>If you like this plugin give it a thumbs up at <a href=\"http:\/\/ngmodules.org\/modules\/ng-file-upload\">ngmodules<\/a> or get me a <a href=\"https:\/\/www.paypal.com\/cgi-bin\/webscr?cmd=_donations&amp;business=danial%2efarid%40gmail%2ecom&amp;lc=CA&amp;item_name=ng%2dfile%2dupload&amp;item_number=ng%2dfile%2dupload&amp;currency_code=USD&amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted\">cup of tea <\/a>. Contributions are welcomed.<\/p>",
         "palabrasClave": [
             "Derechos humanos",
@@ -36,12 +36,7 @@
             "Hidrografía"
         ],
         "medios": [
-            {
-                "ruta": "4c12500ecc7708dc5aebf4448e2bb042.jpg",
-                "pie": "Buscar la fecha y el commit",
-                "tipo": 0,
-                "thumb": ""
-            }
+
         ]
     },
     {
@@ -248,5 +243,55 @@
         ],
         "fecha": "2016-07-14 01:05:52pm",
         "estado": 2
+    },
+    {
+        "id": "000024",
+        "titulo": "La música en la isla",
+        "texto": "<p>El <strong>merengue<\/strong> es un género musical bailable originado en la <a href=\"https:\/\/es.wikipedia.org\/wiki\/Rep%C3%BAblica_Dominicana\">República Dominicana<\/a> a finales del <a href=\"https:\/\/es.wikipedia.org\/wiki\/Siglo_XIX\">siglo XIX<\/a>. Es muy popular en <a href=\"https:\/\/es.wikipedia.org\/wiki\/Hispanoam%C3%A9rica\">Hispanoamérica<\/a>, donde es considerado, junto con la <a href=\"https:\/\/es.wikipedia.org\/wiki\/Salsa_(g%C3%A9nero_musical)\">salsa<\/a>, como uno de los grandes géneros musicales bailables que distinguen el gentilicio latinoamericano.<\/p>\n<p>En sus orígenes, el merengue dominicano era interpretado con instrumentos de cuerda (bandurria y\/o guitarra). Años más tarde, los instrumentos de cuerda fueron sustituidos por el acordeón, conformándose así, junto con la güira y la tambora, la estructura instrumental del conjunto de merengue típico. Este conjunto, con sus tres instrumentos, representa la síntesis de las tres culturas que conformaron la idiosincrasia de la cultura dominicana. La influencia europea viene a estar representada por el acordeón, la africana por la <a href=\"https:\/\/es.wikipedia.org\/wiki\/Tambora_dominicana\">tambora<\/a>, que es un tambor de dos parches, y la taína o aborigen por la güira.<\/p>",
+        "categoria": 4,
+        "subcategoria": 2,
+        "palabrasClave": [
+            "Música",
+            "merengue",
+            "bachata"
+        ],
+        "medios": [
+            {
+                "ruta": "e54155d616d445168f66f4ac845eab9e.jpg",
+                "pie": "Merengue dominicano",
+                "tipo": 0,
+                "thumb": ""
+            }
+        ],
+        "fecha": "2016-07-19 08:11:42pm",
+        "estado": 2
+    },
+    {
+        "id": "000025",
+        "titulo": "Juan Luis Guerra",
+        "texto": "<p><strong>Juan Luis Guerra<\/strong> (<a href=\"https:\/\/es.wikipedia.org\/wiki\/Santo_Domingo\">Santo Domingo<\/a>, <a href=\"https:\/\/es.wikipedia.org\/wiki\/7_de_junio\">7 de junio<\/a> de <a href=\"https:\/\/es.wikipedia.org\/wiki\/1957\">1957<\/a>) <a href=\"https:\/\/es.wikipedia.org\/wiki\/Cantautor\">cantautor<\/a>, <a href=\"https:\/\/es.wikipedia.org\/wiki\/Compositor_de_canciones\">compositor<\/a>, <a href=\"https:\/\/es.wikipedia.org\/wiki\/Arreglista\">arreglista<\/a>, <a href=\"https:\/\/es.wikipedia.org\/wiki\/M%C3%BAsico\">músico<\/a> y <a href=\"https:\/\/es.wikipedia.org\/wiki\/Productor_discogr%C3%A1fico\">productor<\/a> dominicano, que ha vendido más de 30 millones de discos,<a href=\"https:\/\/es.wikipedia.org\/wiki\/Juan_Luis_Guerra#cite_note-1\">1<\/a> y ha ganado numerosos premios, incluyendo 18 <a href=\"https:\/\/es.wikipedia.org\/wiki\/Premios_Grammy_Latinos\">Grammy Latinos<\/a>, dos <a href=\"https:\/\/es.wikipedia.org\/wiki\/Premios_Grammy\">Grammy<\/a> norteamericanos y dos Premios Latin Billboard. En 2007, fue el máximo galardonado con 5 <a href=\"https:\/\/es.wikipedia.org\/wiki\/Anexo:Premios_Grammy_Latinos_2007\">Grammy Latino<\/a>. Guerra ganó 3 <a href=\"https:\/\/es.wikipedia.org\/wiki\/Anexo:Premios_Grammy_Latinos_2010\">Grammy Latinos en 2010<\/a>, incluyendo Álbum del Año. En 2012 ganó un <a href=\"https:\/\/es.wikipedia.org\/wiki\/Anexo:Premios_Grammy_Latinos_2012\">Grammy Latino<\/a> como Productor del Año. También fue el máximo galardonado en los <a href=\"https:\/\/es.wikipedia.org\/wiki\/Anexo:Premios_Grammy_Latinos_2015\">Grammy Latinos en 2015<\/a> con 3 gramófonos.<a href=\"https:\/\/es.wikipedia.org\/wiki\/Juan_Luis_Guerra#cite_note-2\">2<\/a> Iris ( La Señora De Acero ) ayudo a La carrera comercial de Guerra y su banda comenzó con los álbumes <a href=\"https:\/\/es.wikipedia.org\/wiki\/Mudanza_y_acarreo\">Mudanza y acarreo<\/a> y <a href=\"https:\/\/es.wikipedia.org\/wiki\/Mientras_m%C3%A1s_lo_pienso..._t%C3%BA\">Mientras más lo pienso... tú<\/a>. La banda fue nominada para asistir al <a href=\"https:\/\/es.wikipedia.org\/wiki\/Festival_OTI_de_la_Canci%C3%B3n\">Festival OTI de la Canción<\/a> y representar a la República Dominicana.<\/p>",
+        "categoria": 7,
+        "subcategoria": 1,
+        "palabrasClave": [
+            "Juan Luis Guerra",
+            "ritmo",
+            "sabor"
+        ],
+        "medios": [
+            {
+                "ruta": "0b025a315babdf6867e1fd07ab0e8dba.jpg",
+                "pie": "Juan Luis Guerra",
+                "tipo": 0,
+                "thumb": ""
+            }
+        ],
+        "fecha": "2016-07-19 08:20:07pm",
+        "estado": 1
+    },
+    {
+        "id": "000026"
+    },
+    {
+        "id": "000027"
     }
 ]

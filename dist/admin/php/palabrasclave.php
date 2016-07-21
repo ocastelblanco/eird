@@ -14,6 +14,9 @@ $salida = [];
 if (!$params["guardar"]) {// Si no se solicita guardar, solamente se entregan las subcategorías de una categoría solicitada
     $num = array_keys($cadena);
     $salida = $cadena[$num[$params["cat"]]];
-    echo json_encode($salida, JSON_UNESCAPED_UNICODE);// | JSON_PRETTY_PRINT);
 }
+if ($params["todo"]) {
+    $salida = $cadena;
+}
+echo json_encode($salida, JSON_UNESCAPED_UNICODE);// | JSON_PRETTY_PRINT);
 ?>

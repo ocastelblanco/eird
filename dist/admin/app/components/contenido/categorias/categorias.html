@@ -1,0 +1,30 @@
+<div ng-if="cc.permisos >= cp.textos.contenido.categorias.permisos" ng-controller="adminCategorias as ac">
+    <div class="page-header">
+        <h1>
+            {{cp.textos.contenido.categorias.titulo}}
+            <small>{{cp.textos.contenido.categorias.instrucciones}}</small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <button ng-click="ac.crear()" class="btn btn-block btn-info">
+                <i class="fa {{cp.textos.contenido.categorias.crear.icono}}"></i>
+                {{cp.textos.contenido.categorias.crear.texto}}
+            </button>
+        </div>
+        <div class="col-sm-4">
+            <button ng-click="ac.editar()" class="btn btn-block btn-primary" ng-disabled="ac.estadoEditar">
+                <i class="fa {{cp.textos.contenido.categorias.editar.icono}}"></i>
+                {{cp.textos.contenido.categorias.editar.texto}}
+            </button>
+        </div>
+        <div class="col-sm-4">
+            <button ng-click="ac.eliminar()" class="btn btn-block btn-danger" ng-disabled="ac.estadoEditar">
+                <i class="fa {{cp.textos.contenido.categorias.eliminar.icono}}"></i>
+                {{cp.textos.contenido.categorias.eliminar.texto}}
+            </button>
+        </div>
+    </div>
+    <br>
+    <div ui-grid="ac.datosTabla" ui-grid-pagination ui-grid-selection class="tablaCategorias"></div>
+</div>

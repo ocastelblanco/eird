@@ -37,7 +37,7 @@
               "permisos": "5"
             },
             {
-              "texto": "Categorías y etiquetas",
+              "texto": "Categorías",
               "icono": "fa-tags",
               "destino": "categorias",
               "permisos": "4"
@@ -322,6 +322,78 @@
           "publicando": "Publicando..."
         },
         "permisos": "5"
+      },
+      "categorias": {
+        "titulo": "Administrar categorías",
+        "instrucciones": "Cree una nueva categoría o edite una existente",
+        "crear": {
+          "texto": "Crear una nueva categoría",
+          "icono": "fa-plus"
+        },
+        "editar": {
+          "texto": "Editar categoría",
+          "icono": "fa-pencil"
+        },
+        "eliminar": {
+          "texto": "Eliminar categoría",
+          "icono": "fa-trash"
+        },
+        "titulosTabla": {
+          "categoria": "Categorías",
+          "subcategoria": "Subcategorías",
+          "palabrasclave": "Palabras clave"
+        },
+        "modal": {
+          "eliminar": {
+            "titulo": "Eliminar categoría",
+            "proceso": "Eliminando...",
+            "final": "Proceso finalizado",
+            "error": "Error en el proceso",
+            "cuerpo": "¿Desea eliminar la categoría ",
+            "cuerpoExito": "Categoría eliminada correctamente",
+            "cuerpoError": "Se ha producido un error en el proceso. Intente de nuevo.",
+            "botonEliminar": {
+              "texto": "Eliminar categoría",
+              "icono": "fa-trash"
+            },
+            "botonCancelar": {
+              "texto": "Cancelar y volver",
+              "icono": "fa-th"
+            },
+            "botonAceptar": "Aceptar"
+          }
+        },
+        "modalEditar": {
+          "titulo": "Editar una categoría",
+          "instrucciones": {
+            "texto": "Cada categoría debe tener, al menos, una subcategoría y una palabra clave.",
+            "icono": "fa-warning"
+          },
+          "proceso": "Guardando la información...",
+          "exito": "Información guardada",
+          "error": "Error en el procedimiento",
+          "cuerpoExito": "Categoria, subcategorias y palabras clave guardadas correctamente",
+          "cuerpoError": "Error al intentar guardar la información. Intente de nuevo.",
+          "categoria": {
+            "titulo": "Categoría",
+            "instrucciones": "Doble-clic para editar"
+          },
+          "subcategorias": "Subcategorías",
+          "palabrasclave": "Palabras Clave",
+          "botonAceptar": {
+            "texto": "Guardar cambios",
+            "icono": "fa-floppy-o"
+          },
+          "botonCancelar": {
+            "texto": "Cancelar cambios",
+            "icono": "fa-times"
+          },
+          "botonFinalizar": {
+            "texto": "Aceptar",
+            "icono": "fa-check"
+          }
+        },
+        "permisos": "4"
       }
     },
     "panelLogin": {

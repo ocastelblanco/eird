@@ -16,7 +16,8 @@ var eirdAdmin = angular.module('eirdAdmin', [
     'encabezado',
     'entradas',
     'editarEntradas',
-    'publicar'
+    'publicar',
+    'categorias'
 ]);
 // Controladores
 eirdAdmin.controller('controladorPrincipal', ['cargaInterfaz', function(cargaInterfaz) {
