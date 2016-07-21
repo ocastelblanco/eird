@@ -1,0 +1,25 @@
+<div ng-if="cc.permisos >= cp.textos.contenido.portada.permisos">
+    <div class="page-header">
+        <h1>
+            {{cp.textos.contenido.portada.titulo}}
+            <small>{{cp.textos.contenido.portada.instrucciones}}</small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default" ng-controller="articuloDestacado as ad">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{cp.textos.contenido.portada.articuloDestacado.titulo}}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="radio" ng-repeat="opcion in ad.opciones track by $index">
+                        <label>
+                            <input type="radio" ng-model="ad.opcionArticulo" value="{{$index}}" checked>
+                            {{opcion}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

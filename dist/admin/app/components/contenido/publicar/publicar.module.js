@@ -76,7 +76,6 @@ publicar.controller('adminPublicar', ['$http', 'i18nService', 'cargaInterfaz', '
         });
     };
     salida.activaBotones = function() {
-        console.log(salida.numFilasSeleccionadas);
         if (salida.numFilasSeleccionadas == 1) {
             salida.estadoVer = false;
             salida.estadoPublicar = false;
@@ -151,6 +150,7 @@ publicar.controller('adminPublicar', ['$http', 'i18nService', 'cargaInterfaz', '
         });
         $rootScope.$on('entradaPublicada', function(evt){
             $timeout(function(){
+                if(posElegida<salida.datosTabla.data.length - 1){posElegida++;}else{posElegida = 0;}
                 cargarEntrada();
                 $scope.publicar = false;
             },500);
@@ -186,7 +186,7 @@ publicar.controller('adminPublicar', ['$http', 'i18nService', 'cargaInterfaz', '
             angular.forEach(entradas, function(valor, llave) {
                 var aQuitar;
                 angular.forEach(salida.datosTabla.data, function(value, key) {
-                    if(valor.id == value.id) {aQuitar = key}
+                    if(valor.id == value.id) {aQuitar = key;}
                 });
                 salida.datosTabla.data.splice(aQuitar,1);
             });

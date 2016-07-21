@@ -394,6 +394,20 @@
           }
         },
         "permisos": "4"
+      },
+      "portada": {
+        "titulo": "Administrar la portada",
+        "instrucciones": "Configure cada módulo",
+        "articuloDestacado": {
+          "titulo": "¿Cuál es el artículo destacado?",
+          "opciones": {
+            "masReciente": "El artículo más reciente",
+            "recienteSemana": "Aleatorio entre los cargados la última semana",
+            "recienteMes": "Aleatorio entre los cargados el último mes",
+            "aleatorio": "Totalmente aleatorio"
+          }
+        },
+        "permisos": "5"
       }
     },
     "panelLogin": {
