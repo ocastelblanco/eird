@@ -10,6 +10,19 @@
         <link rel="stylesheet" href="../assets/css/jasny-bootstrap.min.css" type="text/css" />
         <link rel="stylesheet" href="../assets/css/eirdAdmin.css" type="text/css" />
         <link rel="stylesheet" href="../assets/css/ui-grid.min.css" type="text/css" />
+        <!-- Implementación en Firebase -->
+        <script src="https://www.gstatic.com/firebasejs/3.2.0/firebase.js"></script>
+        <script>
+            /* global firebase */
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyCfPS6ayXe7S9ddudsiM8LO9HPEGS2CkyA",
+                authDomain: "eird-a6f79.firebaseapp.com",
+                databaseURL: "https://eird-a6f79.firebaseio.com",
+                storageBucket: "eird-a6f79.appspot.com",
+            };
+            firebase.initializeApp(config);
+        </script>
         <!-- Llamado a dependencias JS -->
         <script src="../assets/js/angular.min.js"></script>
         <script src="../assets/js/angular-route.min.js"></script>
