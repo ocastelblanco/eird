@@ -1,2 +1,2 @@
 # Enciclopedia Ilustrada de la República Dominicana
-Frontend y backoffice de la EIRD.
+Frontend de la EIRD, implementado sobre Firebase.
