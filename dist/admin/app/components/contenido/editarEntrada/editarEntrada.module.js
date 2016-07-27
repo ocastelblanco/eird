@@ -71,12 +71,12 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
         publicacion.then(function(){
             $timeout(function(){
                 $rootScope.$emit('entradaGuardada', [true,salida.entrada]);
-            }, 1000);
+            }, 1500);
         }).catch(function(){
             // Error
             $timeout(function(){
                 $rootScope.$emit('entradaGuardada', [false,salida.entrada]);
-            }, 1000);
+            }, 1500);
         });
         salida.modalInstance.result.then(function(vModal){
             if (vModal == 'cancelarEdicion') {
@@ -263,16 +263,27 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
             $scope.boton01 = {'invisible': true};
             $scope.boton02 = {'invisible': true};
             $scope.botonCerrar = {'invisible': true};
-            var post = {'accion': 'eliminar','id': salida.id, 'medio': salida.medioBorrar};
-            $http.post('php/eliminaMedios.php', post).then(function(resp){
+            var nombreThumb = (salida.medios[salida.medioBorrar].thumb)?salida.medios[salida.medioBorrar].nombreThumb:null;
+            var eliminaMedioRef = firebase.storage().ref(salida.id+'/'+salida.medios[salida.medioBorrar].nombre);
+            eliminaMedioRef.delete().then(function(){
+                if (nombreThumb) {
+                    firebase.storage().ref(salida.id+'/'+nombreThumb).delete().then(function(){
+                        finalizaEliminacion(true, null);
+                    }).catch(function(error){
+                        finalizaEliminacion(false, error);
+                    });
+                } else {
+                    finalizaEliminacion(true, null);
+                }
+            }).catch(function(error){finalizaEliminacion(false,error);});
+            function finalizaEliminacion(exito, mensaje) {
                 $scope.boton01 = {
                     'invisible': false,
                     'estilo': 'btn-primary',
                     'icono': textos.botonCerrar.icono,
                     'texto': textos.botonCerrar.texto
                 };
-                $scope.proceso = false;
-                if (resp.data.respuesta) {
+                if (exito){
                     $timeout(function(){
                         salida.medios.splice(salida.medioBorrar,1);
                         $scope.titulo = textos.terminado;
@@ -293,11 +304,11 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
                             'invisible': false,
                             'icono': 'fa-ban fa-2x'
                         },
-                        'texto': resp.data.mensaje,
+                        'texto': mensaje,
                         'estilo': 'alert-danger'
                     };
                 }
-            });
+            }
         };
     }];
     // Controlador para la ventana modal de cargar medios
@@ -389,83 +400,94 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
                     metadata[llave].tipo = tipos[valor.type];
                     metadata[llave].thumb = ($scope.medioThumb[llave])?$scope.medioThumb[llave].name:'';
                 });
-                $scope.tarjetaUpVisible = false;
-                $scope.progresoVisible = [];
-                $scope.progresoValor = [];
-                $scope.mensajeError = [];
-                $scope.mensajeThumbError = [];
-                $scope.mensajeExito = [];
-                $scope.mensajeThumbExito = [];
-                $scope.progresoThumbVisible = [];
-                $scope.progresoThumbValor = [];
-                $scope.footer = {
-                    'boton01': {'invisible': true},
-                    'boton02': {'invisible': true}
-                };
-                // Carga primero los medios, img, audio o video.
-                angular.forEach($scope.misArchivos, function(archivo, llave){
+                $timeout(function(){
+                    $scope.tarjetaUpVisible = false;
+                    $scope.progresoVisible = [];
+                    $scope.progresoValor = [];
+                    $scope.mensajeError = [];
+                    $scope.mensajeThumbError = [];
+                    $scope.mensajeExito = [];
+                    $scope.mensajeThumbExito = [];
+                    $scope.progresoThumbVisible = [];
+                    $scope.progresoThumbValor = [];
+                    $scope.footer = {
+                        'boton01': {'invisible': true},
+                        'boton02': {'invisible': true}
+                    };
+                    cargaMedioFirebase(0);
+                }, 500);
+                function cargaMedioFirebase(llave) {
+                    var archivo = $scope.misArchivos[llave];
                     $scope.progresoVisible[llave] = true;
                     $scope.progresoValor[llave] = 0;
-                    $timeout(function(){
-                        var nombreArchivo, tipoArchivo, cargaArchivo;
-                        var metadataMedio = {
-                            'categoria': salida.categoria,
-                            'subcategoria': salida.subcategoria,
-                            'pie': metadata[llave].pie,
-                            'palabrasClave': salida.palabrasClave.toString()
-                        };
-                        switch (archivo.type) {
-                            case 'image/jpeg':
-                                tipoArchivo = '.jpg';
-                                break;
-                            case 'audio/mp3':
-                                tipoArchivo = '.mp3';
-                                break;
-                            case 'video/mp4':
-                                tipoArchivo = '.mp4';
-                                break;
-                            default:
-                                tipoArchivo = '.jpg';
+                    var nombreArchivo, tipoArchivo, cargaArchivo;
+                    var metadataMedio = {
+                        'categoria': salida.categoria,
+                        'subcategoria': salida.subcategoria,
+                        'pie': metadata[llave].pie,
+                        'palabrasClave': salida.palabrasClave.toString()
+                    };
+                    switch (archivo.type) {
+                        case 'image/jpeg':
+                            tipoArchivo = '.jpg';
+                            break;
+                        case 'audio/mp3':
+                            tipoArchivo = '.mp3';
+                            break;
+                        case 'video/mp4':
+                            tipoArchivo = '.mp4';
+                            break;
+                        default:
+                            tipoArchivo = '.jpg';
+                    }
+                    mediosCargados[llave] = false;
+                    nombreArchivo = Date.now()+tipoArchivo;
+                    archivo.name = nombreArchivo;
+                    cargaArchivo = firebase.storage().ref(salida.id+'/'+nombreArchivo).put(archivo,{customMetadata:metadataMedio});
+                    cargaArchivo.on('state_changed',function(snapshot){
+                        $scope.progresoValor[llave] = Math.ceil(100 * snapshot.bytesTransferred / snapshot.totalBytes);
+                    },function(error){
+                        $scope.mensajeError[llave] = textos.mensajeError + archivo.name + ': ' + error;
+                        erroresMetadata.push(llave);
+                        mediosCargados[llave] = true;
+                        verificaCargas();
+                        if (llave == $scope.misArchivos.length-1) {
+                            $timeout(function(){
+                                $scope.progresoValor[llave] = 100;
+                                $scope.mensajeError[llave] = textos.mensajeError + archivo.name + ': ' + error;
+                                cargaThumbFirebase(0);
+                            }, 1000);
+                        } else {
+                            llave++;
+                            cargaMedioFirebase(llave);
                         }
-                        mediosCargados[llave] = false;
-                        nombreArchivo = Date.now()+tipoArchivo;
-                        archivo.name = nombreArchivo;
-                        cargaArchivo = firebase.storage().ref(salida.id+'/'+nombreArchivo).put(archivo,{customMetadata:metadataMedio});
-                        cargaArchivo.on('state_changed',function(snapshot){
-                            $scope.progresoValor[llave] = Math.ceil(100 * snapshot.bytesTransferred / snapshot.totalBytes);
-                        },function(error){
-                            $scope.mensajeError[llave] = textos.mensajeError + archivo.name + ': ' + error;
-                            erroresMetadata.push(llave);
-                            mediosCargados[llave] = true;
-                            verificaCargas();
-                            if (llave == $scope.misArchivos.length-1) {
-                                $timeout(function(){
-                                    $scope.progresoValor[llave] = 100;
-                                    $scope.mensajeError[llave] = textos.mensajeError + archivo.name + ': ' + error;
-                                }, 1000);
-                            }
-                        },function(){
-                            metadata[llave].ruta = cargaArchivo.snapshot.downloadURL;
-                            $scope.mensajeExito[llave] = archivo.name + textos.mensajeExito;
-                            mediosCargados[llave] = true;
-                            verificaCargas();
-                            if (llave == $scope.misArchivos.length-1) {
-                                $timeout(function(){
-                                    $scope.progresoValor[llave] = 100;
-                                    $scope.mensajeExito[llave] = archivo.name + textos.mensajeExito;
-                                }, 1000);
-                            }
-                        });
-                    }, llave*1000);
-                });
-                // Carga los tumbs que se usaron para audio o video
-                angular.forEach($scope.medioThumb, function(archivo, llave){
-                    $scope.progresoThumbVisible[llave] = true;
-                    $scope.progresoThumbValor[llave] = 0;
-                    $timeout(function(){
+                    },function(){
+                        metadata[llave].ruta = cargaArchivo.snapshot.downloadURL;
+                        metadata[llave].nombre = nombreArchivo;
+                        $scope.mensajeExito[llave] = archivo.name + textos.mensajeExito;
+                        mediosCargados[llave] = true;
+                        verificaCargas();
+                        if (llave == $scope.misArchivos.length-1) {
+                            $timeout(function(){
+                                $scope.progresoValor[llave] = 100;
+                                $scope.mensajeExito[llave] = archivo.name + textos.mensajeExito;
+                                cargaThumbFirebase(0);
+                            }, 1000);
+                        } else {
+                            llave++;
+                            cargaMedioFirebase(llave);
+                        }
+                    });
+                }
+                function cargaThumbFirebase(llave) {
+                    if ($scope.medioThumb[llave]) {
+                        var archivo = $scope.medioThumb[llave];
+                        $scope.progresoThumbVisible[llave] = true;
+                        $scope.progresoThumbValor[llave] = 0;
                         var nombreArchivo, tipoArchivo, cargaArchivo;
                         var metadataMedio = {
-                            'medioPrincipal': metadata[llave].ruta
+                            'rutaMedio': metadata[llave].ruta,
+                            'nombreMedio': metadata[llave].nombre
                         };
                         switch (archivo.type) {
                             case 'image/jpeg':
@@ -491,6 +513,8 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
                             erroresMetadata.push(llave);
                             thumbsCargados[llave] = true;
                             verificaCargas();
+                            llave++;
+                            cargaThumbFirebase(llave);
                             if (llave == $scope.medioThumb.length-1) {
                                 $timeout(function(){
                                     $scope.progresoThumbValor[llave] = 100;
@@ -499,9 +523,12 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
                             }
                         },function(){
                             metadata[llave].thumb = cargaArchivo.snapshot.downloadURL;
+                            metadata[llave].nombreThumb = nombreArchivo;
                             $scope.mensajeThumbExito[llave] = archivo.name + textos.mensajeExito;
                             thumbsCargados[llave] = true;
                             verificaCargas();
+                            llave++;
+                            cargaThumbFirebase(llave);
                             if (llave == $scope.misArchivos.length-1) {
                                 $timeout(function(){
                                     $scope.progresoThumbValor[llave] = 100;
@@ -509,8 +536,13 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
                                 }, 1000);
                             }
                         });
-                    }, llave*1000);
-                });
+                    } else {
+                        if (llave < $scope.misArchivos.length-1) {
+                            llave++;
+                            cargaThumbFirebase(llave);
+                        }
+                    }
+                }
                 function verificaCargas() {
                     var todoCargado = true;
                     angular.forEach(mediosCargados,function(valor,llave){if(!valor){todoCargado=false;}});
