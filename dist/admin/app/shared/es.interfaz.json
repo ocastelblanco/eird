@@ -165,7 +165,8 @@
             "icono": "fa-trash"
           },
           "subirMedio": {
-            "texto": "Cargar medios"
+            "texto": "Cargar medios",
+            "singrabar": "Debe guardar la entrada para cargar medios"
           },
           "modalConfirmarEliminar": {
             "titulo": "Confirme la acción",
@@ -402,6 +403,15 @@
           "titulo": "¿Cuál es el artículo destacado?",
           "opciones": {
             "masReciente": "El artículo más reciente",
+            "recienteSemana": "Aleatorio entre los cargados la última semana",
+            "recienteMes": "Aleatorio entre los cargados el último mes",
+            "aleatorio": "Totalmente aleatorio"
+          }
+        },
+        "medioDestacado": {
+          "titulo": "¿Cuál es el elemento multimedia destacado?",
+          "opciones": {
+            "masReciente": "El más reciente",
             "recienteSemana": "Aleatorio entre los cargados la última semana",
             "recienteMes": "Aleatorio entre los cargados el último mes",
             "aleatorio": "Totalmente aleatorio"
