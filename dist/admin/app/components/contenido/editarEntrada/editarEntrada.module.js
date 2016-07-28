@@ -113,15 +113,7 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$rootScope'
         }
         $rootScope.$on('eliminarEntrada', function(evento, resp){
             var publicacion = firebase.database().ref(rutaDB+salida.id);
-            //************* Oliver: tienes que borrar medio por medio, uno a uno, y no la carpeta completa. Aplicar esto a entradas.module.js **********************************
-            console.log('Intentando borrar', salida.id+'/');
-                firebase.storage().ref(salida.id+'/').delete().then(function(){
-                    console.log(salida.id+'/');
-                }).catch(function(error){
-                    console.log(error, salida.id+'/');
-                });
-                /*
-            publicacion.remove().then(function(){
+            publicacion.update({'estado': 0}).then(function(){
                 $timeout(function(){
                     $rootScope.$emit('entradaEliminada', [{'respuesta': true},{'titulo': salida.tituloEntrada}]);
                 }, 1000);
@@ -130,7 +122,6 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$rootScope'
                     $rootScope.$emit('entradaEliminada', [{'respuesta': false},{'titulo': salida.tituloEntrada}]);
                 }, 1000);
             });
-            */
         });
         salida.modalInstance.result.then(function(vModal){
             // Volvemos al listado de entradas luego de confirmar el cierre.

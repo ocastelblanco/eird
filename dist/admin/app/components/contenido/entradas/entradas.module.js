@@ -111,7 +111,7 @@ entradas.controller('adminEntradas', ['i18nService', 'cargaInterfaz', '$scope', 
         });
         function eliminaFirebase(llave) {
             var publicacion = firebase.database().ref(rutaDB+aBorrar[llave]);
-            publicacion.remove().then(function(){
+            publicacion.update({'estado': 0}).then(function(){
                 firebase.storage().ref(aBorrar[llave]).delete();
                 if (llave < aBorrar.length-1) {
                     llave++;

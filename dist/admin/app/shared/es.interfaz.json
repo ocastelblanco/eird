@@ -62,7 +62,7 @@
         "titulo": "Gestionar entradas",
         "instrucciones": "Seleccione la(s) entrada(s) y haga clic sobre el botón correspondiente.",
         "eliminar": {
-          "texto": "Eliminar entradas seleccionadas",
+          "texto": "Enviar entradas a la papelera",
           "icono": "fa-trash"
         },
         "editar": {
@@ -87,7 +87,7 @@
           "titulo3": "Entradas eliminadas correctamente",
           "tituloError": "Problemas al eliminar las entradas",
           "contenido1": {
-            "texto": "¿Quiere eliminar las entradas definitivamente?",
+            "texto": "¿Quiere enviar las entradas seleccionadas a la papelera?",
             "icono": "fa-exclamation-triangle"
           },
           "contenido3": {
@@ -123,7 +123,7 @@
             "icono": "fa-floppy-o"
           },
           "eliminar": {
-            "texto": "Eliminar entrada",
+            "texto": "Enviar a la papelera",
             "icono": "fa-trash"
           },
           "cancelar": {
@@ -272,7 +272,7 @@
           "titulo3": "Entrada eliminada correctamente",
           "tituloError": "Problemas al eliminar la entrada",
           "contenido1": {
-            "texto": "¿Quiere eliminar la entrada definitivamente?",
+            "texto": "¿Quiere enviar la entrada a la papelera?",
             "icono": "fa-exclamation-triangle"
           },
           "contenido3": {
