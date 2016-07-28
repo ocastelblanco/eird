@@ -1,7 +1,8 @@
-/* global angular idioma */
+/* global angular idioma firebase */
 var entradas = angular.module('entradas', []);
-entradas.controller('adminEntradas', ['$http', 'i18nService', 'cargaInterfaz', '$scope', '$location', '$uibModal', '$rootScope', '$timeout', function($http, i18nService, cargaInterfaz, $scope, $location, $uibModal, $rootScope, $timeout){
+entradas.controller('adminEntradas', ['i18nService', 'cargaInterfaz', '$scope', '$location', '$uibModal', '$rootScope', '$timeout', function(i18nService, cargaInterfaz, $scope, $location, $uibModal, $rootScope, $timeout){
     //console.log('adminEntradas cargado');
+    var rutaDB = 'entradas/';
     var salida = this;
     salida.datosTabla = {
         enableRowSelection: true,
@@ -12,6 +13,7 @@ entradas.controller('adminEntradas', ['$http', 'i18nService', 'cargaInterfaz', '
         showGridFooter:true,
         paginationPageSizes: [10, 20, 50],
         paginationPageSize: 10,
+        gridMenuShowHideColumns: false,
         columnDefs: [
                 {name: 'id', visible: false},
                 {name: 'titulo'},
@@ -29,39 +31,31 @@ entradas.controller('adminEntradas', ['$http', 'i18nService', 'cargaInterfaz', '
         salida.titulosTabla = resp.contenido.entradas.encabezadoTablaDatos;
         salida.datosTabla.columnDefs = [
             {name: 'id', visible: false},
-            {name: 'titulo', displayName: salida.titulosTabla.nomEntradas},
-            {name: 'categoria', displayName: salida.titulosTabla.categoria},
-            {name: 'subcategoria', displayName: salida.titulosTabla.subcategoria},
-            {name: 'fecha', displayName: salida.titulosTabla.fecha},
-            {name: 'estado', displayName: salida.titulosTabla.estado}
+            {name: 'titulo', displayName: salida.titulosTabla.nomEntradas, enableColumnMenu: false, width: '30%'},
+            {name: 'categoria', displayName: salida.titulosTabla.categoria, enableColumnMenu: false},
+            {name: 'subcategoria', displayName: salida.titulosTabla.subcategoria, enableColumnMenu: false},
+            {name: 'fecha', displayName: salida.titulosTabla.fecha, enableColumnMenu: false},
+            {name: 'estado', displayName: salida.titulosTabla.estado, enableColumnMenu: false}
         ];
         cargaDatosTabla();
     });
     function cargaDatosTabla(){
-        $http.post('php/entradas.php').then(function(entradas){
-            $http.get('php/categorias.php?todo=true').then(function(categorias){
-                salida.datosTabla.data = cambiaDatos(entradas.data, categorias.data);
-            });
+        firebase.database().ref(rutaDB).once('value').then(function(snapshot) {
+            $timeout(function(){salida.datosTabla.data = cambiaDatos(snapshot.val())}, 1000);
         });
     }
-    function cambiaDatos(data, categorias) {
-        var nomCat = Object.keys(categorias);
+    function cambiaDatos(data) {
         var respuesta = [];
         angular.forEach(data, function(valor, llave){
             if (data[llave].estado) {
+                data[llave].estado = salida.titulosTabla.estados[valor.estado];
+                data[llave].id = llave;
+                data[llave].fecha = data[llave].fecha.substr(0, 10);
                 respuesta.push(data[llave]);
             }
         });
-        angular.forEach(respuesta, function(valor, llave){
-            respuesta[llave].estado = salida.titulosTabla.estados[valor.estado];
-            var nombreCat = nomCat[valor.categoria];
-            var nombreSub = categorias[nombreCat][valor.subcategoria]
-            respuesta[llave].categoria = nombreCat;
-            respuesta[llave].subcategoria = nombreSub;
-            respuesta[llave].fecha = respuesta[llave].fecha.substr(0, 10);
-        });
         return respuesta;
-    };
+    }
     // Captura cuando el usuario selecciona filas de la tabla
     salida.datosTabla.onRegisterApi = function(gridApi){
         $scope.gridApi = gridApi;
@@ -110,20 +104,29 @@ entradas.controller('adminEntradas', ['$http', 'i18nService', 'cargaInterfaz', '
             keyboard: false
         });
         $rootScope.$on('eliminarEntrada', function(evento, resp){
-            salida.datosPOST = {
-                'accion': 'eliminaEntradas',
-                'entradas': aBorrar
-            };
-            $http.post('php/entradas.php', salida.datosPOST).then(function(resp){
-                $timeout(function(){
-                    $rootScope.$emit('entradaEliminada', [resp.data, salida.datosPOST]);
-                }, 1000);
-            });
+            eliminaFirebase(0);
         });
         salida.modalInstance.result.then(function(vModal){
-            // Modificar salida.datosTabla para quitar las líneas eliminadas
             cargaDatosTabla();
         });
+        function eliminaFirebase(llave) {
+            var publicacion = firebase.database().ref(rutaDB+aBorrar[llave]);
+            publicacion.remove().then(function(){
+                firebase.storage().ref(aBorrar[llave]).delete();
+                if (llave < aBorrar.length-1) {
+                    llave++;
+                    eliminaFirebase(llave);
+                } else {
+                    $timeout(function(){
+                        $rootScope.$emit('entradaEliminada', true);
+                    }, 1000);
+                }
+            }).catch(function(error){
+                $timeout(function(){
+                    $rootScope.$emit('entradaEliminada', false);
+                }, 1000);
+            });
+        }
     };
 }]);
 // Controlador para la ventana modal de Eliminar Entrada
@@ -186,11 +189,11 @@ entradas.controller('modalEliminaEntradas', ['$scope', 'cargaInterfaz', '$uibMod
         $scope.boton02 = function() {
             $uibModalInstance.dismiss();
         };
-        $rootScope.$on('entradaEliminada', function(event, resp){
+        $rootScope.$on('entradaEliminada', function(event, exito){
             $scope.boton01 = null;
             $scope.boton02 = null;
             $scope.boton03 = null;
-            if (resp[0].respuesta) {
+            if (exito) {
                 $scope.titulo = textos.titulo3;
                 $scope.cuerpo = {
                     'progreso': {

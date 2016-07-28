@@ -1,6 +1,6 @@
 /* global angular idioma firebase */
 var editarEntradas = angular.module('editarEntradas', ['ngSanitize']);
-editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$rootScope','$timeout','$route','obtieneMetada','$sce','$filter',function($uibModal,$location,$http,$rootScope,$timeout,$route,obtieneMetada,$sce,$filter){
+editarEntradas.controller('editarEntradas',['$uibModal','$location','$rootScope','$timeout','$route','obtieneMetada','$filter',function($uibModal,$location,$rootScope,$timeout,$route,obtieneMetada,$filter){
     var salida = this;
     var rutaDB = 'entradas/';
     salida.id = null;
@@ -112,16 +112,25 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
             });
         }
         $rootScope.$on('eliminarEntrada', function(evento, resp){
-            var publicacion = firebase.database().ref(rutaDB+salida.id)
+            var publicacion = firebase.database().ref(rutaDB+salida.id);
+            //************* Oliver: tienes que borrar medio por medio, uno a uno, y no la carpeta completa. Aplicar esto a entradas.module.js **********************************
+            console.log('Intentando borrar', salida.id+'/');
+                firebase.storage().ref(salida.id+'/').delete().then(function(){
+                    console.log(salida.id+'/');
+                }).catch(function(error){
+                    console.log(error, salida.id+'/');
+                });
+                /*
             publicacion.remove().then(function(){
                 $timeout(function(){
-                    $rootScope.$emit('entradaEliminada', [{'respuesta': true},{'titulo': salida.entrada.titulo}]);
+                    $rootScope.$emit('entradaEliminada', [{'respuesta': true},{'titulo': salida.tituloEntrada}]);
                 }, 1000);
             }).catch(function(){
                 $timeout(function(){
-                    $rootScope.$emit('entradaEliminada', [{'respuesta': false},{'titulo': salida.entrada.titulo}]);
+                    $rootScope.$emit('entradaEliminada', [{'respuesta': false},{'titulo': salida.tituloEntrada}]);
                 }, 1000);
             });
+            */
         });
         salida.modalInstance.result.then(function(vModal){
             // Volvemos al listado de entradas luego de confirmar el cierre.
@@ -131,6 +140,7 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
         });
     };
     function cancelarEdicion(){
+        salida.id = null;
         $location.path('/entradas');
     }
     // Funciones disponibles para los páneles de categorias/subcategorias y palabras clave
@@ -571,7 +581,6 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
             }
         });
     }];
-
 }]);
 // Controlador para la ventana modal de Ver medio
 editarEntradas.controller('modalVerMedio', ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
@@ -580,8 +589,7 @@ editarEntradas.controller('modalVerMedio', ['$scope', '$uibModalInstance', funct
     };
 }]);
 // Controlador para la ventana modal de Eliminar Entrada
-editarEntradas.controller('modalEliminarEntrada', ['$scope', 'cargaInterfaz', '$uibModalInstance', '$rootScope',
-                                        function($scope, cargaInterfaz, $uibModalInstance, $rootScope){
+editarEntradas.controller('modalEliminarEntrada', ['$scope', 'cargaInterfaz', '$uibModalInstance', '$rootScope', function($scope, cargaInterfaz, $uibModalInstance, $rootScope){
     cargaInterfaz.textos().then(function(resp){
         var textos = resp.contenido.editarEntrada.modalEliminarEntrada;
         $scope.titulo = textos.titulo1;
