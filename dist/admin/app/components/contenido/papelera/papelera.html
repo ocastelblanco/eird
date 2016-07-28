@@ -1,0 +1,25 @@
+<div ng-if="cc.permisos >= cp.textos.contenido.papelera.permisos" ng-controller="adminPapelera as ap">
+    <div class="page-header">
+        <h1>
+            {{cp.textos.contenido.papelera.titulo}}
+            <small>{{cp.textos.contenido.papelera.instrucciones}}</small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">&nbsp;</div>
+        <div class="col-sm-4">
+            <button ng-click="ap.abreModal('modalRestaurarEntrada')" class="btn btn-block btn-primary" ng-disabled="ap.estadoRestaurar">
+                <i class="fa {{cp.textos.contenido.papelera.restaurar.icono}}"></i>
+                {{cp.textos.contenido.papelera.restaurar.texto}}
+            </button>
+        </div>
+        <div class="col-sm-4">
+            <button ng-click="ap.abreModal('modalEliminarEntrada')" class="btn btn-block btn-danger" ng-disabled="ap.estadoEliminar">
+                <i class="fa {{cp.textos.contenido.papelera.eliminar.icono}}"></i>
+                {{cp.textos.contenido.papelera.eliminar.texto}}
+            </button>
+        </div>
+    </div>
+    <br>
+    <div ui-grid="ap.datosTabla" ui-grid-selection ui-grid-pagination class="tablaEntradas"></div>
+</div>

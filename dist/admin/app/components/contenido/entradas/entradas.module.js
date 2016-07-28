@@ -47,7 +47,7 @@ entradas.controller('adminEntradas', ['i18nService', 'cargaInterfaz', '$scope', 
     function cambiaDatos(data) {
         var respuesta = [];
         angular.forEach(data, function(valor, llave){
-            if (data[llave].estado == 2) {
+            if (data[llave].estado) {
                 data[llave].estado = salida.titulosTabla.estados[valor.estado];
                 data[llave].id = llave;
                 data[llave].fecha = data[llave].fecha.substr(0, 10);
@@ -112,7 +112,6 @@ entradas.controller('adminEntradas', ['i18nService', 'cargaInterfaz', '$scope', 
         function eliminaFirebase(llave) {
             var publicacion = firebase.database().ref(rutaDB+aBorrar[llave]);
             publicacion.update({'estado': 0}).then(function(){
-                firebase.storage().ref(aBorrar[llave]).delete();
                 if (llave < aBorrar.length-1) {
                     llave++;
                     eliminaFirebase(llave);

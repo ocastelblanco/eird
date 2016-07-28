@@ -45,7 +45,7 @@ publicar.controller('adminPublicar', ['i18nService', 'cargaInterfaz', '$scope', 
     function cambiaDatos(data) {
         var respuesta = [];
         angular.forEach(data, function(valor, llave){
-            if (data[llave].estado) {
+            if (data[llave] && data[llave].estado == 2) {
                 data[llave].estado = salida.titulosTabla.estados[valor.estado];
                 data[llave].id = llave;
                 data[llave].fecha = data[llave].fecha.substr(0, 10);

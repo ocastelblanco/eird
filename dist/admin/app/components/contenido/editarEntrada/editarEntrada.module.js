@@ -60,6 +60,7 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$rootScope'
             subcategoria: salida.subcategoria,
             estado: 2
         };
+        salida.fechaEntrada = salida.entrada.fecha;
         var publicacion;
         if (salida.id) {
             publicacion = firebase.database().ref(rutaDB+salida.id).update(salida.entrada);
