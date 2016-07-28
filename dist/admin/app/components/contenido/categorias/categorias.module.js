@@ -1,7 +1,8 @@
-/* global angular idioma */
+/* global angular idioma firebase */
 var categorias = angular.module('categorias', []);
-categorias.controller('adminCategorias', ['$http', 'i18nService', 'cargaInterfaz', '$scope', '$uibModal', '$timeout', function($http, i18nService, cargaInterfaz, $scope, $uibModal, $timeout){
+categorias.controller('adminCategorias', ['i18nService', 'cargaInterfaz', '$scope', '$uibModal', '$timeout', function(i18nService, cargaInterfaz, $scope, $uibModal, $timeout){
     //console.log('Publicar cargado');
+    var rutaDB = 'categorias/';
     var salida = this;
     salida.filaSeleccionada = [];
     salida.datosTabla = {
@@ -21,14 +22,13 @@ categorias.controller('adminCategorias', ['$http', 'i18nService', 'cargaInterfaz
                 {name: 'palabrasclave'}
         ]
     };
-    salida.estadoEditar = true;
+    salida.esNuevaCategoria = false;
     i18nService.setCurrentLang(idioma);
     cargaInterfaz.textos().then(function(resp){
         salida.modal = resp.contenido.categorias.modal;
         salida.modalEditarCategoria = resp.contenido.categorias.modalEditar;
         salida.titulosTabla = resp.contenido.categorias.titulosTabla;
         salida.datosTabla.columnDefs = [
-            {name: 'id', visible: false},
             {name: 'categoria', displayName: salida.titulosTabla.categoria, width: '20%'},
             {name: 'subcategoria', displayName: salida.titulosTabla.subcategoria, width: '40%'},
             {name: 'palabrasclave', displayName: salida.titulosTabla.palabrasclave, width: '40%'}
@@ -36,30 +36,18 @@ categorias.controller('adminCategorias', ['$http', 'i18nService', 'cargaInterfaz
         cargaDatosTabla();
     });
     function cargaDatosTabla(){
-        $http.get('php/categorias.php?todo=true').then(function(resp){
-            var categorias = resp.data;
-            $http.get('php/palabrasclave.php?todo=true').then(function(resp){
-                var palabrasclave = resp.data;
-                var json = [];
-                var id = 0;
-                angular.forEach(categorias, function(valor, llave){
-                    var sub = '';
-                    var pClave = '';
-                    angular.forEach(categorias[llave], function(valCat, llaveCat){
-                        var separador = (llaveCat < categorias[llave].length-1)?' | ':'';
-                        sub += valCat+separador;
-                        
-                    });
-                    angular.forEach(palabrasclave[llave], function(valPC, llavePC){
-                        var separador = (llavePC < palabrasclave[llave].length-1)?' | ':'';
-                        pClave += valPC+separador;
-                        
-                    });
-                    json.push({'id': id, 'categoria': llave, 'subcategoria': sub, 'palabrasclave': pClave});
-                    id++;
+        firebase.database().ref(rutaDB).once('value').then(function(snapshot) {
+            var val = [];
+            angular.forEach(snapshot.val(), function(valor, llave) {
+                val.push({
+                    'categoria': llave,
+                    'subcategoria': valor.subcategorias.toString(),
+                    'palabrasclave': valor.palabrasClave.toString()
                 });
-                salida.datosTabla.data = json;
             });
+            $timeout(function(){
+                salida.datosTabla.data = val;
+            }, 500);
         });
     }
     // Captura cuando el usuario selecciona una fila de la tabla
@@ -93,58 +81,33 @@ categorias.controller('adminCategorias', ['$http', 'i18nService', 'cargaInterfaz
         });
     };
     salida.eliminarCategoria = function() {
-        var datosPost = {'accion': 'eliminar', 'categoria': salida.filaSeleccionada[0].categoria};
-        $http.post('php/eliminaCategoria.php', datosPost).then(function(resp){
-            if (resp.data.respuesta) {
-                salida.datosTabla.data.splice(salida.filaSeleccionada[0].id, 1);
-                angular.forEach(salida.datosTabla.data, function(valor, llave){
-                    salida.datosTabla.data[llave].id = llave;
-                });
-                $timeout(function(){
-                    salida.cierraEliminar(true);
-                }, 500);
-            } else {
-                $timeout(function(){
-                    salida.cierraEliminar(false);
-                }, 500);
-            }
+        firebase.database().ref(rutaDB+salida.filaSeleccionada[0].categoria).remove(function(){
+            cargaDatosTabla();
+        }).then(function(){
+            $timeout(function(){
+                salida.cierraEliminar(true);
+            }, 500);
+        }).catch(function(error){
+            console.log(error);
+            $timeout(function(){
+                salida.cierraEliminar(false);
+            }, 500);
         });
     };
     salida.guardarCategoria = function(id, cat, sub, pc){
-        var datosTemp = salida.datosTabla.data;
-        var subc = '';
-        var pClave = '';
-        angular.forEach(sub, function(valCat, llaveCat){
-            var separador = (llaveCat < sub.length-1)?' | ':'';
-            subc += valCat+separador;
-        });
-        angular.forEach(pc, function(valPC, llavePC){
-            var separador = (llavePC < pc.length-1)?' | ':'';
-            pClave += valPC+separador;
-        });
-        if (id == null) {
-            id = datosTemp.length;
-            datosTemp.push({'id': id, 'categoria': cat, 'subcategoria': subc, 'palabrasclave': pClave});
+        var nuevaCategoria = {};
+        nuevaCategoria[cat] = {'subcategorias': sub, 'palabrasClave': pc};
+        if (id) {
+            firebase.database().ref(rutaDB+id).remove();
         }
-        var archivoCategorias = {};
-        var archivoPalabrasclave = {};
-        angular.forEach(datosTemp, function(valor, llave) {
-            if(id == llave) {
-                archivoCategorias[cat] = sub;
-                archivoPalabrasclave[cat] = pc;
+        firebase.database().ref(rutaDB).update(nuevaCategoria, function(error){
+            if (error){
+                salida.exitoCambios(false);
             } else {
-                archivoCategorias[valor.categoria] = valor.subcategoria.split(' | ');
-                archivoPalabrasclave[valor.categoria] = valor.palabrasclave.split(' | ');
+                console.log(error);
+                salida.exitoCambios(true);
             }
-        });
-        var salidaPOST = {'categorias': archivoCategorias, 'palabrasclave': archivoPalabrasclave};
-        $http.post('php/guardarCategorias.php', salidaPOST).then(function(resp){
-            $timeout(function(){
-                salida.exitoCambios(resp.data.respuesta);
-            },500);
-            if (resp.data.respuesta) {
-                cargaDatosTabla();
-            }
+            cargaDatosTabla();
         });
     };
     var modalEliminarCategoria = ['$uibModalInstance', '$scope', function($uibModalInstance, $scope){
@@ -257,6 +220,7 @@ categorias.controller('adminCategorias', ['$http', 'i18nService', 'cargaInterfaz
         };
     }];
     var modalEditarCategoria = ['$uibModalInstance', '$scope', function($uibModalInstance, $scope){
+        var catOriginal = salida.filaSeleccionada[0].categoria;
         $scope.proceso = false;
         $scope.paneles = true;
         $scope.verCancelar = true;
@@ -264,8 +228,8 @@ categorias.controller('adminCategorias', ['$http', 'i18nService', 'cargaInterfaz
         $scope.instrucciones = salida.modalEditarCategoria.instrucciones;
         $scope.instrucciones.estilo = 'alert-info';
         $scope.categoria = salida.filaSeleccionada[0].categoria;
-        $scope.subcategorias = (salida.filaSeleccionada[0].subcategoria)?salida.filaSeleccionada[0].subcategoria.split(' | '):[];
-        $scope.palabrasclave = (salida.filaSeleccionada[0].palabrasclave)?salida.filaSeleccionada[0].palabrasclave.split(' | '):[];
+        $scope.subcategorias = (salida.filaSeleccionada[0].subcategoria)?salida.filaSeleccionada[0].subcategoria.split(','):[];
+        $scope.palabrasclave = (salida.filaSeleccionada[0].palabrasclave)?salida.filaSeleccionada[0].palabrasclave.split(','):[];
         $scope.editaCategoria = (salida.filaSeleccionada[0].categoria)?false:true;
         $scope.nomCategoria = {
             'titulo': salida.modalEditarCategoria.categoria.titulo,
@@ -296,7 +260,7 @@ categorias.controller('adminCategorias', ['$http', 'i18nService', 'cargaInterfaz
         $scope.aceptarCambios = function(){
             $scope.proceso = true;
             $scope.titulo = salida.modalEditarCategoria.proceso;
-            salida.guardarCategoria(salida.filaSeleccionada[0].id, $scope.categoria, $scope.subcategorias, $scope.palabrasclave);
+            salida.guardarCategoria(catOriginal, $scope.categoria, $scope.subcategorias, $scope.palabrasclave);
         };
         $scope.cancelarCambios = function(){$uibModalInstance.dismiss();};
         salida.exitoCambios = function(exito){
