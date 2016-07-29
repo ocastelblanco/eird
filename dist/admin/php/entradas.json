@@ -298,5 +298,21 @@
     },
     {
         "id": "000027"
+    },
+    {
+        "id": "000028",
+        "titulo": "Los doce años de Balaguer",
+        "texto": "<p>En 1966 <a href=\"https:\/\/es.wikipedia.org\/wiki\/Joaqu%C3%ADn_Balaguer\">Joaquín Balaguer<\/a> ascendió al poder y se mantuvo en él durante un periodo de 12 años, en una dictadura que se valió de <a href=\"https:\/\/es.wikipedia.org\/wiki\/Fraudes_electorales\">fraudes electorales<\/a>, y utilizaba la represión sobre sus opositores políticos, para que la competencia fuera prácticamente nula y legitimar su reelección \"democráticamente\". Su gestión fue un período de represión de los <a href=\"https:\/\/es.wikipedia.org\/wiki\/Derechos_humanos\">derechos humanos<\/a> y las libertades civiles, en la cual se produjo 11 000 víctimas por desapariciones forzadas y asesinatos políticos.<a href=\"https:\/\/es.wikipedia.org\/wiki\/Rep%C3%BAblica_Dominicana#cite_note-29\">29<\/a><a href=\"https:\/\/es.wikipedia.org\/wiki\/Rep%C3%BAblica_Dominicana#cite_note-30\">30<\/a> Su gobierno fue muy criticado por una creciente disparidad entre ricos y pobres. Fue, sin embargo, elogiado por un ambicioso programa de infraestructura, que incluye grandes proyectos de viviendas, complejos deportivos, teatros, museos, acueductos, caminos vecinales, carreteras, y el monumento <a href=\"https:\/\/es.wikipedia.org\/wiki\/Faro_a_Col%C3%B3n\">Faro a Colón<\/a>.<\/p>",
+        "categoria": 0,
+        "subcategoria": 5,
+        "palabrasClave": [
+            "Balaguer",
+            "Derechos humanos"
+        ],
+        "medios": [
+
+        ],
+        "fecha": "2016-07-22 05:51:56pm",
+        "estado": 2
     }
 ]

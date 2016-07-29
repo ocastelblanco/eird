@@ -1,7 +1,8 @@
-/* global angular idioma rutaMedios */
+/* global angular idioma firebase */
 var publicar = angular.module('publicar', []);
-publicar.controller('adminPublicar', ['$http', 'i18nService', 'cargaInterfaz', '$scope', '$location', '$uibModal', '$rootScope', '$timeout', function($http, i18nService, cargaInterfaz, $scope, $location, $uibModal, $rootScope, $timeout){
+publicar.controller('adminPublicar', ['i18nService', 'cargaInterfaz', '$scope', '$location', '$uibModal', '$rootScope', '$timeout', function(i18nService, cargaInterfaz, $scope, $location, $uibModal, $rootScope, $timeout){
     //console.log('Publicar cargado');
+    var rutaDB = 'entradas/';
     var salida = this;
     salida.datosTabla = {
         enableRowSelection: true,
@@ -12,6 +13,7 @@ publicar.controller('adminPublicar', ['$http', 'i18nService', 'cargaInterfaz', '
         showGridFooter:true,
         paginationPageSizes: [10, 20, 50],
         paginationPageSize: 10,
+        gridMenuShowHideColumns: false,
         columnDefs: [
                 {name: 'id', visible: false},
                 {name: 'titulo'},
@@ -28,36 +30,27 @@ publicar.controller('adminPublicar', ['$http', 'i18nService', 'cargaInterfaz', '
         salida.titulosTabla = resp.contenido.entradas.encabezadoTablaDatos;
         salida.datosTabla.columnDefs = [
             {name: 'id', visible: false},
-            {name: 'titulo', displayName: salida.titulosTabla.nomEntradas},
-            {name: 'categoria', displayName: salida.titulosTabla.categoria},
-            {name: 'subcategoria', displayName: salida.titulosTabla.subcategoria},
-            {name: 'fecha', displayName: salida.titulosTabla.fecha}
+            {name: 'titulo', displayName: salida.titulosTabla.nomEntradas, enableColumnMenu: false, width: '30%'},
+            {name: 'categoria', displayName: salida.titulosTabla.categoria, enableColumnMenu: false},
+            {name: 'subcategoria', displayName: salida.titulosTabla.subcategoria, enableColumnMenu: false},
+            {name: 'fecha', displayName: salida.titulosTabla.fecha, enableColumnMenu: false}
         ];
         cargaDatosTabla();
     });
     function cargaDatosTabla(){
-        $http.post('php/entradas.php').then(function(entradas){
-            $http.get('php/categorias.php?todo=true').then(function(categorias){
-                salida.datosTabla.data = cambiaDatos(entradas.data, categorias.data);
-            });
+        firebase.database().ref(rutaDB).once('value').then(function(snapshot) {
+            $timeout(function(){salida.datosTabla.data = cambiaDatos(snapshot.val())}, 1000);
         });
     }
-    function cambiaDatos(data, categorias) {
-        var nomCat = Object.keys(categorias);
+    function cambiaDatos(data) {
         var respuesta = [];
         angular.forEach(data, function(valor, llave){
-            // Solo carga contenidos cuando NO ha sido publicado (no se listan ni publicados ni eliminados)
-            if (data[llave].estado == 2) {
+            if (data[llave] && data[llave].estado == 2) {
+                data[llave].estado = salida.titulosTabla.estados[valor.estado];
+                data[llave].id = llave;
+                data[llave].fecha = data[llave].fecha.substr(0, 10);
                 respuesta.push(data[llave]);
             }
-        });
-        angular.forEach(respuesta, function(valor, llave){
-            //respuesta[llave].estado = salida.titulosTabla.estados[valor.estado];
-            var nombreCat = nomCat[valor.categoria];
-            var nombreSub = categorias[nombreCat][valor.subcategoria]
-            respuesta[llave].categoria = nombreCat;
-            respuesta[llave].subcategoria = nombreSub;
-            respuesta[llave].fecha = respuesta[llave].fecha.substr(0, 10);
         });
         return respuesta;
     };
@@ -164,7 +157,7 @@ publicar.controller('adminPublicar', ['$http', 'i18nService', 'cargaInterfaz', '
             cargarEntrada();
         };
         $scope.rutaThumb = function(medio) {
-            return (medio.tipo)?rutaMedios+medio.thumb:rutaMedios+medio.ruta;
+            return (medio.tipo)?medio.thumb:medio.ruta;
         };
         function cargarEntrada() {
             $scope.titulo = salida.datosTabla.data[posElegida].titulo;
@@ -176,25 +169,37 @@ publicar.controller('adminPublicar', ['$http', 'i18nService', 'cargaInterfaz', '
         }
     }];
     function publicarEntradas(entradas){
-        var datosPOST = {};
-        datosPOST.accion = "publicarEntradas";
-        datosPOST.idEntradas = [];
-        angular.forEach(entradas, function(valor, llave){
-            datosPOST.idEntradas.push(valor.id);
+        var aPublicar = [];
+        angular.forEach(entradas, function(value, key) {
+            aPublicar.push(value.id);
         });
-        $http.post('php/entradas.php', datosPOST).then(function(resp){
-            angular.forEach(entradas, function(valor, llave) {
-                var aQuitar;
-                angular.forEach(salida.datosTabla.data, function(value, key) {
-                    if(valor.id == value.id) {aQuitar = key;}
-                });
-                salida.datosTabla.data.splice(aQuitar,1);
+        publicaFirebase(0);
+        function publicaFirebase(llave) {
+            var publicacion = firebase.database().ref(rutaDB+aPublicar[llave]);
+            publicacion.update({'estado': 1}).then(function(){
+                firebase.storage().ref(aPublicar[llave]).delete();
+                if (llave < aPublicar.length-1) {
+                    llave++;
+                    publicaFirebase(llave);
+                } else {
+                    $timeout(function(){
+                        angular.forEach(entradas, function(valor, clave) {
+                            angular.forEach(salida.datosTabla.data, function(value, key) {
+                                if(valor.id == value.id) {salida.datosTabla.data.splice(key,1);}
+                            });
+                        });
+                        salida.estadoPublicando = false;
+                        salida.numFilasSeleccionadas = 0;
+                        $scope.gridApi.selection.clearSelectedRows();
+                        salida.activaBotones();
+                        $rootScope.$emit('entradaPublicada');
+                    }, 1000);
+                }
+            }).catch(function(error){
+                $timeout(function(){
+                    console.log(error);
+                }, 1000);
             });
-            salida.estadoPublicando = false;
-            salida.numFilasSeleccionadas = 0;
-            $scope.gridApi.selection.clearSelectedRows();
-            salida.activaBotones();
-            $rootScope.$emit('entradaPublicada');
-        });
+        }
     }
 }]);

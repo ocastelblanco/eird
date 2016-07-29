@@ -1,6 +1,12 @@
-/* global angular */
+/* global angular firebase */
 var idioma = 'es';
-var rutaMedios = '../media/';
+var config = {
+    apiKey: "AIzaSyCfPS6ayXe7S9ddudsiM8LO9HPEGS2CkyA",
+    authDomain: "eird-a6f79.firebaseapp.com",
+    databaseURL: "https://eird-a6f79.firebaseio.com",
+    storageBucket: "eird-a6f79.appspot.com",
+};
+firebase.initializeApp(config);
 // Módulos de la app principal eirdAdmin
 var eirdAdmin = angular.module('eirdAdmin', [
     'ui.bootstrap',
@@ -18,7 +24,8 @@ var eirdAdmin = angular.module('eirdAdmin', [
     'editarEntradas',
     'publicar',
     'categorias',
-    'portada'
+    'portada',
+    'papelera'
 ]);
 // Controladores
 eirdAdmin.controller('controladorPrincipal', ['cargaInterfaz', function(cargaInterfaz) {

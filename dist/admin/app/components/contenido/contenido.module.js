@@ -20,8 +20,7 @@ contenido.controller('controladorContenido', ['consultaSesion', '$routeParams', 
         salida.permisos = resp.permisos;
     });
 }]);
-contenido.controller('menuLateral', ['consultaSesion', '$location', 'cargaInterfaz', '$routeParams',
-                            function(consultaSesion, $location, cargaInterfaz, $routeParams){
+contenido.controller('menuLateral', ['consultaSesion', '$location', 'cargaInterfaz', '$routeParams', function(consultaSesion, $location, cargaInterfaz, $routeParams){
     //console.log('menuLateral cargado');
     var salida = this;
     salida.seccion = $location.path().split('/')[1];

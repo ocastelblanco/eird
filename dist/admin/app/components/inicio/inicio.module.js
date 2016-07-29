@@ -2,8 +2,7 @@
 var pagInicial = '/contenido';
 var inicio = angular.module('inicio', ['eirdAdmin']);
 // Verifica si la sesión ha sido iniciada
-inicio.controller('inyectaContenido', ['consultaSesion', '$scope', '$location',
-                                function(consultaSesion, $scope, $location) {
+inicio.controller('inyectaContenido', ['consultaSesion', '$scope', '$location', function(consultaSesion, $scope, $location) {
     //console.log('inyectaContenido cargado');
     var salida = this;
     consultaSesion.hay().then(function(sesion){

@@ -47,6 +47,12 @@
               "icono": "fa-newspaper-o",
               "destino": "portada",
               "permisos": "4"
+            },
+            {
+              "texto": "Papelera",
+              "icono": "fa-trash",
+              "destino": "papelera",
+              "permisos": "5"
             }
           ]
         }
@@ -62,7 +68,7 @@
         "titulo": "Gestionar entradas",
         "instrucciones": "Seleccione la(s) entrada(s) y haga clic sobre el botón correspondiente.",
         "eliminar": {
-          "texto": "Eliminar entradas seleccionadas",
+          "texto": "Enviar entradas a la papelera",
           "icono": "fa-trash"
         },
         "editar": {
@@ -87,7 +93,7 @@
           "titulo3": "Entradas eliminadas correctamente",
           "tituloError": "Problemas al eliminar las entradas",
           "contenido1": {
-            "texto": "¿Quiere eliminar las entradas definitivamente?",
+            "texto": "¿Quiere enviar las entradas seleccionadas a la papelera?",
             "icono": "fa-exclamation-triangle"
           },
           "contenido3": {
@@ -123,7 +129,7 @@
             "icono": "fa-floppy-o"
           },
           "eliminar": {
-            "texto": "Eliminar entrada",
+            "texto": "Enviar a la papelera",
             "icono": "fa-trash"
           },
           "cancelar": {
@@ -165,7 +171,8 @@
             "icono": "fa-trash"
           },
           "subirMedio": {
-            "texto": "Cargar medios"
+            "texto": "Cargar medios",
+            "singrabar": "Debe guardar la entrada para cargar medios"
           },
           "modalConfirmarEliminar": {
             "titulo": "Confirme la acción",
@@ -271,7 +278,7 @@
           "titulo3": "Entrada eliminada correctamente",
           "tituloError": "Problemas al eliminar la entrada",
           "contenido1": {
-            "texto": "¿Quiere eliminar la entrada definitivamente?",
+            "texto": "¿Quiere enviar la entrada a la papelera?",
             "icono": "fa-exclamation-triangle"
           },
           "contenido3": {
@@ -407,7 +414,87 @@
             "aleatorio": "Totalmente aleatorio"
           }
         },
+        "medioDestacado": {
+          "titulo": "¿Cuál es el elemento multimedia destacado?",
+          "opciones": {
+            "masReciente": "El más reciente",
+            "recienteSemana": "Aleatorio entre los cargados la última semana",
+            "recienteMes": "Aleatorio entre los cargados el último mes",
+            "aleatorio": "Totalmente aleatorio"
+          }
+        },
         "permisos": "5"
+      },
+      "papelera": {
+        "titulo": "Papelera de reciclaje",
+        "instrucciones": "Elimine definitivamente o restaure entradas.",
+        "eliminar": {
+          "texto": "Eliminar definitivamente",
+          "icono": "fa-trash"
+        },
+        "restaurar": {
+          "texto": "Restaurar",
+          "icono": "fa-undo"
+        },
+        "modalRestaurarEntrada": {
+          "confirmacion": {
+            "titulo": "Restaurar entradas",
+            "contenido": "¿Desea restaurar las siguientes entradas?",
+            "estilo": "alert-warning",
+            "pie": "Importante: todas las entradas restauradas deberán ser publicadas nuevamente.",
+            "botonAceptar": {
+              "texto": "Restaurar",
+              "estilo": "btn-warning",
+              "icono": "fa-undo"
+            },
+            "botonCancelar": {
+              "texto": "Cancelar sin restaurar",
+              "estilo": "btn-default",
+              "icono": "fa-th"
+            }
+          },
+          "proceso": "Restaurando las entradas...",
+          "error": {
+            "titulo": "Ha ocurrido un error",
+            "contenido": "No se pudieron restaurar las entradas seleccionadas:",
+            "boton": "Cerrar"
+          },
+          "exito": {
+            "titulo": "Restauración realizada",
+            "contenido": "Las entradas seleccionadas han sido restauradas:",
+            "boton": "Cerrar"
+          }
+        },
+        "modalEliminarEntrada": {
+          "confirmacion": {
+            "titulo": "Eliminar entradas",
+            "contenido": "¿Desea eliminar definitivamente las siguientes entradas?",
+            "estilo": "alert-danger",
+            "pie": "Importante: se eliminarán definitivamente tanto las entradas como sus elementos multimedia.",
+            "botonAceptar": {
+              "texto": "Eliminar definitivamente",
+              "estilo": "btn-danger",
+              "icono": "fa-trash"
+            },
+            "botonCancelar": {
+              "texto": "Cancelar sin eliminar",
+              "estilo": "btn-default",
+              "icono": "fa-th"
+            }
+          },
+          "proceso": "Eliminando las entradas...",
+          "error": {
+            "titulo": "Ha ocurrido un error",
+            "contenido": "No se pudieron eliminar las entradas seleccionadas:",
+            "boton": "Cerrar"
+          },
+          "exito": {
+            "titulo": "Eliminación definitiva",
+            "contenido": "Las entradas seleccionadas han sido eliminadas definitivamente:",
+            "boton": "Cerrar"
+          }
+        },
+        "permisos": 5
       }
     },
     "panelLogin": {

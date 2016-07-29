@@ -1,26 +1,24 @@
-/* global angular idioma rutaMedios */
-var entradaID;
+/* global angular idioma firebase */
 var editarEntradas = angular.module('editarEntradas', ['ngSanitize']);
-editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$rootScope','$timeout','$route','obtieneMetada','$sce',function($uibModal,$location,$http,$rootScope,$timeout,$route,obtieneMetada,$sce){
+editarEntradas.controller('editarEntradas',['$uibModal','$location','$rootScope','$timeout','$route','obtieneMetada','$filter',function($uibModal,$location,$rootScope,$timeout,$route,obtieneMetada,$filter){
     var salida = this;
-    salida.datosPOST = {};
+    var rutaDB = 'entradas/';
+    salida.id = null;
     salida.PC = [];
     salida.medios = [];
     // Cargar información cuando ya existe un ID (se editó la entrada)
     var location = $location.search();
     if (location.id) {
-        entradaID = location.id;
-        salida.datosPOST.id = location.id;
-        salida.datosPOST.accion = 'listarEntrada';
-        $http.post('php/entradas.php', salida.datosPOST).then(function(resp){
-            salida.tituloEntrada = resp.data.titulo;
-            salida.textoEntrada = resp.data.texto;
-            salida.fechaEntrada = resp.data.fecha;
-            salida.numCat = resp.data.categoria;
-            salida.cambiaCat(salida.numCat, resp.data.subcategoria);
-            salida.cambiaSub(resp.data.subcategoria);
-            salida.PC = resp.data.palabrasClave?resp.data.palabrasClave:[];
-            salida.medios = resp.data.medios?resp.data.medios:[];
+        salida.id = location.id;
+        firebase.database().ref(rutaDB+salida.id).once('value').then(function(resp){
+            salida.tituloEntrada = resp.val().titulo;
+            salida.textoEntrada = resp.val().texto;
+            salida.fechaEntrada = resp.val().fecha;
+            salida.numCat = resp.val().categoria;
+            salida.cambiaCat(salida.numCat, resp.val().subcategoria);
+            salida.cambiaSub(resp.val().subcategoria);
+            salida.PC = resp.val().palabrasClave?resp.val().palabrasClave:[];
+            salida.medios = resp.val().medios?resp.val().medios:[];
         });
     }
     salida.tinymceOptions = {
@@ -52,25 +50,34 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
             controller: 'modalGuardarEntrada',
             backdrop: 'static'
         });
-        if (entradaID) {salida.datosPOST.id = entradaID;}
-        salida.datosPOST.accion = 'guardar';
-        salida.datosPOST.titulo = salida.tituloEntrada;
-        salida.datosPOST.texto = salida.textoEntrada;
-        salida.datosPOST.palabrasClave = salida.PC;
-        salida.datosPOST.medios = salida.medios;
-        // Y todos los demás datos necesarios, como Categoría, subcategoría y palabras clave.
-        $http.post('php/entradas.php', salida.datosPOST).then(function(resp){
+        salida.entrada = {
+            titulo: salida.tituloEntrada,
+            texto: salida.textoEntrada,
+            palabrasClave: salida.PC,
+            medios: salida.medios,
+            fecha: $filter('date')(Date.now(), 'y-MM-dd hh:mm:ss a'),
+            categoria: salida.categoria,
+            subcategoria: salida.subcategoria,
+            estado: 2
+        };
+        salida.fechaEntrada = salida.entrada.fecha;
+        var publicacion;
+        if (salida.id) {
+            publicacion = firebase.database().ref(rutaDB+salida.id).update(salida.entrada);
+        } else {
+            publicacion = firebase.database().ref(rutaDB).push(salida.entrada);
+            salida.id = publicacion.key;
+            $location.search('id', salida.id);
+        }
+        publicacion.then(function(){
             $timeout(function(){
-                salida.datosPOST.accion = 'listarEntrada';
-                $http.post('php/entradas.php', salida.datosPOST).then(function(resp){
-                    salida.fechaEntrada = resp.data.fecha;
-                    salida.datosPOST.accion = null;
-                });
-                $rootScope.$emit('entradaGuardada', [resp.data,salida.datosPOST]);
-            }, 1000);
-            entradaID = resp.data.id;
-            salida.datosPOST.id = entradaID; // Esto es para activar el botón Eliminar entrada
-            $location.search('id', entradaID);
+                $rootScope.$emit('entradaGuardada', [true,salida.entrada]);
+            }, 1500);
+        }).catch(function(){
+            // Error
+            $timeout(function(){
+                $rootScope.$emit('entradaGuardada', [false,salida.entrada]);
+            }, 1500);
         });
         salida.modalInstance.result.then(function(vModal){
             if (vModal == 'cancelarEdicion') {
@@ -80,7 +87,7 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
                 var seccion = $location.path().split('/')[1];
                 var pos = $location.search('id', null);
                 pos.path('/'+seccion+'/editarEntrada');
-                entradaID = null;
+                salida.id = null;
                 $route.reload();
             }
         });
@@ -97,8 +104,7 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
         });
     };
     salida.eliminaEntrada = function() {
-        if (entradaID) {
-            salida.datosPOST.id = entradaID;
+        if (salida.id) {
             salida.modalInstance = $uibModal.open({
                 templateUrl: 'app/shared/modal.html',
                 controller: 'modalEliminarEntrada',
@@ -107,10 +113,14 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
             });
         }
         $rootScope.$on('eliminarEntrada', function(evento, resp){
-            salida.datosPOST.accion = "eliminar";
-            $http.post('php/entradas.php', salida.datosPOST).then(function(resp){
+            var publicacion = firebase.database().ref(rutaDB+salida.id);
+            publicacion.update({'estado': 0}).then(function(){
                 $timeout(function(){
-                    $rootScope.$emit('entradaEliminada', [resp.data,salida.datosPOST]);
+                    $rootScope.$emit('entradaEliminada', [{'respuesta': true},{'titulo': salida.tituloEntrada}]);
+                }, 1000);
+            }).catch(function(){
+                $timeout(function(){
+                    $rootScope.$emit('entradaEliminada', [{'respuesta': false},{'titulo': salida.tituloEntrada}]);
                 }, 1000);
             });
         });
@@ -122,6 +132,7 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
         });
     };
     function cancelarEdicion(){
+        salida.id = null;
         $location.path('/entradas');
     }
     // Funciones disponibles para los páneles de categorias/subcategorias y palabras clave
@@ -130,7 +141,7 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
         salida.categorias = resp;
     });
     salida.cambiaCat = function(valor, miSub) {
-        salida.datosPOST.categoria = valor;
+        salida.categoria = valor;
         salida.numSub = miSub;
         obtieneMetada.subcategorias(valor).then(function(resp){
             salida.subcategorias = resp;
@@ -149,7 +160,7 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
         });
     };
     salida.cambiaSub = function(valor) {
-        salida.datosPOST.subcategoria = valor;
+        salida.subcategoria = valor;
     };
     salida.nuevaPClave = function(palabra) {
       salida.PC.push(palabra);
@@ -175,11 +186,11 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
         var footer = '</div><div class="modal-footer"><p>';
         var cuerpoMedio;
         if (medio.tipo == 0) {
-            cuerpoMedio = '<img src="'+rutaMedios+medio.ruta+'">';
+            cuerpoMedio = '<img src="'+medio.ruta+'">';
         } else if (medio.tipo == 1) {
-            cuerpoMedio = '<div class="contenedor"><img src="'+rutaMedios+medio.thumb+'"><audio src="'+rutaMedios+medio.ruta+'" controls></audio></div>';
+            cuerpoMedio = '<div class="contenedor"><img src="'+medio.thumb+'"><audio src="'+medio.ruta+'" controls></audio></div>';
         } else if (medio.tipo == 2) {
-            cuerpoMedio = '<video src="'+rutaMedios+medio.ruta+'" poster="'+rutaMedios+medio.thumb+'" controls></video>';
+            cuerpoMedio = '<video src="'+medio.ruta+'" poster="'+medio.thumb+'" controls></video>';
         }
         var templateMedio = head+body+cuerpoMedio+footer+medio.pie+'</p></div>';
         salida.modalInstance = $uibModal.open({
@@ -189,13 +200,10 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
             controller: 'modalVerMedio'
         });
     };
-    salida.rutaThumb = function(medio) {
-        return (medio.tipo)?rutaMedios+medio.thumb:rutaMedios+medio.ruta;
-    };
     salida.abrirCarga = function(){
         salida.modalInstance = $uibModal.open({
             templateUrl: 'app/shared/modalUpload.html',
-            controller: 'modalCargarMedios',
+            controller: modalCargarMedios,
             size: 'lg',
             windowClass: 'modal-cargamedios',
             backdrop: 'static',
@@ -257,16 +265,27 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
             $scope.boton01 = {'invisible': true};
             $scope.boton02 = {'invisible': true};
             $scope.botonCerrar = {'invisible': true};
-            var post = {'accion': 'eliminar','id': entradaID, 'medio': salida.medioBorrar};
-            $http.post('php/eliminaMedios.php', post).then(function(resp){
+            var nombreThumb = (salida.medios[salida.medioBorrar].thumb)?salida.medios[salida.medioBorrar].nombreThumb:null;
+            var eliminaMedioRef = firebase.storage().ref(salida.id+'/'+salida.medios[salida.medioBorrar].nombre);
+            eliminaMedioRef.delete().then(function(){
+                if (nombreThumb) {
+                    firebase.storage().ref(salida.id+'/'+nombreThumb).delete().then(function(){
+                        finalizaEliminacion(true, null);
+                    }).catch(function(error){
+                        finalizaEliminacion(false, error);
+                    });
+                } else {
+                    finalizaEliminacion(true, null);
+                }
+            }).catch(function(error){finalizaEliminacion(false,error);});
+            function finalizaEliminacion(exito, mensaje) {
                 $scope.boton01 = {
                     'invisible': false,
                     'estilo': 'btn-primary',
                     'icono': textos.botonCerrar.icono,
                     'texto': textos.botonCerrar.texto
                 };
-                $scope.proceso = false;
-                if (resp.data.respuesta) {
+                if (exito){
                     $timeout(function(){
                         salida.medios.splice(salida.medioBorrar,1);
                         $scope.titulo = textos.terminado;
@@ -287,203 +306,273 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$http','$ro
                             'invisible': false,
                             'icono': 'fa-ban fa-2x'
                         },
-                        'texto': resp.data.mensaje,
+                        'texto': mensaje,
                         'estilo': 'alert-danger'
                     };
                 }
-            });
+            }
         };
     }];
-}]);
-// Controlador para la ventana modal de cargar medios
-editarEntradas.controller('modalCargarMedios', ['$scope', 'cargaInterfaz', '$uibModalInstance', '$rootScope','Upload', '$timeout', function($scope, cargaInterfaz, $uibModalInstance, $rootScope, Upload, $timeout){
-    var metadata = [];
-    var tipos = {'image/jpeg': 0, 'audio/mp3': 1, 'video/mp4': 2};
-    $scope.misArchivos = [];
-    $scope.medioThumb = [];
-    $scope.pies = [];
-    cargaInterfaz.textos().then(function(resp){
-        var textos = resp.contenido.editarEntrada.modalCargarMedios;
-        $scope.titulo = textos.titulo;
-        $scope.cuerpo = {
-            'progreso': {'invisible': true},
-            'instrucciones': textos.instrucciones,
-            'noCompatible': textos.noCompatible,
-            'miniInstrucciones': textos.miniInstrucciones,
-            'botonSubirThumb': textos.botonSubirThumb,
-            'botonEliminar': textos.botonEliminar,
-            'textareaPlaceholder': textos.textareaPlaceholder
-        };
-        $scope.footer = {
-            'boton01': {'invisible': true},
-            'boton02': {
-                'invisible': false,
-                'texto': textos.boton02.texto,
-                'estilo': 'btn-danger',
-                'icono': {
-                    'invisible': false,
-                    'estilo': textos.boton02.icono
-                }
-            }
-        };
-        $scope.boton02 = function() {
-            $uibModalInstance.dismiss('cancel');
-        };
-        $scope.$watch('archivos', function() {
-            $scope.upload($scope.archivos);
-        });
-        $scope.tarjetaUpVisible = true;
-        $scope.upload = function (archivos) {
-            if (archivos && archivos.length) {
-                angular.forEach(archivos, function(valor, llave){$scope.misArchivos.push(valor);});
-                $scope.footer = {
-                    'boton01': {
-                        'invisible': false,
-                        'texto': textos.boton01.texto,
-                        'estilo': 'btn-primary',
-                        'icono': {
-                            'invisible': false,
-                            'estilo': textos.boton01.icono
-                        }
-                    },
-                    'boton02': {
-                        'invisible': false,
-                        'texto': textos.boton02.texto,
-                        'estilo': 'btn-danger',
-                        'icono': {
-                            'invisible': false,
-                            'estilo': textos.boton02.icono
-                        }
-                    }
-                };
-                $scope.boton01 = function() {
-                    cargarArchivos();
-                };
-                $scope.boton02 = function() {
-                    archivos = [];
-                    $scope.misArchivos = [];
-                    $uibModalInstance.dismiss('cancel');
-                };
-            }
-        };
-        $scope.eliminarMedio = function(index) {
-            $scope.misArchivos.splice(index, 1);
-            $scope.medioThumb.splice(index, 1);
-        };
-        $scope.subirThumb = function(thumb, index){
-            $scope.medioThumb[index] = thumb;
-        };
-        function cargarArchivos() {
-            var mediosCargados = [];
-            var thumbsCargados = [];
-            var erroresMetadata = [];
-            angular.forEach($scope.misArchivos, function(valor, llave){
-                metadata[llave] = {'ruta':'','pie':'','tipo':'','thumb':''};
-                metadata[llave].ruta = valor.name;
-                metadata[llave].pie = ($scope.pies[llave])?$scope.pies[llave]:'';
-                metadata[llave].tipo = tipos[valor.type];
-                metadata[llave].thumb = ($scope.medioThumb[llave])?$scope.medioThumb[llave].name:'';
-            });
-            $scope.tarjetaUpVisible = false;
-            $scope.progresoVisible = [];
-            $scope.progresoValor = [];
-            $scope.mensajeError = [];
-            $scope.mensajeThumbError = [];
-            $scope.mensajeExito = [];
-            $scope.mensajeThumbExito = [];
-            $scope.progresoThumbVisible = [];
-            $scope.progresoThumbValor = [];
-            // Carga primero los medios, img, audio o video.
-            angular.forEach($scope.misArchivos, function(archivo, llave){
-                mediosCargados[llave] = false;
-                $scope.progresoVisible[llave] = true;
-                $scope.progresoValor[llave] = 0;
-                $timeout(function(){
-                    Upload.upload({
-                        url: 'php/cargaMedios.php',
-                        data: {file: archivo}
-                    }).then(function(resp) {
-                        //console.log(resp);
-                        if (resp.data.respuesta) {
-                            metadata[llave].ruta = resp.data.nombreFinal;
-                            $scope.mensajeExito[llave] = archivo.name + textos.mensajeExito;
-                        } else {
-                            $scope.mensajeError[llave] = textos.mensajeError + archivo.name + ': ' + resp.data.mensaje;
-                            erroresMetadata.push(llave);
-                        }
-                        mediosCargados[llave] = true;
-                        verificaCargas();
-                    }, function(resp) {
-                        $scope.mensajeError[llave] = textos.mensajeError + archivo.name + ': ' + resp.status;
-                        erroresMetadata.push(llave);
-                        mediosCargados[llave] = true;
-                        verificaCargas();
-                    }, function(evt) {
-                        $scope.progresoValor[llave] = parseInt(100.0 * evt.loaded / evt.total);
-                    });
-                }, (llave*1000));
-            });
-            // Carga los tumbs que se usaron para audio o video
-            angular.forEach($scope.medioThumb, function(archivo, llave){
-                $scope.progresoThumbVisible[llave] = true;
-                $scope.progresoThumbValor[llave] = 0;
-                thumbsCargados[llave] = false;
-                $timeout(function(){
-                    Upload.upload({
-                        url: 'php/cargaMedios.php',
-                        data: {file: archivo}
-                    }).then(function(resp) {
-                        //console.log(resp);
-                        if (resp.data.respuesta) {
-                            metadata[llave].thumb = resp.data.nombreFinal;
-                            $scope.mensajeThumbExito[llave] = archivo.name + textos.mensajeExito;
-                        } else {
-                            $scope.mensajeThumbError[llave] = textos.mensajeError + archivo.name + ': ' + resp.data.mensaje;
-                            erroresMetadata.push(llave);
-                        }
-                        thumbsCargados[llave] = true;
-                        verificaCargas();
-                    }, function(resp) {
-                        $scope.mensajeThumbError[llave] = textos.mensajeError + archivo.name + ': ' + resp.status;
-                        thumbsCargados[llave] = true;
-                        erroresMetadata.push(llave);
-                        verificaCargas();
-                    }, function(evt) {
-                        $scope.progresoThumbValor[llave] = parseInt(100.0 * evt.loaded / evt.total);
-                    });
-                }, (llave*1000));
-            });
+    // Controlador para la ventana modal de cargar medios
+    var modalCargarMedios = ['$scope', 'cargaInterfaz', '$uibModalInstance', '$rootScope','Upload', '$timeout', function($scope, cargaInterfaz, $uibModalInstance, $rootScope, Upload, $timeout){
+        var metadata = [];
+        var tipos = {'image/jpeg': 0, 'audio/mp3': 1, 'video/mp4': 2};
+        $scope.misArchivos = [];
+        $scope.medioThumb = [];
+        $scope.pies = [];
+        cargaInterfaz.textos().then(function(resp){
+            var textos = resp.contenido.editarEntrada.modalCargarMedios;
+            $scope.titulo = textos.titulo;
+            $scope.cuerpo = {
+                'progreso': {'invisible': true},
+                'instrucciones': textos.instrucciones,
+                'noCompatible': textos.noCompatible,
+                'miniInstrucciones': textos.miniInstrucciones,
+                'botonSubirThumb': textos.botonSubirThumb,
+                'botonEliminar': textos.botonEliminar,
+                'textareaPlaceholder': textos.textareaPlaceholder
+            };
             $scope.footer = {
                 'boton01': {'invisible': true},
-                'boton02': {'invisible': true}
-            };
-            function verificaCargas() {
-                var todoCargado = true;
-                angular.forEach(mediosCargados,function(valor,llave){if(!valor){todoCargado=false;}});
-                angular.forEach(thumbsCargados,function(valor,llave){if(!valor){todoCargado=false;}});
-                if(todoCargado){
-                    $scope.footer.boton01 = {
+                'boton02': {
+                    'invisible': false,
+                    'texto': textos.boton02.texto,
+                    'estilo': 'btn-danger',
+                    'icono': {
                         'invisible': false,
-                        'texto': textos.botonOK.texto,
-                        'estilo': 'btn-primary',
-                        'icono': {'invisible': true}
+                        'estilo': textos.boton02.icono
+                    }
+                }
+            };
+            $scope.boton02 = function() {
+                $uibModalInstance.dismiss('cancel');
+            };
+            $scope.$watch('archivos', function() {
+                $scope.upload($scope.archivos);
+            });
+            $scope.tarjetaUpVisible = true;
+            $scope.upload = function (archivos) {
+                if (archivos && archivos.length) {
+                    angular.forEach(archivos, function(valor, llave){$scope.misArchivos.push(valor);});
+                    $scope.footer = {
+                        'boton01': {
+                            'invisible': false,
+                            'texto': textos.boton01.texto,
+                            'estilo': 'btn-primary',
+                            'icono': {
+                                'invisible': false,
+                                'estilo': textos.boton01.icono
+                            }
+                        },
+                        'boton02': {
+                            'invisible': false,
+                            'texto': textos.boton02.texto,
+                            'estilo': 'btn-danger',
+                            'icono': {
+                                'invisible': false,
+                                'estilo': textos.boton02.icono
+                            }
+                        }
                     };
-                    var temp = [];
-                    angular.forEach(metadata,function(valor,llave){
-                        var sinError = true;
-                        angular.forEach(erroresMetadata,function(value,key){
-                            if (llave == value){
-                                sinError = false;
+                    $scope.boton01 = function() {
+                        cargarArchivos();
+                    };
+                    $scope.boton02 = function() {
+                        archivos = [];
+                        $scope.misArchivos = [];
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                }
+            };
+            $scope.eliminarMedio = function(index) {
+                $scope.misArchivos.splice(index, 1);
+                $scope.medioThumb.splice(index, 1);
+            };
+            $scope.subirThumb = function(thumb, index){
+                $scope.medioThumb[index] = thumb;
+            };
+            function cargarArchivos() {
+                var mediosCargados = [];
+                var thumbsCargados = [];
+                var erroresMetadata = [];
+                angular.forEach($scope.misArchivos, function(valor, llave){
+                    metadata[llave] = {'ruta':'','pie':'','tipo':'','thumb':''};
+                    metadata[llave].ruta = valor.name;
+                    metadata[llave].pie = ($scope.pies[llave])?$scope.pies[llave]:'';
+                    metadata[llave].tipo = tipos[valor.type];
+                    metadata[llave].thumb = ($scope.medioThumb[llave])?$scope.medioThumb[llave].name:'';
+                });
+                $timeout(function(){
+                    $scope.tarjetaUpVisible = false;
+                    $scope.progresoVisible = [];
+                    $scope.progresoValor = [];
+                    $scope.mensajeError = [];
+                    $scope.mensajeThumbError = [];
+                    $scope.mensajeExito = [];
+                    $scope.mensajeThumbExito = [];
+                    $scope.progresoThumbVisible = [];
+                    $scope.progresoThumbValor = [];
+                    $scope.footer = {
+                        'boton01': {'invisible': true},
+                        'boton02': {'invisible': true}
+                    };
+                    cargaMedioFirebase(0);
+                }, 500);
+                function cargaMedioFirebase(llave) {
+                    var archivo = $scope.misArchivos[llave];
+                    $scope.progresoVisible[llave] = true;
+                    $scope.progresoValor[llave] = 0;
+                    var nombreArchivo, tipoArchivo, cargaArchivo;
+                    var metadataMedio = {
+                        'categoria': salida.categoria,
+                        'subcategoria': salida.subcategoria,
+                        'pie': metadata[llave].pie,
+                        'palabrasClave': salida.palabrasClave.toString()
+                    };
+                    switch (archivo.type) {
+                        case 'image/jpeg':
+                            tipoArchivo = '.jpg';
+                            break;
+                        case 'audio/mp3':
+                            tipoArchivo = '.mp3';
+                            break;
+                        case 'video/mp4':
+                            tipoArchivo = '.mp4';
+                            break;
+                        default:
+                            tipoArchivo = '.jpg';
+                    }
+                    mediosCargados[llave] = false;
+                    nombreArchivo = Date.now()+tipoArchivo;
+                    archivo.name = nombreArchivo;
+                    cargaArchivo = firebase.storage().ref(salida.id+'/'+nombreArchivo).put(archivo,{customMetadata:metadataMedio});
+                    cargaArchivo.on('state_changed',function(snapshot){
+                        $scope.progresoValor[llave] = Math.ceil(100 * snapshot.bytesTransferred / snapshot.totalBytes);
+                    },function(error){
+                        $scope.mensajeError[llave] = textos.mensajeError + archivo.name + ': ' + error;
+                        erroresMetadata.push(llave);
+                        mediosCargados[llave] = true;
+                        verificaCargas();
+                        if (llave == $scope.misArchivos.length-1) {
+                            $timeout(function(){
+                                $scope.progresoValor[llave] = 100;
+                                $scope.mensajeError[llave] = textos.mensajeError + archivo.name + ': ' + error;
+                                cargaThumbFirebase(0);
+                            }, 1000);
+                        } else {
+                            llave++;
+                            cargaMedioFirebase(llave);
+                        }
+                    },function(){
+                        metadata[llave].ruta = cargaArchivo.snapshot.downloadURL;
+                        metadata[llave].nombre = nombreArchivo;
+                        $scope.mensajeExito[llave] = archivo.name + textos.mensajeExito;
+                        mediosCargados[llave] = true;
+                        verificaCargas();
+                        if (llave == $scope.misArchivos.length-1) {
+                            $timeout(function(){
+                                $scope.progresoValor[llave] = 100;
+                                $scope.mensajeExito[llave] = archivo.name + textos.mensajeExito;
+                                cargaThumbFirebase(0);
+                            }, 1000);
+                        } else {
+                            llave++;
+                            cargaMedioFirebase(llave);
+                        }
+                    });
+                }
+                function cargaThumbFirebase(llave) {
+                    if ($scope.medioThumb[llave]) {
+                        var archivo = $scope.medioThumb[llave];
+                        $scope.progresoThumbVisible[llave] = true;
+                        $scope.progresoThumbValor[llave] = 0;
+                        var nombreArchivo, tipoArchivo, cargaArchivo;
+                        var metadataMedio = {
+                            'rutaMedio': metadata[llave].ruta,
+                            'nombreMedio': metadata[llave].nombre
+                        };
+                        switch (archivo.type) {
+                            case 'image/jpeg':
+                                tipoArchivo = '.jpg';
+                                break;
+                            case 'audio/mp3':
+                                tipoArchivo = '.mp3';
+                                break;
+                            case 'video/mp4':
+                                tipoArchivo = '.mp4';
+                                break;
+                            default:
+                                tipoArchivo = '.jpg';
+                        }
+                        thumbsCargados[llave] = false;
+                        nombreArchivo = Date.now()+tipoArchivo;
+                        archivo.name = nombreArchivo;
+                        cargaArchivo = firebase.storage().ref(salida.id+'/'+nombreArchivo).put(archivo,{customMetadata:metadataMedio});
+                        cargaArchivo.on('state_changed',function(snapshot){
+                            $scope.progresoThumbValor[llave] = Math.ceil(100 * snapshot.bytesTransferred / snapshot.totalBytes);
+                        },function(error){
+                            $scope.mensajeThumbError[llave] = textos.mensajeError + archivo.name + ': ' + error;
+                            erroresMetadata.push(llave);
+                            thumbsCargados[llave] = true;
+                            verificaCargas();
+                            llave++;
+                            cargaThumbFirebase(llave);
+                            if (llave == $scope.medioThumb.length-1) {
+                                $timeout(function(){
+                                    $scope.progresoThumbValor[llave] = 100;
+                                    $scope.mensajeThumbError[llave] = textos.mensajeError + archivo.name + ': ' + error;
+                                }, 1000);
+                            }
+                        },function(){
+                            metadata[llave].thumb = cargaArchivo.snapshot.downloadURL;
+                            metadata[llave].nombreThumb = nombreArchivo;
+                            $scope.mensajeThumbExito[llave] = archivo.name + textos.mensajeExito;
+                            thumbsCargados[llave] = true;
+                            verificaCargas();
+                            llave++;
+                            cargaThumbFirebase(llave);
+                            if (llave == $scope.misArchivos.length-1) {
+                                $timeout(function(){
+                                    $scope.progresoThumbValor[llave] = 100;
+                                    $scope.mensajeThumbExito[llave] = archivo.name + textos.mensajeExito;
+                                }, 1000);
                             }
                         });
-                        if(sinError){temp.push(valor);}
-                    });
-                    metadata = temp;
-                    $scope.boton01 = function(){$uibModalInstance.close(metadata);};
+                    } else {
+                        if (llave < $scope.misArchivos.length-1) {
+                            llave++;
+                            cargaThumbFirebase(llave);
+                        }
+                    }
+                }
+                function verificaCargas() {
+                    var todoCargado = true;
+                    angular.forEach(mediosCargados,function(valor,llave){if(!valor){todoCargado=false;}});
+                    angular.forEach(thumbsCargados,function(valor,llave){if(!valor){todoCargado=false;}});
+                    if(todoCargado){
+                        $scope.footer.boton01 = {
+                            'invisible': false,
+                            'texto': textos.botonOK.texto,
+                            'estilo': 'btn-primary',
+                            'icono': {'invisible': true}
+                        };
+                        var temp = [];
+                        angular.forEach(metadata,function(valor,llave){
+                            var sinError = true;
+                            angular.forEach(erroresMetadata,function(value,key){
+                                if (llave == value){
+                                    sinError = false;
+                                }
+                            });
+                            if(sinError){temp.push(valor);}
+                        });
+                        metadata = temp;
+                        $scope.boton01 = function(){$uibModalInstance.close(metadata);};
+                    }
                 }
             }
-        }
-    });
+        });
+    }];
 }]);
 // Controlador para la ventana modal de Ver medio
 editarEntradas.controller('modalVerMedio', ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
@@ -492,8 +581,7 @@ editarEntradas.controller('modalVerMedio', ['$scope', '$uibModalInstance', funct
     };
 }]);
 // Controlador para la ventana modal de Eliminar Entrada
-editarEntradas.controller('modalEliminarEntrada', ['$scope', 'cargaInterfaz', '$uibModalInstance', '$rootScope',
-                                        function($scope, cargaInterfaz, $uibModalInstance, $rootScope){
+editarEntradas.controller('modalEliminarEntrada', ['$scope', 'cargaInterfaz', '$uibModalInstance', '$rootScope', function($scope, cargaInterfaz, $uibModalInstance, $rootScope){
     cargaInterfaz.textos().then(function(resp){
         var textos = resp.contenido.editarEntrada.modalEliminarEntrada;
         $scope.titulo = textos.titulo1;
@@ -681,7 +769,7 @@ editarEntradas.controller('modalGuardarEntrada', ['$scope', 'cargaInterfaz', '$u
             }
         };
         $rootScope.$on('entradaGuardada', function(event, resp){
-            if (resp[0].respuesta) {
+            if (resp[0]) {
                 $scope.titulo = textos.titulo2;
                 $scope.cuerpo = {
                     'progreso': {
@@ -755,25 +843,31 @@ editarEntradas.controller('modalGuardarEntrada', ['$scope', 'cargaInterfaz', '$u
         }); 
     });
 }]);
-editarEntradas.service('obtieneMetada', ['$http', function($http){
-    var rutaCat = 'php/categorias.php';
-    var rutaPC = 'php/palabrasclave.php';
+editarEntradas.service('obtieneMetada', [function(){
+    var rutaCat = 'categorias/';
+    var query = firebase.database().ref(rutaCat).once('value');
     var obtieneMetada = {
         categorias: function() {
-            var promesa = $http.get(rutaCat).then(function(resp){
-                return resp.data;
+            var promesa = query.then(function(resp){
+                var data = [];
+                angular.forEach(resp.val(), function(valor, llave){data.push(llave)});
+                return data;
             });
             return promesa;
         },
         subcategorias: function(cat) {
-            var promesa = $http.get(rutaCat+'?cat='+cat).then(function(resp){
-                return resp.data;
+            var promesa = query.then(function(resp){
+                var data = [];
+                angular.forEach(resp.val()[cat].subcategorias, function(valor, llave){data.push(valor);});
+                return data;
             });
             return promesa;
         },
         palabrasClave: function(cat) {
-            var promesa = $http.get(rutaPC+'?cat='+cat).then(function(resp){
-                return resp.data;
+            var promesa = query.then(function(resp){
+                var data = [];
+                angular.forEach(resp.val()[cat].palabrasClave, function(valor, llave){data.push(valor);});
+                return data;
             });
             return promesa;
         }

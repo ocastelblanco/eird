@@ -9,17 +9,38 @@
         <div class="col-md-4">
             <div class="panel panel-default" ng-controller="articuloDestacado as ad">
                 <div class="panel-heading">
-                    <h3 class="panel-title">{{cp.textos.contenido.portada.articuloDestacado.titulo}}</h3>
+                    <h3 class="panel-title">
+                        {{cp.textos.contenido.portada.articuloDestacado.titulo}}
+                        <i class="fa fa-spinner fa-pulse fa-lg fa-fw" ng-show="ad.cargando"></i>
+                    </h3>
                 </div>
                 <div class="panel-body">
                     <div class="radio" ng-repeat="opcion in ad.opciones track by $index">
                         <label>
-                            <input type="radio" ng-model="ad.opcionArticulo" value="{{$index}}" checked>
+                            <input type="radio" ng-model="ad.opcionArticulo" value="{{$index}}" ng-checked="ad.igual($index, ad.sel)" ng-change="ad.cambio($index)">
                             {{opcion}}
                         </label>
-                    </div>
+                    </div><!-- /.radio -->
+                </div><!-- /.panel-body -->
+            </div><!-- /.panel -->
+        </div><!-- /.col-md-4 -->
+        <div class="col-md-4">
+            <div class="panel panel-default" ng-controller="medioDestacado as md">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        {{cp.textos.contenido.portada.medioDestacado.titulo}}
+                        <i class="fa fa-spinner fa-pulse fa-lg fa-fw" ng-show="md.cargando"></i>
+                    </h3>
                 </div>
-            </div>
-        </div>
-    </div>
+                <div class="panel-body">
+                    <div class="radio" ng-repeat="opcion in md.opciones track by $index">
+                        <label>
+                            <input type="radio" ng-model="md.opcionMedio" value="{{$index}}" ng-checked="md.igual($index, md.sel)" ng-change="md.cambio($index)">
+                            {{opcion}}
+                        </label>
+                    </div><!-- /.radio -->
+                </div><!-- /.panel-body -->
+            </div><!-- /.panel -->
+        </div><!-- /.col-md-4 -->
+    </div><!-- /.row -->
 </div>
