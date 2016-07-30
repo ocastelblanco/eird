@@ -1,6 +1,6 @@
 /* global angular idioma firebase */
 var categorias = angular.module('categorias', []);
-categorias.controller('adminCategorias', ['i18nService', 'cargaInterfaz', '$scope', '$uibModal', '$timeout', function(i18nService, cargaInterfaz, $scope, $uibModal, $timeout){
+categorias.controller('adminCategorias', ['i18nService', 'cargaInterfaz', '$scope', '$uibModal', '$timeout', 'preCarga', function(i18nService, cargaInterfaz, $scope, $uibModal, $timeout, preCarga){
     //console.log('Publicar cargado');
     var rutaDB = 'categorias/';
     var salida = this;
@@ -47,6 +47,7 @@ categorias.controller('adminCategorias', ['i18nService', 'cargaInterfaz', '$scop
             });
             $timeout(function(){
                 salida.datosTabla.data = val;
+                preCarga(false);
             }, 500);
         });
     }

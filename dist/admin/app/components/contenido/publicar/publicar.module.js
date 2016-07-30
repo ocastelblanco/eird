@@ -1,7 +1,8 @@
 /* global angular idioma firebase */
 var publicar = angular.module('publicar', []);
-publicar.controller('adminPublicar', ['i18nService', 'cargaInterfaz', '$scope', '$location', '$uibModal', '$rootScope', '$timeout', function(i18nService, cargaInterfaz, $scope, $location, $uibModal, $rootScope, $timeout){
+publicar.controller('adminPublicar', ['i18nService', 'cargaInterfaz', '$scope', '$location', '$uibModal', '$rootScope', '$timeout', 'preCarga','sesion', function(i18nService, cargaInterfaz, $scope, $location, $uibModal, $rootScope, $timeout, preCarga,sesion){
     //console.log('Publicar cargado');
+    sesion();
     var rutaDB = 'entradas/';
     var salida = this;
     salida.datosTabla = {
@@ -39,7 +40,10 @@ publicar.controller('adminPublicar', ['i18nService', 'cargaInterfaz', '$scope', 
     });
     function cargaDatosTabla(){
         firebase.database().ref(rutaDB).once('value').then(function(snapshot) {
-            $timeout(function(){salida.datosTabla.data = cambiaDatos(snapshot.val())}, 1000);
+            $timeout(function(){
+                salida.datosTabla.data = cambiaDatos(snapshot.val());
+                preCarga(false);
+            }, 1000);
         });
     }
     function cambiaDatos(data) {

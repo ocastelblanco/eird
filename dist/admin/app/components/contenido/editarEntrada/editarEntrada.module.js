@@ -1,6 +1,6 @@
 /* global angular idioma firebase */
 var editarEntradas = angular.module('editarEntradas', ['ngSanitize']);
-editarEntradas.controller('editarEntradas',['$uibModal','$location','$rootScope','$timeout','$route','obtieneMetada','$filter',function($uibModal,$location,$rootScope,$timeout,$route,obtieneMetada,$filter){
+editarEntradas.controller('editarEntradas',['$uibModal','$location','$rootScope','$timeout','$route','obtieneMetada','$filter', 'preCarga',function($uibModal,$location,$rootScope,$timeout,$route,obtieneMetada,$filter,preCarga){
     var salida = this;
     var rutaDB = 'entradas/';
     salida.id = null;
@@ -43,6 +43,7 @@ editarEntradas.controller('editarEntradas',['$uibModal','$location','$rootScope'
         ],
         toolbar1: "cut copy paste | undo redo | removeformat bold italic underline | bullist numlist | alignleft aligncenter alignright alignjustify | styleselect code"
     };
+    $timeout(preCarga(false), 100);
     // Funciones disponibles para los botones de acción
     salida.guardaCambios = function() {
         salida.modalInstance = $uibModal.open({

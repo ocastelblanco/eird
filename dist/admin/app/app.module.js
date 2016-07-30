@@ -7,6 +7,8 @@ var config = {
     storageBucket: "eird-a6f79.appspot.com",
 };
 firebase.initializeApp(config);
+var sesionUsuario = {};
+var datosAdmin = {};
 // Módulos de la app principal eirdAdmin
 var eirdAdmin = angular.module('eirdAdmin', [
     'ui.bootstrap',
@@ -28,7 +30,7 @@ var eirdAdmin = angular.module('eirdAdmin', [
     'papelera'
 ]);
 // Controladores
-eirdAdmin.controller('controladorPrincipal', ['cargaInterfaz', function(cargaInterfaz) {
+eirdAdmin.controller('controladorPrincipal', ['cargaInterfaz', '$timeout', function(cargaInterfaz, $timeout) {
     // Controlador principal
     console.log('ControladorPrincipal iniciado');
     // Contenidos básicos de la interfaz
@@ -36,6 +38,23 @@ eirdAdmin.controller('controladorPrincipal', ['cargaInterfaz', function(cargaInt
     cargaInterfaz.textos().then(function(resp){
         salida.textos = resp;
     });
+    var user = firebase.auth().currentUser;
+    $timeout(function(){
+            if (user) {
+                firebase.database().ref('administradores').once('value').then(function(datos){
+                    angular.forEach(datos.val(), function(valor, llave){
+                        datosAdmin[valor.email] = valor.permisos;
+                    });
+                    sesionUsuario.sesion = true;
+                    sesionUsuario.email = user.email;
+                    sesionUsuario.permisos = datosAdmin[sesionUsuario.email];
+                });
+            }
+    },500);
+}]);
+eirdAdmin.controller('preCarga', ['$rootScope', function($rootScope){
+    var salida = this;
+    $rootScope.$on('preCargaVisible', function(evento, visible){salida.activo = visible;});
 }]);
 // Servicios
 eirdAdmin.service('cargaInterfaz', ['$http', function($http){
@@ -50,4 +69,24 @@ eirdAdmin.service('cargaInterfaz', ['$http', function($http){
         }
     };
     return cargaInterfaz;
+}]);
+eirdAdmin.service('preCarga', ['$rootScope', function($rootScope){
+    var preCarga = function(visible) {
+        $rootScope.$emit('preCargaVisible', visible);
+        return visible;
+    };
+    return preCarga;
+}]);
+eirdAdmin.service('sesion', ['$route', '$location', function($route, $location){
+    var sesion = function() {
+        if(!sesionUsuario.sesion && $location.path() != '/') {
+            $location.path('/');
+            $route.reload();
+            sesionUsuario.sesion = null;
+            sesionUsuario.email = null;
+            sesionUsuario.permisos = null;
+        }
+        return true;
+    }
+    return sesion;
 }]);

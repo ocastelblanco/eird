@@ -46,7 +46,7 @@
               "texto": "Portada",
               "icono": "fa-newspaper-o",
               "destino": "portada",
-              "permisos": "4"
+              "permisos": "5"
             },
             {
               "texto": "Papelera",

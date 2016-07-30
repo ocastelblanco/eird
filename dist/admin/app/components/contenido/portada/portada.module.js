@@ -1,6 +1,6 @@
 /* global angular firebase */
 var portada = angular.module('portada', []);
-portada.controller('articuloDestacado', ['cargaInterfaz', '$timeout', function(cargaInterfaz, $timeout){
+portada.controller('articuloDestacado', ['cargaInterfaz', '$timeout', 'preCarga', function(cargaInterfaz, $timeout, preCarga){
     var salida = this;
     var ruta = 'portada/articuloDestacado';
     salida.igual = function(op1, op2) {
@@ -10,6 +10,7 @@ portada.controller('articuloDestacado', ['cargaInterfaz', '$timeout', function(c
         salida.sel = snapshot.val();
         cargaInterfaz.textos().then(function(resp){
             salida.opciones = resp.contenido.portada.articuloDestacado.opciones;
+            preCarga(false);
         });
     });
     salida.cambio = function(index){

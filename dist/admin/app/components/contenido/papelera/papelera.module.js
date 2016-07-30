@@ -1,6 +1,6 @@
 /* global angular idioma firebase */
 var papelera = angular.module('papelera', []);
-papelera.controller('adminPapelera', ['i18nService', 'cargaInterfaz', '$scope', '$rootScope', '$uibModal', '$timeout', function(i18nService, cargaInterfaz, $scope, $rootScope, $uibModal, $timeout){
+papelera.controller('adminPapelera', ['i18nService', 'cargaInterfaz', '$scope', '$rootScope', '$uibModal', '$timeout', 'preCarga', function(i18nService, cargaInterfaz, $scope, $rootScope, $uibModal, $timeout, preCarga){
     //console.log('Papelera cargado');
     var rutaDB = 'entradas/';
     var salida = this;
@@ -41,7 +41,10 @@ papelera.controller('adminPapelera', ['i18nService', 'cargaInterfaz', '$scope', 
     });
     function cargaDatosTabla(){
         firebase.database().ref(rutaDB).once('value').then(function(snapshot) {
-            $timeout(function(){salida.datosTabla.data = cambiaDatos(snapshot.val());}, 1000);
+            $timeout(function(){
+                salida.datosTabla.data = cambiaDatos(snapshot.val());
+                preCarga(false);
+            }, 1000);
         });
     }
     function cambiaDatos(data) {

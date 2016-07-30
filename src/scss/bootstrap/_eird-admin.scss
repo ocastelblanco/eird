@@ -2,7 +2,15 @@
 // Interfaz de administración EIRD
 // --------------------------------------------------
 
-
+.pre-carga {
+    color: #000;
+    background-color: #FFF;
+    opacity: .75;
+    i {
+        display: block;
+        margin: 1em auto auto auto;
+    }
+}
 // -- Editar entradas
 //  \-- Panel de Elementos multimedia
 //    \-- Tarjetas de medios

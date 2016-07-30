@@ -1,7 +1,8 @@
 /* global angular idioma firebase */
 var entradas = angular.module('entradas', []);
-entradas.controller('adminEntradas', ['i18nService', 'cargaInterfaz', '$scope', '$location', '$uibModal', '$rootScope', '$timeout', function(i18nService, cargaInterfaz, $scope, $location, $uibModal, $rootScope, $timeout){
+entradas.controller('adminEntradas', ['i18nService', 'cargaInterfaz', '$scope', '$location', '$uibModal', '$rootScope', '$timeout', 'preCarga','sesion', function(i18nService, cargaInterfaz, $scope, $location, $uibModal, $rootScope, $timeout, preCarga,sesion){
     //console.log('adminEntradas cargado');
+    sesion();
     var rutaDB = 'entradas/';
     var salida = this;
     salida.datosTabla = {
@@ -41,7 +42,10 @@ entradas.controller('adminEntradas', ['i18nService', 'cargaInterfaz', '$scope', 
     });
     function cargaDatosTabla(){
         firebase.database().ref(rutaDB).once('value').then(function(snapshot) {
-            $timeout(function(){salida.datosTabla.data = cambiaDatos(snapshot.val())}, 1000);
+            $timeout(function(){
+                salida.datosTabla.data = cambiaDatos(snapshot.val());
+                preCarga(false);
+            }, 1000);
         });
     }
     function cambiaDatos(data) {

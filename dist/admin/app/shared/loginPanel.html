@@ -20,8 +20,8 @@
                             {{cp.textos.panelLogin.labelClave}}
                         </label>
                         <input type="password" ng-model="lf.clave" class="form-control" id="clave" placeholder="{{cp.textos.panelLogin.placeholderClave}}">
-                        
                     </div>
+                    <div class="alert alert-warning" ng-show="lf.error">{{lf.error}}</div>
                     <button type="submit" class="btn btn-primary btn-block">
                         <i class="fa {{cp.textos.panelLogin.iconoSubmit}}" aria-hidden="true"></i>
                         {{cp.textos.panelLogin.labelSubmit}}
