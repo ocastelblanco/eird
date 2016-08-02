@@ -1,0 +1,31 @@
+<div ng-controller="adminCodigos as ac">
+    <div class="page-header">
+        <h2>{{cp.textos.codigos.titulo}} <small>{{cp.textos.codigos.instrucciones}}</small></h2>
+    </div><!-- /.header -->
+    <div class="row">
+        <div class="col-md-3">
+            <button class="btn btn-info btn-block" type="button" ng-click="ac.crear()">
+                <i class="fa {{cp.textos.codigos.crear.icono}}"></i>
+                {{cp.textos.codigos.crear.texto}}
+            </button>
+        </div><!-- /.col-md-3 -->
+        <div class="col-md-3">
+            <button class="btn btn-primary btn-block" type="button" ng-click="ac.editar()">
+                <i class="fa {{cp.textos.codigos.editar.icono}}"></i>
+                {{cp.textos.codigos.editar.texto}}
+            </button>
+        </div><!-- /.col-md-3 -->
+        <div class="col-md-3">
+            <button class="btn btn-success btn-block" type="button" ng-click="ac.exportar()">
+                <i class="fa {{cp.textos.codigos.exportar.icono}}"></i>
+                {{cp.textos.codigos.exportar.texto}}
+            </button>
+        </div><!-- /.col-md-3 -->
+        <div class="col-md-3">
+            <button class="btn btn-danger btn-block" type="button" ng-click="ac.eliminar()">
+                <i class="fa {{cp.textos.codigos.eliminar.icono}}"></i>
+                {{cp.textos.codigos.eliminar.texto}}
+            </button>
+        </div><!-- /.col-md-3 -->
+    </div><!-- /.row -->
+</div><!-- adminCodigos -->

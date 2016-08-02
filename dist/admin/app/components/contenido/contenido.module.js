@@ -1,26 +1,25 @@
 /* global angular sesionUsuario*/
 var subInicial = {'contenido': 'entradas'};
 var contenido = angular.module('contenido', []);
-contenido.controller('controladorContenido', ['$routeParams', '$location', '$timeout', function($routeParams, $location, $timeout){
+contenido.controller('controladorContenido', ['$routeParams', '$location', '$timeout', 'sesion', function($routeParams, $location, $timeout,sesion){
     console.log('controladorContenido cargado');
+    sesion();
     var salida = this;
     salida.params = $routeParams;
     salida.seccion = $location.path().split('/')[1];
-    var tiempoEspera = 1000;
+    var tiempoEspera = 2000;
     if (sesionUsuario.permisos){tiempoEspera = 0}
+    salida.footer = 'app/shared/footer.html';
     $timeout(function(){
+        // Consulta de permisos del usuario, según su login, usados por todas las vistas
+        salida.permisos = sesionUsuario.permisos;
         salida.header = 'app/components/header/header.html';
-        salida.footer = 'app/shared/footer.html';
         salida.nav = 'app/components/menu/menu.html';
         if (!salida.params.subseccion) {
             $location.path('/'+salida.seccion+'/'+subInicial[salida.seccion]);
         } else {
             salida.central = 'app/components/'+salida.seccion+'/'+salida.params.subseccion+'/'+salida.params.subseccion+'.html';
         }
-        // Consulta de permisos del usuario, según su login, usados por todas las vistas
-        $timeout(function(){
-            salida.permisos = sesionUsuario.permisos;
-        },tiempoEspera);
     },tiempoEspera);
 }]);
 contenido.controller('menuLateral', ['$location', 'cargaInterfaz', '$routeParams', function($location, cargaInterfaz, $routeParams){

@@ -1,0 +1,9 @@
+<div ng-controller="cargaCodigos as cc">
+    <ng-include src="cc.header"></ng-include>
+    <div ng-include="cc.central" class="contenidoCodigos"></div>
+    <ng-include class="navbar-fixed-bottom" src="cc.footer"></ng-include>
+    <div class="modal-backdrop fade in pre-carga" ng-controller="preCarga as pc" ng-show="pc.activo" ng-init="pc.activo = true">
+        <i class="fa fa-spinner fa-spin fa-10x fa-fw"></i>
+        <span class="sr-only">Cargando...</span>
+    </div><!-- /.pre-carga -->
+</div> <!-- Controlador - contenedor -->

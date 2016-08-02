@@ -27,10 +27,11 @@ var eirdAdmin = angular.module('eirdAdmin', [
     'publicar',
     'categorias',
     'portada',
-    'papelera'
+    'papelera',
+    'codigos'
 ]);
 // Controladores
-eirdAdmin.controller('controladorPrincipal', ['cargaInterfaz', '$timeout', function(cargaInterfaz, $timeout) {
+eirdAdmin.controller('controladorPrincipal', ['cargaInterfaz', '$timeout', 'sesion', function(cargaInterfaz, $timeout, sesion) {
     // Controlador principal
     console.log('ControladorPrincipal iniciado');
     // Contenidos básicos de la interfaz
@@ -40,16 +41,16 @@ eirdAdmin.controller('controladorPrincipal', ['cargaInterfaz', '$timeout', funct
     });
     var user = firebase.auth().currentUser;
     $timeout(function(){
-            if (user) {
-                firebase.database().ref('administradores').once('value').then(function(datos){
-                    angular.forEach(datos.val(), function(valor, llave){
-                        datosAdmin[valor.email] = valor.permisos;
-                    });
-                    sesionUsuario.sesion = true;
-                    sesionUsuario.email = user.email;
-                    sesionUsuario.permisos = datosAdmin[sesionUsuario.email];
+        if (user) {
+            firebase.database().ref('administradores').once('value').then(function(datos){
+                angular.forEach(datos.val(), function(valor, llave){
+                    datosAdmin[valor.email] = valor.permisos;
                 });
-            }
+                sesionUsuario.sesion = true;
+                sesionUsuario.email = user.email;
+                sesionUsuario.permisos = datosAdmin[sesionUsuario.email];
+            });
+        }
     },500);
 }]);
 eirdAdmin.controller('preCarga', ['$rootScope', function($rootScope){
@@ -77,16 +78,29 @@ eirdAdmin.service('preCarga', ['$rootScope', function($rootScope){
     };
     return preCarga;
 }]);
-eirdAdmin.service('sesion', ['$route', '$location', function($route, $location){
+eirdAdmin.service('sesion', ['$route', '$location', '$timeout', function($route, $location, $timeout){
     var sesion = function() {
-        if(!sesionUsuario.sesion && $location.path() != '/') {
-            $location.path('/');
-            $route.reload();
-            sesionUsuario.sesion = null;
-            sesionUsuario.email = null;
-            sesionUsuario.permisos = null;
-        }
-        return true;
-    }
+        var user = firebase.auth().currentUser;
+        $timeout(function(){
+            if(!user) {
+                $location.path('/');
+                $route.reload();
+                sesionUsuario.sesion = null;
+                sesionUsuario.email = null;
+                sesionUsuario.permisos = null;
+                return false;
+            } else {
+                firebase.database().ref('administradores').once('value').then(function(datos){
+                    angular.forEach(datos.val(), function(valor, llave){
+                        datosAdmin[valor.email] = valor.permisos;
+                    });
+                    sesionUsuario.sesion = true;
+                    sesionUsuario.email = user.email;
+                    sesionUsuario.permisos = datosAdmin[sesionUsuario.email];
+                    return true;
+                });
+            }
+        },500);
+    };
     return sesion;
 }]);

@@ -2,7 +2,7 @@
 var eirdAdmin = angular.module('eirdAdmin');
 // Enrutamientos
 
-eirdAdmin.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+eirdAdmin.config(['$routeProvider', function($routeProvider) {
     $routeProvider
         .when('/', {
             templateUrl :'app/components/inicio/inicio.html'
@@ -15,8 +15,9 @@ eirdAdmin.config(['$routeProvider', '$locationProvider', function($routeProvider
         }).when('/contenido/:subseccion', {
             templateUrl : 'app/components/contenido/contenido.html',
             reloadOnSearch: false
+        }).when('/codigos', {
+            templateUrl : 'app/components/codigos/codigos.html'
         }).otherwise({
             redirectTo: '/'
         });
-        //$locationProvider.html5Mode(true);
 }]);

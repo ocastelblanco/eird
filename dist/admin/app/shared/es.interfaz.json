@@ -497,6 +497,38 @@
         "permisos": 5
       }
     },
+    "codigos": {
+      "titulo": "Administrar códigos de acceso",
+      "instrucciones": "Cree, elimine, edite o exporte códigos de acceso.",
+      "crear": {
+        "texto": "Crear",
+        "icono": "fa-plus"
+      },
+      "editar": {
+        "texto": "Editar",
+        "icono": "fa-pencil"
+      },
+      "exportar": {
+        "texto": "Exportar",
+        "icono": "fa-file-excel-o"
+      },
+      "eliminar": {
+        "texto": "Eliminar",
+        "icono": "fa-trash"
+      },
+      "modal": {
+        "tituloCrear": "Crear códigos de acceso",
+        "instruccionesCrear": "Los campos con * son obligatorios.",
+        "numCodigos": "Número de códigos a crear",
+        "fechaCodigos": "Fecha de validez de los códigos",
+        "cerrarFecha": "Cerrar",
+        "identificador": "Identificador",
+        "instruccionesIdentificador": "El identificador es una ayuda para marcar grupos de códigos",
+        "observaciones": "Observaciones",
+        "botonAceptar": "Aceptar",
+        "botonCancelar": "Cancelar"
+      }
+    },
     "panelLogin": {
       "titulo": "Ingrese sus datos para iniciar sesión",
       "labelUsuario": "Usuario",

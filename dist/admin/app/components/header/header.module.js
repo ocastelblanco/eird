@@ -1,17 +1,7 @@
 /* global angular firebase sesionUsuario */
 var encabezado = angular.module('encabezado', ['eirdAdmin', 'inicio']);
-encabezado.controller('creaEncabezado', ['$location', '$route', '$timeout', 'sesion', function($location, $route, $timeout, sesion){
-    sesion();
+encabezado.controller('creaEncabezado', ['$location', '$route', '$timeout', function($location, $route, $timeout){
     var salida = this;
-    var tiempoEspera = 500;
-    if (sesionUsuario.permisos){tiempoEspera = 0}
-    $timeout(function(){
-        if (sesionUsuario.sesion) {
-            salida.haySesion = true;
-        } else {
-            salida.haySesion = false;
-        }
-    },tiempoEspera);
     salida.cierraSesion = function(){
         firebase.auth().signOut().then(function(){
             $location.path('/');
