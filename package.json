@@ -1,7 +1,7 @@
 {
   "name": "eird",
   "author": "Oliver Castelblanco",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Enciclopedia Ilustrada de la República Dominicana",
   "dependencies": {
     "angular": "^1.5.7",
