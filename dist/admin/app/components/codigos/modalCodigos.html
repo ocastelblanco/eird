@@ -4,18 +4,17 @@
 </div>
 <div class="modal-body">
     <div class="form-horizontal">
-        <div class="form-group">
+        <div class="form-group" ng-show="numCodigos">
             <label for="numCodigos" class="col-sm-4 control-label">{{textos.numCodigos}} *</label>
             <div class="col-sm-3">
-                <input type="number" class="form-control" id="numCodigos" placeholder="{{textos.numCodigos}}" ng-model="numCodigos" ng-init="numCodigos = 10" ng-required="true">
+                <input type="number" class="form-control" id="numCodigos" placeholder="{{textos.numCodigos}}" ng-model="numCodigos">
             </div>
             <div class="col-sm-5">&nbsp;</div>
         </div><!-- /.form-group -->
-        
         <div class="form-group">
             <label for="fechaCodigos" class="col-sm-4 control-label">{{textos.fechaCodigos}} *</label>
             <div class="input-group col-sm-5 abreFecha">
-                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="fechaValidez" is-open="fechaAbierto" datepicker-options="fechaOpciones" ng-required="true" close-text="{{textos.cerrarFecha}}" id="fechaCodigos" ng-init="fechaValidez = ''">
+                <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="fechaValidez" is-open="fechaAbierto" datepicker-options="fechaOpciones" close-text="{{textos.cerrarFecha}}" id="fechaCodigos">
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-info" ng-click="abrirFecha()"><i class="fa fa-calendar"></i></button>
                 </span>
@@ -25,7 +24,7 @@
         <div class="form-group">
             <label for="identifica" class="col-sm-4 control-label">{{textos.identificador}} *</label>
             <div class="col-sm-8">
-                <input id="identifica" type="text" class="form-control" ng-model="identificador" ng-required="true" aria-describedby="helpBlock" placeholder="{{textos.identificador}}" ng-init="identificador = ''">
+                <input id="identifica" type="text" class="form-control" ng-model="identificador" aria-describedby="helpBlock" placeholder="{{textos.identificador}}">
                 <span id="helpBlock" class="help-block">{{textos.instruccionesIdentificador}}</span>
             </div>
         </div><!-- /.form-group -->
@@ -36,6 +35,14 @@
             </div>
         </div><!-- /.form-group -->
     </div><!-- /.form-horizontal -->
+    <div class="row" ng-show="textoProgreso">
+        <div class="col-sm-4">
+            {{textoProgreso}}
+        </div>
+        <div class="col-sm-8">
+            <uib-progressbar max="maxCodigos" value="progreso" type="{{estiloProgreso}}">{{progreso}} / {{maxCodigos}}</uib-progressbar>
+        </div>
+    </div><!-- /.row -->
 </div><!-- /.modal-body -->
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="aceptar()" ng-disabled="valido()">

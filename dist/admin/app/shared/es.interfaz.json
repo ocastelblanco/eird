@@ -516,6 +516,14 @@
         "texto": "Eliminar",
         "icono": "fa-trash"
       },
+      "encabezadoTablaDatos": {
+        "codigo": "Código",
+        "identificador": "Identificador",
+        "validez": "Valido hasta",
+        "email": "Email asociado",
+        "estado": "Estado",
+        "observaciones": "Observaciones"
+      },
       "modal": {
         "tituloCrear": "Crear códigos de acceso",
         "instruccionesCrear": "Los campos con * son obligatorios.",
@@ -525,9 +533,24 @@
         "identificador": "Identificador",
         "instruccionesIdentificador": "El identificador es una ayuda para marcar grupos de códigos",
         "observaciones": "Observaciones",
+        "progresoCreacion": "Creando códigos",
+        "terminadoCreacion": "Códigos creados correctamente",
         "botonAceptar": "Aceptar",
-        "botonCancelar": "Cancelar"
-      }
+        "botonCancelar": "Cancelar",
+        "tituloEliminar": "Eliminar códigos",
+        "cuerpoEliminar": "¿Desea eliminar XX códigos?",
+        "botonEliminar": "Eliminar códigos",
+        "botonNoEliminar": "Volver sin eliminar",
+        "cuerpoProgreso": "Eliminando códigos...",
+        "cuerpoExito": "Códigos eliminados con éxito.",
+        "cuerpoError": "Ha ocurrido un error en el proceso de eliminación.",
+        "botonCerrar": "Cerrar",
+        "tituloEditar": "Editar XX códigos",
+        "textoCodigosEditar": "Códigos a editar",
+        "progresoEdicion": "Actualizando códigos",
+        "terminadoEdicion": "Códigos editados correctamente"
+      },
+      "estadosCodigo": ["Sin asignar", "Asignado"]
     },
     "panelLogin": {
       "titulo": "Ingrese sus datos para iniciar sesión",

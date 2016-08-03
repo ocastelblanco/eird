@@ -10,22 +10,40 @@
             </button>
         </div><!-- /.col-md-3 -->
         <div class="col-md-3">
-            <button class="btn btn-primary btn-block" type="button" ng-click="ac.editar()">
+            <button class="btn btn-primary btn-block" type="button" ng-click="ac.editar()" ng-disabled="ac.estadoEditar">
                 <i class="fa {{cp.textos.codigos.editar.icono}}"></i>
                 {{cp.textos.codigos.editar.texto}}
             </button>
         </div><!-- /.col-md-3 -->
         <div class="col-md-3">
-            <button class="btn btn-success btn-block" type="button" ng-click="ac.exportar()">
+            <button class="btn btn-success btn-block" type="button" ng-click="ac.exportar()" ng-disabled="ac.estadoExportar">
                 <i class="fa {{cp.textos.codigos.exportar.icono}}"></i>
                 {{cp.textos.codigos.exportar.texto}}
             </button>
         </div><!-- /.col-md-3 -->
         <div class="col-md-3">
-            <button class="btn btn-danger btn-block" type="button" ng-click="ac.eliminar()">
+            <button class="btn btn-danger btn-block" type="button" ng-click="ac.eliminar()" ng-disabled="ac.estadoEliminar">
                 <i class="fa {{cp.textos.codigos.eliminar.icono}}"></i>
                 {{cp.textos.codigos.eliminar.texto}}
             </button>
         </div><!-- /.col-md-3 -->
     </div><!-- /.row -->
+    <br>
+    <div class="row">
+        <div class="col-sm-12">
+            <div ui-grid="ac.datosTabla" ui-grid-selection ui-grid-pagination class="tablaEntradas"></div>
+        </div><!-- /.col-sm-12 -->
+    </div><!-- /.row -->
+    <table id="aExcel" class="ng-hide">
+        <thead>
+            <tr>
+                <th ng-repeat="encabezado in cp.textos.codigos.encabezadoTablaDatos">{{encabezado}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="fila in ac.filasSeleccionadas">
+                <td ng-repeat="celda in fila">{{celda}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div><!-- adminCodigos -->
