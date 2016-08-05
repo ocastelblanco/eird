@@ -1,0 +1,59 @@
+<nav class="navbar navbar-fixed-top" ng-controller="barraNavegacion as bn">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2">
+                <div class="navbar-header">
+                    <a class="btn btn-navbar navbar-toggle" ng-init="isCollapsed = true" ng-click="isCollapsed = !isCollapsed">
+                        <span class="sr-only">Navegación colapsada</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="navbar-brand" href="portada">
+                        EIRD
+                    </a>
+                </div><!-- /navbar-header -->
+            </div><!-- /.col-sm-3 -->
+            <div class="col-sm-9 col-md-10">
+                <div uib-collapse="isCollapsed" class="nav-collapse navbar-collapse collapse navbar-responsive-collapse">
+                    <ul class="nav navbar-nav navbar-right" ng-init="abreBusqueda = true">
+                        <li>
+                            <a href="" ng-click="bn.abreBusqueda()" ng-show="abreBusqueda">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </li>
+                        <li class="navbar-form navbar-busqueda" ng-show="abreBusqueda">
+                            <div class="form-group">
+                              <input type="text" class="form-control" placeholder="Buscar en la Enciclopedia" ng-blur="abreBusqueda = false">
+                            </div>
+                        </li>
+                        <li ng-show="bn.sesionActiva">
+                            <a href="" ng-click="abreBusqueda = !abreBusqueda">
+                                <i class="fa fa-search" ng-hide="abreBusqueda"></i>
+                                <i class="fa fa-times" ng-show="abreBusqueda"></i>
+                            </a>
+                        </li>
+                        <li ng-hide="bn.sesionActiva">
+                            <a href="ingreso">
+                                Acceder
+                            </a>
+                        </li>
+                        <li uib-dropdown is-open="status.isopen" ng-show="bn.sesionActiva">
+                            <a id="single-button" uib-dropdown-toggle>
+                                Mi nombre <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                <li role="menuitem">
+                                    <a href="ingreso/salir" ng-click="alert('Cierra')">
+                                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                        Salir
+                                    </a>
+                                </li>
+                            </ul>
+                        </li><!-- Dropdown menú -->  
+                    </ul>
+                </div><!-- /navbar-collapse -->
+            </div><!-- /.col-sm-9 -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</nav>

@@ -1,0 +1,26 @@
+/* Estilos particulares de EIRD */
+
+// ---> Estilos para acomodar la barra superior de navegación
+body {
+    padding-top: $navbar-height;
+}
+
+// ---> Estilos para que se ajusten los elementos interactivos en UI Bootstrap
+a,
+.nav,
+.pagination,
+.carousel,
+.panel-title a {
+    cursor: pointer;
+}
+.navbar {
+    background-color: $body-bg;
+    &.scrollDown {
+        box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.13);
+    }
+    .navbar-busqueda {
+            width: 200%;
+        input {
+        }
+    }
+}

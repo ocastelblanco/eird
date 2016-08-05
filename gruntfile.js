@@ -61,9 +61,14 @@ module.exports = function(grunt) {
                             'node_modules/angular-route/angular-route.min.js',
                             'node_modules/angular-sanitize/angular-sanitize.min.js',
                             'node_modules/angular-touch/angular-touch.min.js',
+                            'node_modules/angular-animate/angular-animate.min.js',
                             'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
                             'node_modules/ng-file-upload/dist/ng-file-upload.min.js',
-                            'node_modules/angular-ui-grid/ui-grid.min.js'
+                            'node_modules/angular-ui-grid/ui-grid.min.js',
+                            'node_modules/firebase/firebase.js',
+                            'node_modules/angularfire/dist/angularfire.min.js',
+                            'src/ui-bootstrap/ui-bootstrap.min.js',
+                            'node_modules/angular-scroll/angular-scroll.min.js'
                         ],
                         dest: 'dist/assets/js/',
                         flatten: true

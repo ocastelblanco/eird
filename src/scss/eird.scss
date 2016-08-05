@@ -1,0 +1,57 @@
+/* Hoja de estilos de la app EIRD, tomado de Bootstrap v. 3.3.6 */
+/* 2016 */
+
+ 
+// Core variables and mixins
+@import "eird/variables";
+@import "eird/mixins";
+
+// Reset and dependencies
+@import "eird/normalize";
+//@import "eird/print";
+//@import "eird/glyphicons";
+
+// Core CSS
+@import "eird/scaffolding";
+//@import "eird/type";
+//@import "eird/code";
+@import "eird/grid";
+//@import "eird/tables";
+@import "eird/forms";
+@import "eird/buttons";
+
+// Components
+//@import "eird/component-animations";
+@import "eird/dropdowns";
+@import "eird/button-groups";
+//@import "eird/input-groups";
+@import "eird/navs";
+@import "eird/navbar";
+//@import "eird/breadcrumbs";
+//@import "eird/pagination";
+//@import "eird/pager";
+//@import "eird/labels";
+//@import "eird/badges";
+//@import "eird/jumbotron";
+//@import "eird/thumbnails";
+//@import "eird/alerts";
+//@import "eird/progress-bars";
+//@import "eird/media";
+//@import "eird/list-group";
+//@import "eird/panels";
+//@import "eird/responsive-embed";
+//@import "eird/wells";
+//@import "eird/close";
+
+// Components w/ JavaScript
+//@import "eird/modals";
+//@import "eird/tooltip";
+//@import "eird/popovers";
+//@import "eird/carousel";
+
+// Utility classes
+//@import "eird/utilities";
+//@import "eird/responsive-utilities";
+
+/* Personalizado para EIRD */
+@import "eird/eird";
