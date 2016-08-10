@@ -418,6 +418,11 @@ $navbar-inverse-toggle-hover-bg:            #333 !default;
 $navbar-inverse-toggle-icon-bar-bg:         #fff !default;
 $navbar-inverse-toggle-border-color:        #333 !default;
 
+// Navbar de búsqueda
+$navbar-busqueda-sm:                        (300px + $grid-gutter-width) !default;
+$navbar-busqueda-md:                        (440px + $grid-gutter-width) !default;
+$navbar-busqueda-lg:                        (720px + $grid-gutter-width) !default;
+
 
 //== Navs
 //

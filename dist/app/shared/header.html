@@ -1,4 +1,4 @@
-<nav class="navbar navbar-fixed-top" ng-controller="barraNavegacion as bn">
+<nav class="navbar navbar-default navbar-fixed-top" ng-controller="barraNavegacion as bn">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-3 col-md-2">
@@ -10,43 +10,41 @@
                         <span class="icon-bar"></span>
                     </a>
                     <a class="navbar-brand" href="portada">
-                        EIRD
+                        {{cp.interfaz.generales.titulo_corto}}
                     </a>
                 </div><!-- /navbar-header -->
             </div><!-- /.col-sm-3 -->
             <div class="col-sm-9 col-md-10">
                 <div uib-collapse="isCollapsed" class="nav-collapse navbar-collapse collapse navbar-responsive-collapse">
-                    <ul class="nav navbar-nav navbar-right" ng-init="abreBusqueda = true">
-                        <li>
-                            <a href="" ng-click="bn.abreBusqueda()" ng-show="abreBusqueda">
-                                <i class="fa fa-search"></i>
-                            </a>
-                        </li>
-                        <li class="navbar-form navbar-busqueda" ng-show="abreBusqueda">
-                            <div class="form-group">
-                              <input type="text" class="form-control" placeholder="Buscar en la Enciclopedia" ng-blur="abreBusqueda = false">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="navbar-busqueda" ng-if="bn.usuario" ng-init="bn.abierta = true">
+                            <div class="navbar-form navbar-left">
+                                <button class="btn btn-busqueda" ng-click="bn.busqueda()" ng-if="bn.busquedaAbierta">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <div class="form-group abreAnimado" ng-if="bn.busquedaAbierta">
+                                    <input type="text" class="form-control" id="inputBusqueda" ng-blur="bn.abreBusqueda(false)" placeholder="Buscar en la Enciclopedia">
+                                </div>
+                                <button class="btn btn-busqueda" ng-click="bn.abreBusqueda(bn.abierta)">
+                                    <i class="fa fa-search" ng-if="!bn.busquedaAbierta"></i>
+                                    <i class="fa fa-times" ng-if="bn.busquedaAbierta"></i>
+                                </button>
                             </div>
                         </li>
-                        <li ng-show="bn.sesionActiva">
-                            <a href="" ng-click="abreBusqueda = !abreBusqueda">
-                                <i class="fa fa-search" ng-hide="abreBusqueda"></i>
-                                <i class="fa fa-times" ng-show="abreBusqueda"></i>
-                            </a>
-                        </li>
-                        <li ng-hide="bn.sesionActiva">
+                        <li ng-if="!bn.usuario">
                             <a href="ingreso">
-                                Acceder
+                                {{cp.interfaz.acceso.acceder}}
                             </a>
                         </li>
-                        <li uib-dropdown is-open="status.isopen" ng-show="bn.sesionActiva">
+                        <li uib-dropdown is-open="status.isopen" ng-if="bn.usuario">
                             <a id="single-button" uib-dropdown-toggle>
-                                Mi nombre <span class="caret"></span>
+                                {{bn.usuario.displayName}} <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
                                 <li role="menuitem">
-                                    <a href="ingreso/salir" ng-click="alert('Cierra')">
+                                    <a href="ingreso/salir" ng-click="bn.autenticar.$signOut()">
                                         <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                        Salir
+                                        {{cp.interfaz.acceso.salir}}
                                     </a>
                                 </li>
                             </ul>

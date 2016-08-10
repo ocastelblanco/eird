@@ -13,14 +13,109 @@ a,
 .panel-title a {
     cursor: pointer;
 }
+// Animaciones con ngAnimate
+.abreAnimado.ng-enter {
+  transition: 1.5s linear all;
+  width: 0%;
+}
+
+/* The finishing CSS styles for the enter animation */
+.abreAnimado.ng-enter.ng-enter-active {
+  width: 100%;
+}
 .navbar {
     background-color: $body-bg;
+    border: 0;
     &.scrollDown {
         box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.13);
     }
     .navbar-busqueda {
-            width: 200%;
-        input {
+        .navbar-form {
+            margin-top: 0;
+            margin-bottom: 0;
+            .btn-busqueda {
+                background-color: transparent;
+                border-radius: 0;
+                &:hover,
+                &:focus {
+                    text-decoration: none;
+                    background-color: $nav-link-hover-bg;
+                }
+            }
+            .form-group {
+                &.ng-enter,
+                &.ng-leave {
+                    transition: 0.3s ease-in all;
+                }
+                &.ng-enter,
+                &.ng-leave.ng-leave-active{
+                    width: 0px;
+                }
+                .form-control {
+                    width: 100%;
+                }
+            }
+            .form-group,
+            .form-group.ng-enter-active,
+            .form-group.ng-leave {
+                @media (max-width: $screen-sm-min - 1) {
+                    width: auto;
+                }
+                @media (min-width: $screen-sm-min) {
+                    width: $navbar-busqueda-sm;
+                }
+                @media (min-width: $screen-md-min) {
+                    width: $navbar-busqueda-md;
+                }
+                @media (min-width: $screen-lg-min) {
+                    width: $navbar-busqueda-lg;
+                }
+            }
         }
     }
+    @media (min-width: $grid-float-breakpoint) {
+        .btn-busqueda {
+            padding-top:    $navbar-padding-vertical;
+            padding-bottom: $navbar-padding-vertical;
+        }
+    }
+    /*
+    .navbar-busqueda {
+        margin: 0;
+        @media (max-width: $screen-sm-min - 1) {
+            width: 100%;
+            height: $navbar-height;
+            .form-group {
+                width: 70%;
+            }
+        }
+        @media (min-width: $screen-sm-min) {
+            width: $navbar-busqueda-sm;
+            .form-group {
+                width: 210px;
+            }
+        }
+        @media (min-width: $screen-md-min) {
+            width: $navbar-busqueda-md;
+            .form-group {
+                width: 340px;
+            }
+        }
+        @media (min-width: $screen-lg-min) {
+            width: $navbar-busqueda-lg;
+            .form-group {
+                width: 630px;
+            }
+        }
+        a {
+            float: left;
+        }
+        .form-group {
+            float: left;
+            padding-top: 0.5em;
+            .form-control {
+                width: 100%;
+            }
+        }
+    }*/
 }

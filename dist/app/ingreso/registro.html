@@ -1,0 +1,32 @@
+<div class="row" ng-controller="adminRegistro as ar">
+    <div class="col-md-3">&nbsp;</div><!-- /.col-md-3 -->
+    <div class="col-md-6">
+        <div class="encabezado">
+            <div class="brand">{{cp.interfaz.generales.titulo_corto}}</div>
+            <div class="instrucciones" ng-hide="ar.crearCuenta">{{cp.interfaz.acceso.ingreso_codigo_instrucciones}}</div>
+            <div class="instrucciones" ng-show="ar.crearCuenta">{{cp.interfaz.acceso.registro_instrucciones}}</div>
+        </div><!-- /.encabezado -->
+        <div class="panel panel-default" ng-hide="ar.crearCuenta">
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="codigo">{{cp.interfaz.acceso.codigo}}</label>
+                    <input type="text" class="form-control" id="codigo" placeholder="{{cp.interfaz.acceso.codigo}}" ng-model="codigo">
+                </div><!-- /.form-group -->
+                <button class="btn btn-block btn-default" ng-click="ar.verificarCodigo(codigo)">
+                    {{cp.interfaz.acceso.ingreso_codigo_boton}}
+                </button>
+            </div><!-- /.panel-body -->
+        </div><!-- /.panel -->
+        <div class="panel panel-default" ng-show="ar.crearCuenta">
+            <div class="panel-body">
+                <div>
+                    {{cp.interfaz.acceso.codigo}}: {{codigo}}
+                </div>
+                <div>
+                    {{cp.interfaz.acceso.registro_validez}}: {{ar.validez}}
+                </div>
+            </div><!-- /.panel-body -->
+        </div><!-- /.panel -->
+    </div><!-- /.col-md-6 -->
+    <div class="col-md-3">&nbsp;</div><!-- /.col-md-3 -->
+</div><!-- /.row -->

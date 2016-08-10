@@ -1,5 +1,4 @@
 /* global angular firebase */
-var idioma = 'es';
 var config = {
     apiKey: "AIzaSyCfPS6ayXe7S9ddudsiM8LO9HPEGS2CkyA",
     authDomain: "eird-a6f79.firebaseapp.com",
@@ -11,13 +10,24 @@ var eirdApp = angular.module('eirdApp', [
     'ngRoute',
     'ngTouch',
     'ngSanitize',
+    'ngAnimate',
+    'firebase',
     'ui.bootstrap',
     'duScroll',
     'shared',
-    'portada'
+    'portada',
+    'ingreso'
 ]);
-eirdApp.controller('controladorPrincipal', [function(){
-    console.log('controladorPrincipal iniciado');   
-    var salida = this;
-    salida.resultado = salida.valor * 100;
+eirdApp.controller('controladorPrincipal', ['$firebaseObject', function($firebaseObject){
+    console.log('controladorPrincipal iniciado');
+    var idioma = 'es';
+    var yo = this;
+    var ref = firebase.database().ref('/interfaz/'+idioma);
+    var interfaz = $firebaseObject(ref);
+    interfaz.$loaded().then(function(){
+        yo.interfaz = interfaz;
+    });
+}]);
+eirdApp.service('Auth', ['$firebaseAuth', function($firebaseAuth){
+    return $firebaseAuth();
 }]);
