@@ -1,4 +1,4 @@
-<div class="row" ng-controller="adminRegistro as ar">
+<div class="row" ng-controller="adminRegistro as ar" ng-show="ar.foCargado">
     <div class="col-md-3">&nbsp;</div><!-- /.col-md-3 -->
     <div class="col-md-6">
         <div class="encabezado">
@@ -10,11 +10,16 @@
             <div class="panel-body">
                 <div class="form-group">
                     <label for="codigo">{{cp.interfaz.acceso.codigo}}</label>
-                    <input type="text" class="form-control" id="codigo" placeholder="{{cp.interfaz.acceso.codigo}}" ng-model="codigo">
+                    <input type="text" class="form-control" id="codigo" placeholder="{{cp.interfaz.acceso.codigo}}" ng-model="codigo" ng-change="ar.validarCodigo(codigo)">
                 </div><!-- /.form-group -->
-                <button class="btn btn-block btn-default" ng-click="ar.verificarCodigo(codigo)">
+                <button class="btn btn-block btn-default" ng-click="ar.verificarCodigo(codigo)" ng-disabled="!ar.codigoValido">
                     {{cp.interfaz.acceso.ingreso_codigo_boton}}
                 </button>
+                <br>
+                <div class="alert alert-warning" ng-show="!ar.codigoValido && codigo">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    {{cp.interfaz.acceso.codigo_invalido}}
+                </div>
             </div><!-- /.panel-body -->
         </div><!-- /.panel -->
         <div class="panel panel-default" ng-show="ar.crearCuenta">
@@ -24,6 +29,133 @@
                 </div>
                 <div>
                     {{cp.interfaz.acceso.registro_validez}}: {{ar.validez}}
+                </div>
+                <div ng-hide="ar.yaRegistrado">
+                    <div class="form-group has-feedback" ng-class="{'has-success': ar.nombres}">
+                        <label class="control-label" for="nombres_form">{{cp.interfaz.acceso.registro_nombres}}</label>
+                        <input class="form-control" type="text" id="nombres_form" ng-model="ar.nombres" placeholder="{{cp.interfaz.acceso.registro_nombres}}" aria-describedby="nombresStatus">
+                        <i class="fa fa-check fa-2x form-control-feedback" aria-hidden="true" ng-show="ar.nombres"></i>
+                        <span id="nombresStatus" class="sr-only" ng-show="ar.nombres">(correcto)</span>
+                    </div>
+                    <div class="form-group has-feedback" ng-class="{'has-success': ar.apellidos}">
+                        <label class="control-label" for="apellidos_form">{{cp.interfaz.acceso.registro_apellidos}}</label>
+                        <input class="form-control" type="text" id="apellidos_form" ng-model="ar.apellidos" placeholder="{{cp.interfaz.acceso.registro_apellidos}}" aria-describedby="apellidosStatus">
+                        <i class="fa fa-check fa-2x form-control-feedback" aria-hidden="true" ng-show="ar.apellidos"></i>
+                        <span id="apellidosStatus" class="sr-only" ng-show="ar.apellidos">(correcto)</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">{{cp.interfaz.acceso.registro_fecha_nacimiento}}</div>
+                        <div class="col-sm-3" class="form-group has-feedback" ng-class="{'has-success': ar.dia}">
+                            <label class="control-label" for="dia_form">{{cp.interfaz.acceso.registro_titulo_dia}}</label>
+                            <select id="dia_form" class="form-control" ng-model="ar.dia" aria-describedby="diaStatus">
+                                <option ng-repeat="dia in ar.dias">
+                                    {{dia}}
+                                </option>
+                            </select>
+                        <i class="fa fa-check fa-lg form-control-feedback" aria-hidden="true" ng-show="ar.dia"></i>
+                        <span id="diaStatus" class="sr-only" ng-show="ar.dia">(correcto)</span>
+                        </div><!-- /.col-sm-3 -->
+                        <div class="col-sm-3" class="form-group has-feedback" ng-class="{'has-success': ar.mes}">
+                            <label class="control-label" for="mes_form">{{cp.interfaz.acceso.registro_titulo_mes}}</label>
+                            <select id="mes_form" class="form-control" ng-model="ar.mes" ng-change="ar.ajustaDias()" aria-describedby="mesStatus">
+                                <option ng-repeat="mes in cp.interfaz.acceso.registro_meses track by $index" value="{{$index}}">
+                                    {{mes}}
+                                </option>
+                            </select>
+                        <i class="fa fa-check fa-lg form-control-feedback" aria-hidden="true" ng-show="ar.mes"></i>
+                        <span id="mesStatus" class="sr-only" ng-show="ar.mes">(correcto)</span>
+                        </div><!-- /.col-sm-3 -->
+                        <div class="col-sm-6" class="form-group has-feedback" ng-class="{'has-success': ar.anno}">
+                            <label class="control-label" for="anno_form">{{cp.interfaz.acceso.registro_titulo_anno}}</label>
+                            <select id="anno_form" class="form-control" ng-model="ar.anno" ng-change="ar.ajustaDias()" aria-describedby="annoStatus">
+                                <option ng-repeat="anno in ar.annos">
+                                    {{anno}}
+                                </option>
+                            </select>
+                        <i class="fa fa-check fa-lg form-control-feedback" aria-hidden="true" ng-show="ar.anno"></i>
+                        <span id="annoStatus" class="sr-only" ng-show="ar.anno">(correcto)</span>
+                        </div><!-- /.col-sm-6 -->
+                    </div><!-- /.row -->
+                    <div class="form-group has-feedback" ng-class="{'has-success': ar.email && ar.emailUnico, 'has-error': ar.email && !ar.emailUnico}">
+                        <label class="control-label" for="email_form">{{cp.interfaz.acceso.email}}</label>
+                        <input class="form-control" type="email" id="email_form" ng-model="ar.email" placeholder="{{cp.interfaz.acceso.email}}" aria-describedby="emailStatus" ng-change="ar.escribeEmail();">
+                        <i class="fa fa-check fa-2x form-control-feedback" aria-hidden="true" ng-show="ar.email && ar.emailUnico"></i>
+                        <span id="emailStatus" class="sr-only" ng-show="ar.email && ar.emailUnico">(correcto)</span>
+                        <i class="fa fa-times fa-2x form-control-feedback" aria-hidden="true" ng-show="ar.email && !ar.emailUnico"></i>
+                        <span id="emailStatus" class="sr-only" ng-show="ar.email && !ar.emailUnico">(incorrecto)</span>
+                        <span class="help-block" ng-show="ar.email && !ar.emailUnico">
+                            {{cp.interfaz.acceso.registro_error_email}}
+                        </span>
+                    </div>
+                    <div class="form-group has-feedback" ng-class="{'has-success': ar.clave && ar.clave.length > 5}">
+                        <label class="control-label" for="clave_form">{{cp.interfaz.acceso.password}}</label>
+                        <input class="form-control" type="password" id="clave_form" ng-model="ar.clave" placeholder="{{cp.interfaz.acceso.password}}" aria-describedby="claveStatus">
+                        <i class="fa fa-check fa-2x form-control-feedback" aria-hidden="true" ng-show="ar.clave && ar.clave.length > 5"></i>
+                        <span id="claveStatus" class="sr-only" ng-show="ar.clave">(correcto)</span>
+                    </div>
+                    <div class="form-group has-feedback" ng-class="{'has-success': reclave && reclave == ar.clave}">
+                        <label class="control-label" for="reclave_form">{{cp.interfaz.acceso.registro_repetir_password}}</label>
+                        <input class="form-control" type="password" id="reclave_form" ng-model="reclave" placeholder="{{cp.interfaz.acceso.password}}" aria-describedby="reclaveStatus">
+                        <i class="fa fa-check fa-2x form-control-feedback" aria-hidden="true" ng-show="reclave && reclave == ar.clave"></i>
+                        <span id="reclaveStatus" class="sr-only" ng-show="reclave && reclave == ar.clave">(correcto)</span>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="ar.acepto">
+                            {{cp.interfaz.acceso.registro_acepto_TC}}
+                        </label>
+                        <a href="/tc.html" target="_blank">
+                            {{cp.interfaz.acceso.registro_titulo_TC}}
+                        </a>
+                        <i class="fa fa-check fa-lg has-success" ng-show="ar.acepto"></i>
+                    </div>
+                    <button class="btn btn-block btn-default" ng-disabled="!ar.acepto || !ar.nombres || !ar.apellidos || !ar.dia || !ar.mes || !ar.anno || !ar.email || !ar.clave || ar.clave != reclave || !ar.emailUnico || ar.registrando" ng-click="ar.registrarCuenta(codigo);">
+                        <span ng-hide="ar.registrando">{{cp.interfaz.acceso.registro_boton}}</span>
+                        <span ng-show="ar.registrando">{{cp.interfaz.acceso.registrando}}</span>
+                        <i class="fa fa-spinner fa-spin fa-lg fa-fw" ng-show="ar.registrando"></i>
+                    </button>
+                </div>
+                <div class="alert alert-warning" role="alert" ng-show="ar.errorAutenticacion">
+                    <i class="fa fa-exclamation-triangle fa-lg"></i>
+                    {{cp.interfaz.acceso.registro_error_email}}
+                    <br>
+                    {{cp.interfaz.acceso.registro_error_email_instrucciones}}
+                </div>
+                <div class="alert alert-danger" role="alert" ng-show="ar.errorRegistro">
+                    <i class="fa fa-exclamation-triangle fa-lg"></i>
+                    {{ar.mensajeErrorRegistro}}
+                </div>
+                <div class="row" ng-show="ar.yaRegistrado">
+                    <div class="col-md-12 alert alert-success" role="alert">
+                        <i class="fa fa-thumbs-up fa-lg"></i>
+                        {{cp.interfaz.acceso.resumen}}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">{{cp.interfaz.acceso.registro_nombres}}</div>
+                        <div class="col-md-8">{{ar.nombres}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">{{cp.interfaz.acceso.registro_apellidos}}</div>
+                        <div class="col-md-8">{{ar.apellidos}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">{{cp.interfaz.acceso.registro_fecha_nacimiento}}</div>
+                        <div class="col-md-8">{{ar.nacimiento}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">{{cp.interfaz.acceso.email}}</div>
+                        <div class="col-md-8">{{ar.email}}</div>
+                    </div>
+                    <div class="col-md-12 alert alert-info" role="alert">
+                        <i class="fa fa-info-circle fa-lg"></i>
+                        {{cp.interfaz.acceso.resumen_instrucciones}}
+                    </div>
+                    <div class="col-md-12">
+                        <a href="portada" class="btn btn-block btn-default">
+                            <i class="fa fa-arrow-left"></i>
+                            {{cp.interfaz.acceso.volver_portada}}
+                        </a>
+                    </div>
                 </div>
             </div><!-- /.panel-body -->
         </div><!-- /.panel -->

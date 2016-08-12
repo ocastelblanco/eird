@@ -79,43 +79,9 @@ a,
             padding-bottom: $navbar-padding-vertical;
         }
     }
-    /*
-    .navbar-busqueda {
-        margin: 0;
-        @media (max-width: $screen-sm-min - 1) {
-            width: 100%;
-            height: $navbar-height;
-            .form-group {
-                width: 70%;
-            }
-        }
-        @media (min-width: $screen-sm-min) {
-            width: $navbar-busqueda-sm;
-            .form-group {
-                width: 210px;
-            }
-        }
-        @media (min-width: $screen-md-min) {
-            width: $navbar-busqueda-md;
-            .form-group {
-                width: 340px;
-            }
-        }
-        @media (min-width: $screen-lg-min) {
-            width: $navbar-busqueda-lg;
-            .form-group {
-                width: 630px;
-            }
-        }
-        a {
-            float: left;
-        }
-        .form-group {
-            float: left;
-            padding-top: 0.5em;
-            .form-control {
-                width: 100%;
-            }
-        }
-    }*/
+}
+
+//---> Estilos para formulario de registro / login
+i.has-success {
+    color: $state-success-text;
 }

@@ -24,4 +24,7 @@ shared.controller('barraNavegacion', ['$document','$window','$timeout','Auth',fu
     yo.auntenticar.$onAuthStateChanged(function(usuario) {
         yo.usuario = usuario;
     });
+    yo.salir = function(){
+        Auth.$signOut();
+    };
 }]);
