@@ -121,6 +121,40 @@ ingreso.controller('adminLogin',['Auth', '$location', '$firebaseObject', functio
         });
     };
 }]);
+ingreso.controller('adminRestaurar',['$firebaseObject', 'Auth', function($firebaseObject,Auth){
+    console.log('adminRestaurar');
+    var yo = this;
+    var ref = firebase.database().ref('/codigos');
+    var fo = $firebaseObject(ref);
+    var emails = {};
+    fo.$loaded().then(function(){
+        yo.foCargado = true;
+        emails = obtieneEmails(fo);
+    });
+    yo.restaurando = false;
+    yo.emailValido = false;
+    yo.restauracionEnviada = false;
+    yo.restaurar = function(){
+        yo.restaurando = true;
+        Auth.$sendPasswordResetEmail(yo.email).then(function(){
+            yo.restaurando = false;
+            yo.restauracionEnviada = true;
+            yo.restaurarExito = true;
+        }).catch(function(error){
+            yo.restaurando = false;
+            yo.restauracionEnviada = true;
+            yo.restaurarExito = false;
+            yo.restaurarError = error.code+': '+error.message;
+        });
+    };
+    yo.validaEmail = function(){
+        if (emails[yo.email]) {
+            yo.emailValido = true;
+        } else {
+            yo.emailValido = false;
+        }
+    };
+}]);
 function obtieneEmails(fo) {
     var salida = {};
     angular.forEach(fo, function(valor, llave){

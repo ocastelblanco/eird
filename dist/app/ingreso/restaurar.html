@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-md-3">&nbsp;</div>
+    <div class="col-md-6">
+        <div class="encabezado">
+            <div class="brand">{{cp.interfaz.acceso.titulo_corto}}</div>
+            <div class="instrucciones">{{cp.interfaz.acceso.restaurar_instrucciones}}</div>
+        </div>
+        <div class="panel panel-default" ng-show="ar.foCargado" ng-controller="adminRestaurar as ar">
+            <div class="panel-body" ng-hide="ar.restauracionEnviada">
+                <div class="form-group has-feedback" ng-class="{'has-success': ar.emailValido, 'has-error': ar.email && !ar.emailValido}">
+                    <label for="correoElectronico">{{cp.interfaz.acceso.email}}</label>
+                    <input type="email" class="form-control" id="correoElectronico" placeholder="{{cp.interfaz.acceso.email}}" ng-model="ar.email" ng-keyup="$event.keyCode==13?ar.restaurar():null" ng-change="ar.validaEmail()" aria-describedby="emailStatus">
+                    <i class="fa fa-check fa-2x form-control-feedback" aria-hidden="true" ng-show="ar.emailValido"></i>
+                    <span id="emailStatus" class="sr-only" ng-show="ar.emailValido">(correcto)</span>
+                    <i class="fa fa-times fa-2x form-control-feedback" aria-hidden="true" ng-show="ar.email && !ar.emailValido"></i>
+                    <span id="emailStatus" class="sr-only" ng-show="ar.email && !ar.emailValido">(incorrecto)</span>
+                    <span class="help-block" ng-show="ar.email && !ar.emailValido">
+                        {{cp.interfaz.acceso.restaurar_error_email}}
+                    </span>
+                </div>
+                <button class="btn btn-block btn-default" ng-click="ar.restaurar()" ng-disabled="!ar.emailValido">
+                    <span ng-hide="ar.restaurando">{{cp.interfaz.acceso.restaurar_boton}}</span>
+                    <span ng-show="ar.restaurando">{{cp.interfaz.acceso.restaurando}}</span>
+                    <i ng-show="ar.restaurando" class="fa fa-spinner fa-spin fa-lg fa-fw"></i>
+                </button>
+            </div><!-- /.panel-body -->
+            <div class="panel-body" ng-show="ar.restauracionEnviada">
+                <div class="alert alert-success" role="alert" ng-show="ar.restaurarExito">
+                    <i class="fa fa-thumbs-up fa-lg"></i>
+                    {{cp.interfaz.acceso.restaurar_resumen}}
+                </div>
+                <div class="alert alert-danger" role="alert" ng-hide="ar.restaurarExito">
+                    <i class="fa fa-thumbs-down fa-lg"></i>
+                    {{ar.restaurarError}}
+                </div>
+                <a href="portada" class="btn btn-block btn-default">
+                    {{cp.interfaz.generales.volver_portada}}
+                </a>
+            </div><!-- /.panel-body -->
+        </div><!-- /.panel -->
+    </div><!-- /.col-md-6 -->
+    <div class="col-md-3">&nbsp;</div>
+</div><!-- /.row -->

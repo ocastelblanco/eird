@@ -9,6 +9,8 @@ eirdApp.config(['$routeProvider', '$locationProvider', function($routeProvider, 
             templateUrl : 'app/ingreso/ingreso.html'
         }).when('/ingreso/:subseccion', {
             templateUrl : 'app/ingreso/ingreso.html'
+        }).when('/restaurar', {
+            templateUrl : 'app/ingreso/restaurar.html'
         }).when('/categorias', {
             templateUrl : 'app/categorias/categorias.html'
         }).when('/busqueda', {

@@ -1,0 +1,68 @@
+<!doctype html>
+<html ng-app="eirdAuth">
+    <head>
+        <title>Enciclopedia Ilustrada de la República Dominicana</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../assets/css/eird.min.css" type="text/css" />
+        <link rel="stylesheet" href="../assets/css/font-awesome.min.css" type="text/css" />
+        <!-- Llamado a dependencias JS -->
+        <!-- AngularJS y plugins -->
+        <script src="../assets/js/angular.min.js"></script>
+        <!-- Implementación en Firebase -->
+        <script src="../assets/js/firebase.js"></script>
+        <script src="../assets/js/angularfire.min.js"></script>
+    </head>
+    <body>
+        <div class="container" ng-controller="controladorPrincipal as cp">
+            <div class="row">
+                <div class="col-md-3">&nbsp;</div><!-- /.col-md-3 -->
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-body" ng-show="cp.restaurarClave && !cp.mensajeError">
+                            <div>{{cp.interfaz.acceso.nueva_clave}}</div>
+                            <div class="form-group has-feedback" ng-class="{'has-success': cp.clave && cp.clave.length > 5}">
+                                <label class="control-label" for="clave_form">{{cp.interfaz.acceso.password}}</label>
+                                <input class="form-control" type="password" id="clave_form" ng-model="cp.clave" placeholder="{{cp.interfaz.acceso.password}}" aria-describedby="claveStatus">
+                                <i class="fa fa-check fa-2x form-control-feedback" aria-hidden="true" ng-show="cp.clave && cp.clave.length > 5"></i>
+                                <span id="claveStatus" class="sr-only" ng-show="cp.clave">(correcto)</span>
+                            </div>
+                            <div class="form-group has-feedback" ng-class="{'has-success': reclave && reclave == cp.clave}">
+                                <label class="control-label" for="reclave_form">{{cp.interfaz.acceso.registro_repetir_password}}</label>
+                                <input class="form-control" type="password" id="reclave_form" ng-model="reclave" placeholder="{{cp.interfaz.acceso.password}}" aria-describedby="reclaveStatus">
+                                <i class="fa fa-check fa-2x form-control-feedback" aria-hidden="true" ng-show="reclave && reclave == cp.clave"></i>
+                                <span id="reclaveStatus" class="sr-only" ng-show="reclave && reclave == cp.clave">(correcto)</span>
+                            </div>
+                            <button class="btn btn-block btn-default" ng-disabled="!cp.clave || cp.clave != reclave || cp.registrando" ng-click="cp.cambiarClave();">
+                                <span ng-hide="cp.cambiando">{{cp.interfaz.acceso.restaurar_boton}}</span>
+                                <span ng-show="cp.cambiando">{{cp.interfaz.acceso.restaurando}}</span>
+                                <i class="fa fa-spinner fa-spin fa-lg fa-fw" ng-show="cp.cambiando"></i>
+                            </button>
+                        </div><!-- /.panel-body -->
+                        <div class="panel-body" ng-show="cp.claveRestaurada && !cp.mensajeError">
+                            <div class="alert alert-success" role="alert">
+                                <i class="fa fa-thumbs-up fa-lg"></i>
+                                {{cp.interfaz.acceso.nueva_clave_exito}}
+                            </div>
+                            <a href=".." class="btn btn-block btn-default">
+                                {{cp.interfaz.generales.volver_portada}}
+                            </a>
+                        </div><!-- /.panel-body -->
+                        <div class="panel-body" ng-show="cp.mensajeError">
+                            <div class="alert alert-danger" role="alert">
+                                <i class="fa fa-thumbs-down fa-lg"></i>
+                                {{cp.mensajeError}}
+                            </div>
+                            <a href=".." class="btn btn-block btn-default">
+                                {{cp.interfaz.generales.volver_portada}}
+                            </a>
+                        </div><!-- /.panel-body -->
+                    </div><!-- /.panel -->
+                </div><!-- /.col-md-6 -->
+                <div class="col-md-3">&nbsp;</div><!-- /.col-md-3 -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+        <!-- Componentes de la app raiz -->
+        <script src="auth.module.js"></script>
+    </body>
+</html>
