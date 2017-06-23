@@ -3,8 +3,8 @@ var shared = angular.module('shared', []);
 shared.controller('barraNavegacion', ['$document','$window','$timeout','Auth',function($document,$window,$timeout,Auth){
     console.log('barraNavegacion');    
     var yo = this;
-    var navbar = angular.element(document.querySelector('.navbar'));
     $document.on("scroll", function() {
+        var navbar = angular.element(document.querySelector('.navbar'));
         if ($document.scrollTop() > 10) {
             navbar.addClass('scrollDown');
         } else {
@@ -28,7 +28,7 @@ shared.controller('barraNavegacion', ['$document','$window','$timeout','Auth',fu
         Auth.$signOut();
     };
 }]);
-shared.controller('adminBusqueda', ['$firebaseArray',function($firebaseArray){
+shared.controller('adminBusqueda', ['$firebaseArray', '$location',function($firebaseArray, $location){
     console.log('adminBusqueda');
     var yo = this;
     var ref = firebase.database().ref('entradas/').orderByChild('titulo');
@@ -62,7 +62,7 @@ shared.controller('adminBusqueda', ['$firebaseArray',function($firebaseArray){
         });
     });
     yo.buscar = function(){
-        console.log(yo.termino);
+        $location.path('busqueda/'+yo.termino);
     };
     yo.obtenerTerminos = function(valor) {
         

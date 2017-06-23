@@ -9,6 +9,9 @@
     "codigos": {
       ".read": true,
       ".write": "auth != null"
+    },
+    "entradas": {
+      ".indexOn": ["categoria", "subcategoria", "titulo"]
     }
   }
 }

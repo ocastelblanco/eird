@@ -16,7 +16,9 @@ var eirdApp = angular.module('eirdApp', [
     'duScroll',
     'shared',
     'portada',
-    'ingreso'
+    'ingreso',
+    'busqueda',
+    'entrada'
 ]);
 eirdApp.controller('controladorPrincipal', ['$firebaseObject', function($firebaseObject){
     console.log('controladorPrincipal iniciado');
@@ -31,3 +33,9 @@ eirdApp.controller('controladorPrincipal', ['$firebaseObject', function($firebas
 eirdApp.service('Auth', ['$firebaseAuth', function($firebaseAuth){
     return $firebaseAuth();
 }]);
+eirdApp.config(function($sceDelegateProvider) {
+    $sceDelegateProvider.resourceUrlWhitelist([
+        'self',
+        'https://firebasestorage.googleapis.com/**'
+    ]);
+});

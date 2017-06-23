@@ -1,0 +1,19 @@
+<div ng-controller="adminEntrada as ae" ng-cloak>
+    <ng-include src="ae.header"></ng-include>
+    <div class="container">
+        <h1>{{ae.entrada.titulo}}</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <div ng-repeat="medio in ae.entrada.medios">
+                    <img class="img-responsive" ng-src="{{medio.ruta}}" ng-if="!medio.tipo">
+                    <img class="img-responsive" ng-src="{{medio.thumb}}" ng-if="medio.tipo == 1">
+                    <audio ng-src="{{medio.ruta}}" ng-if="medio.tipo == 1" controls></audio>
+                    <video ng-src="{{medio.ruta}}" ng-if="medio.tipo == 2" controls poster="{{medio.thumb}}"></video>
+                </div>
+            </div>
+            <div class="col-md-8 contenidoEntrada">
+                <ng-bind-html ng-bind-html="ae.entrada.texto"></ng-bind-html>
+            </div>
+        </div>
+    </div>
+</div>

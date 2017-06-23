@@ -13,9 +13,9 @@ eirdApp.config(['$routeProvider', '$locationProvider', function($routeProvider, 
             templateUrl : 'app/ingreso/restaurar.html'
         }).when('/categorias', {
             templateUrl : 'app/categorias/categorias.html'
-        }).when('/busqueda', {
+        }).when('/busqueda/:termino', {
             templateUrl : 'app/busqueda/busqueda.html'
-        }).when('/entrada', {
+        }).when('/entrada/:id', {
             templateUrl : 'app/entrada/entrada.html'
         }).otherwise({
             redirectTo: '/'

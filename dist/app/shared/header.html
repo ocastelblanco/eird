@@ -23,7 +23,7 @@
                                     <i class="fa fa-search"></i>
                                 </button>
                                 <div class="form-group abreAnimado" ng-if="bn.busquedaAbierta">
-                                    <input type="text" class="form-control" id="inputBusqueda" placeholder="{{cp.interfaz.generales.buscar_general}}" autocomplete="off" ng-model="ab.termino" uib-typeahead="hint.titulo for hint in ab.hints | filter:$viewValue | limitTo:8" typeahead-template-url="busqueda.html">
+                                    <input type="text" class="form-control" id="inputBusqueda" placeholder="{{cp.interfaz.generales.buscar_general}}" autocomplete="off" ng-model="ab.termino" uib-typeahead="hint.titulo for hint in ab.hints | filter:$viewValue | limitTo:18" typeahead-template-url="busqueda.html">
                                 </div>
                                 <button class="btn btn-busqueda" ng-click="bn.abreBusqueda(bn.abierta)">
                                     <i class="fa fa-search" ng-if="!bn.busquedaAbierta"></i>

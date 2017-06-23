@@ -85,3 +85,17 @@ a,
 i.has-success {
     color: $state-success-text;
 }
+//---> Estilos para el typeahead de búsqueda
+.opcion-busqueda {
+    small {
+        width: 10em;
+        display: inline-block;
+        font-size: 60%;
+        color: $gray-dark;
+    }
+    &:hover {
+        small {
+            color: $gray-lighter;
+        }
+    }
+}
